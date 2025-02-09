@@ -1,0 +1,6 @@
+# Ignore artifacts:
+dist
+client
+
+# Ignore files:
+.env
