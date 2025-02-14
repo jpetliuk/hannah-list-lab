@@ -23,12 +23,10 @@ const userSchema = mongoose.Schema(
     premiumAccount: { type: Boolean, default: false },
     oauthProvider: {
       type: String,
-      enum: ['google', 'facebook', 'github', 'twitter'],
+      enum: ['google'],
       required: true,
     },
     oauthId: { type: String, required: true },
-    accessToken: { type: String },
-    verificationToken: { type: String },
     projects: {
       type: [projectSchema],
     },

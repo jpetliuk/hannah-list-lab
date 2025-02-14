@@ -1,12 +1,11 @@
 import User from '../models/user.model.js';
-import { verifyUser } from '../middleware/verifyUser.js';
 
 export const getProject = async (req, res) => {
   const { projectId } = req.params;
 
   try {
     const user = await User.findOne(
-      { _id: verifyUser, 'projects._id': projectId },
+      { _id: req.user.id, 'projects._id': projectId },
       { 'projects.$': 1 }, // This returns only the matched project
     );
 
@@ -15,13 +14,12 @@ export const getProject = async (req, res) => {
     }
 
     res.status(200).json({
-      success: true,
       message: 'Project retrieved successfully',
       project: user.projects[0],
     });
   } catch (error) {
     console.log('Error retrieving project: ', error.message);
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -30,7 +28,7 @@ export const updateProject = async (req, res) => {
 
   try {
     const updatedProject = await User.findOneAndUpdate(
-      { _id: verifyUser, 'projects._id': projectId },
+      { _id: req.user.id, 'projects._id': projectId },
       {
         $set: {
           'projects.$.projectName': req.body.projectName,
@@ -47,7 +45,7 @@ export const updateProject = async (req, res) => {
     res.status(200).json('Project updated successfully');
   } catch (error) {
     console.log('Error updating the project: ', error.message);
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -56,7 +54,7 @@ export const deleteProject = async (req, res) => {
     const { projectId } = req.params;
 
     const updatedUser = await User.findOneAndUpdate(
-      { _id: verifyUser },
+      { _id: req.user.id },
       { $pull: { projects: { _id: projectId } } },
       { new: true },
     ).select('projects');
@@ -72,18 +70,17 @@ export const deleteProject = async (req, res) => {
     if (projectDeleted)
       return res.status(404).json({ message: 'Project not found' });
 
-    res
-      .status(200)
-      .json({ success: true, message: 'Project deleted successfully' });
+    res.status(200).json({ message: 'Project deleted successfully' });
   } catch (error) {
     console.error('Error deleting project: ', error.message);
-    res.status(400).json({ success: false, message: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
 export const createProject = async (req, res) => {
   try {
-    const user = await User.findById(verifyUser);
+    const user = await User.findById(req.user.id);
+    console.log(req.user.id);
 
     if (user.premiumAccount === false && user.projects.length >= 5) {
       return res.status(400).json({
@@ -107,7 +104,7 @@ export const createProject = async (req, res) => {
     };
 
     const updatedUser = await User.findOneAndUpdate(
-      { _id: verifyUser },
+      { _id: req.user.id },
       { $push: { projects: newProject } },
       { new: true, runValidators: true },
     ).select('projects');
@@ -117,13 +114,12 @@ export const createProject = async (req, res) => {
     }
 
     res.status(201).json({
-      success: true,
       message: 'Project created successfully',
-      project: newProject,
-      user: updatedUser,
+      newProject,
+      userProjectList: updatedUser,
     });
   } catch (error) {
     console.log('Error creating project: ', error.message);
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
