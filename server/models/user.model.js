@@ -17,7 +17,7 @@ const projectSchema = mongoose.Schema({
 const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
-    Username: { type: String },
+    username: { type: String },
     email: { type: String, required: true, unique: true },
     profilePicture: { type: String },
     premiumAccount: { type: Boolean, default: false },

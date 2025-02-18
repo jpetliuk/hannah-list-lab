@@ -16,7 +16,9 @@ passport.serializeUser((user, done) => {
 // Deserialize user (retrieving user from session)
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).select(
+      '-oauthId -oauthProvider -lastLogin -updatedAt -email -__v',
+    );
     done(null, user);
   } catch (err) {
     done(err, null);
