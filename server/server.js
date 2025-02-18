@@ -6,6 +6,9 @@ import helmet from 'helmet';
 import session from 'express-session';
 import passport from 'passport';
 
+import mongoose from 'mongoose';
+import MongoStore from 'connect-mongo';
+
 import { dbConfig } from './config/dbConfig.js';
 
 import authRoutes from './routes/authRoutes.js';
@@ -24,6 +27,8 @@ app.use(helmet());
 
 app.use(cors());
 
+dbConfig();
+
 // Set up session handling
 app.use(
   session({
@@ -31,11 +36,14 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      httpOnly: true, // Ensures cookies can't be accessed via JavaScript
-      // secure: true,
-      // sameSite: 'Strict',
+      httpOnly: true,
       maxAge: 60 * 60 * 1000,
-    }, // Set to true in production with HTTPS
+    },
+    store: MongoStore.create({
+      client: mongoose.connection.getClient(),
+      autoRemove: 'interval',
+      autoRemoveInterval: 10,
+    }),
   }),
 );
 
@@ -50,6 +58,5 @@ app.use('/dashboard', dashboardRoutes);
 // Start Server and DB
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  dbConfig();
   console.log('Server is running on port ', PORT);
 });
