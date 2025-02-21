@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+
+.figtree-regular {
+   font-family: "Figtree", serif;
+   font-optical-sizing: auto;
+   font-weight: 400;
+ }
+
+ .figtree-medium {
+   font-family: "Figtree", serif;
+   font-optical-sizing: auto;
+   font-weight: 500;
+ }
+
+ .figtree-semibold {
+   font-family: "Figtree", serif;
+   font-optical-sizing: auto;
+   font-weight: 600;
+ }
+
+ .figtree-bold {
+   font-family: "Figtree", serif;
+   font-optical-sizing: auto;
+   font-weight: 700;
+ }
