@@ -1,5 +1,5 @@
-import BannerImage from "../components/BannerImage"
-import GetStarted from "../components/GetStarted"
+import BannerImage from '../components/BannerImage';
+import GetStarted from '../components/GetStarted';
 
 const StartPage = () => {
   return (
@@ -7,6 +7,6 @@ const StartPage = () => {
       <BannerImage />
       <GetStarted />
     </div>
-  )
-}
-export default StartPage
+  );
+};
+export default StartPage;
