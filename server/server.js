@@ -6,7 +6,6 @@ import helmet from 'helmet';
 import session from 'express-session';
 import passport from 'passport';
 
-import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
 
 import { dbConfig } from './config/dbConfig.js';
@@ -24,12 +23,12 @@ const app = express();
 app.use(express.json());
 
 app.use(helmet());
-
 app.use(cors());
 
+// Database Connection
 dbConfig();
 
-// Set up session handling
+// Session config
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -37,12 +36,16 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // HTTPS required
+      sameSite: 'lax',
       maxAge: 60 * 60 * 1000,
     },
     store: MongoStore.create({
-      client: mongoose.connection.getClient(),
-      autoRemove: 'interval',
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: 'sessions',
+      ttl: 60 * 60,
       autoRemoveInterval: 10,
+      autoRemove: 'interval',
     }),
   }),
 );

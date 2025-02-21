@@ -22,12 +22,20 @@ router.get(
 );
 
 // Logout route
-router.get('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
+  if (!req.session) {
+    return res.status(400).json({ message: 'No active session found' });
+  }
+
   req.logout((err) => {
     if (err) {
       return res.status(500).json({ message: 'Logout failed', error: err });
     }
-    req.session.destroy(() => {
+
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Could not destroy session' });
+      }
       res.clearCookie('connect.sid');
       res.json({ message: 'Logged out successfully' });
     });
