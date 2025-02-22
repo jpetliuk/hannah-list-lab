@@ -1,25 +1,25 @@
 @import 'tailwindcss';
 
-.figtree-regular {
-  font-family: 'Figtree', serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
+@theme {
+  --color-default-text: #1e1e2c;
+  --color-light-text: #5f616b;
+  --color-orange-text: #f7653d;
+
+  --color-white-gray: #f6f6f6;
+  --color-light-gray: #d9d9d9;
+  --color-dark-gray: #5f616b;
+  --color-light-gray: #d9d9d9;
+
+  --color-button-yellow: #ffd43a;
+  --color-button-yellow-hover: #ffce1f;
+  --color-button-yellow-active: #ffdc5c;
+
+  --color-button-gray: #d9d9d9;
+  --color-button-gray-hover: #cccccc;
+  --color-button-gray-active: #ebebeb;
 }
 
-.figtree-medium {
+:root {
   font-family: 'Figtree', serif;
   font-optical-sizing: auto;
-  font-weight: 500;
-}
-
-.figtree-semibold {
-  font-family: 'Figtree', serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-}
-
-.figtree-bold {
-  font-family: 'Figtree', serif;
-  font-optical-sizing: auto;
-  font-weight: 700;
 }

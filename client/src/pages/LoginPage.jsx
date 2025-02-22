@@ -1,12 +1,12 @@
 import BannerImage from '../components/BannerImage';
-import GetStarted from '../components/GetStarted';
+import Login from '../components/Login';
 
-const StartPage = () => {
+const LoginPage = () => {
   return (
     <div className="flex h-screen w-full items-center justify-center gap-8 bg-white p-8">
       <BannerImage />
-      <GetStarted />
+      <Login />
     </div>
   );
 };
-export default StartPage;
+export default LoginPage;

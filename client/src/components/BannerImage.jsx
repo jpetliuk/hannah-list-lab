@@ -1,11 +1,11 @@
 const BannerImage = () => {
   return (
-    <div className="w-full h-full border border-[#D9D9D9] rounded-[25px]">
+    <div className="border-light-gray h-full w-full rounded-3xl border">
       <img
         src="/banner-image.jpeg"
         alt="Banner image"
-        className="w-full h-full object-cover rounded-[25px]"
-      ></img>
+        className="h-full w-full rounded-3xl object-cover"
+      />
     </div>
   );
 };
