@@ -1,12 +1,14 @@
-import BannerImage from '../components/BannerImage';
-import GetStarted from '../components/GetStarted';
+import { Outlet } from 'react-router-dom';
 
-const StartPage = () => {
+import BannerImage from '../components/BannerImage';
+
+const WelcomeLayout = () => {
   return (
     <div className="flex h-screen w-full items-center justify-center gap-8 bg-white p-8">
       <BannerImage />
-      <GetStarted />
+
+      <Outlet />
     </div>
   );
 };
-export default StartPage;
+export default WelcomeLayout;

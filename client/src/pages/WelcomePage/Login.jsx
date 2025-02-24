@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const GetStarted = () => {
+const Login = () => {
   return (
     <div className="border-light-gray flex h-full w-full items-center justify-center rounded-3xl border p-8">
       <div className="w-[450px]">
@@ -46,4 +46,4 @@ const GetStarted = () => {
     </div>
   );
 };
-export default GetStarted;
+export default Login;
