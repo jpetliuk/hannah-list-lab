@@ -47,7 +47,7 @@ const Navbar = () => {
                   className="h-5 w-5 rounded-full object-cover"
                 />
                 <h3
-                  className={`duration-100 ${selected === item.path ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-sm`}
+                  className={`duration-100 ${selected === item.path ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-[15px]`}
                 >
                   {item.label}
                 </h3>
@@ -72,7 +72,7 @@ const Navbar = () => {
                   #
                 </p>
                 <h3
-                  className={`${selected === item._id ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-sm duration-100`}
+                  className={`${selected === item._id ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-[15px] duration-100`}
                 >
                   {item.projectName}
                 </h3>
@@ -91,7 +91,7 @@ const Navbar = () => {
             alt="user icon photo"
             className="h-5 w-5 rounded-full object-cover"
           />
-          <h3 className="text-light-text text-sm font-light">Settings</h3>
+          <h3 className="text-light-text text-[15px] font-light">Settings</h3>
         </div>
 
         <div className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1">
@@ -100,7 +100,7 @@ const Navbar = () => {
             alt="user icon photo"
             className="h-5 w-5 rounded-full object-cover"
           />
-          <h3 className="text-light-text text-sm font-light">Sign-out</h3>
+          <h3 className="text-light-text text-[15px] font-light">Sign-out</h3>
         </div>
       </div>
       {/* Settings section */}

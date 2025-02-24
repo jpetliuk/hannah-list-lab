@@ -98,7 +98,7 @@ export const projects = [
     ],
   },
   {
-    projectName: 'Rob a bank',
+    projectName: 'Rob a bank in a bikini',
     description: 'Testing:\nNow we are testing\nThe line breaks.',
     _id: '2222222222',
     backgroundImage: '/trees-8136806_1280.png',
