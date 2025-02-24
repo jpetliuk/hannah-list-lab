@@ -20,9 +20,16 @@
   --color-button-gray: #d9d9d9;
   --color-button-gray-hover: #cccccc;
   --color-button-gray-active: #ebebeb;
+
+  --color-comment-blue-line: #b1f3fc;
+  --color-comment-blue-background: #f7feff;
+
+  --color-custom-white: #ffffff;
+  --color-outline: #d9d9d9;
 }
 
 :root {
   font-family: 'Figtree', serif;
   font-optical-sizing: auto;
+  background-color: #d9d9d9;
 }

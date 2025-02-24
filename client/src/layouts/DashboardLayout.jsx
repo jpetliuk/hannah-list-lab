@@ -5,12 +5,14 @@ import Navbar from '../components/Navbar';
 
 const DashboardLayout = () => {
   return (
-    <div className="bg-light-gray flex h-screen w-full items-center justify-center gap-5 p-5">
-      <div className="flex h-full w-96 flex-col gap-4">
+    <div className="flex min-h-screen w-full">
+      <div className="fixed flex h-full w-80 flex-col gap-4 p-5 pr-3">
         <Logo />
         <Navbar />
       </div>
-      <Outlet />
+      <div className="ml-80 flex-1 p-5 pl-3">
+        <Outlet />
+      </div>
     </div>
   );
 };

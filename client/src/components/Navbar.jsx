@@ -19,7 +19,7 @@ const Navbar = () => {
   }, [location.pathname, id]);
 
   return (
-    <div className="flex h-full w-full flex-col justify-between rounded-3xl bg-white p-3">
+    <div className="border-outline bg-custom-white flex h-full w-full flex-col justify-between rounded-3xl border p-3">
       <div>
         <div className="border-white-gray flex w-full items-center gap-3 border-b pb-4">
           <img

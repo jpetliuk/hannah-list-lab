@@ -24,7 +24,7 @@ const Login = () => {
         </Link>
 
         <div className="relative mb-3 w-full">
-          <h3 className="text-light-text relative z-10 mx-auto w-fit bg-white px-4 text-center text-sm font-semibold">
+          <h3 className="text-light-text bg-custom-white relative z-10 mx-auto w-fit px-4 text-center text-sm font-semibold">
             or
           </h3>
           <hr className="border-light-gray absolute top-1/2 z-0 w-full" />
