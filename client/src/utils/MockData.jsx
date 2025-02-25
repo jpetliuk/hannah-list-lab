@@ -21,32 +21,40 @@ export const tools = [
   },
 ];
 
-// export const projects = [
-//   {
-//     value: 'research-paper-publication',
-//     label: 'Research Paper Publication',
-//     icon: '/banner-image.jpeg',
-//     id: '111111111111111',
-//     backgroundImage:
-//       'https://cdn.pixabay.com/photo/2023/04/13/17/08/forest-7922999_1280.jpg',
-//   },
-//   {
-//     value: 'master-project',
-//     label: 'Master Project',
-//     icon: '/banner-image.jpeg',
-//     id: '22222222222222222222',
-//     backgroundImage:
-//       'https://cdn.pixabay.com/photo/2023/04/13/17/08/forest-7922999_1280.jpg',
-//   },
-//   {
-//     value: 'website-creation',
-//     label: 'Website Creation',
-//     icon: '/banner-image.jpeg',
-//     id: '3333333333333333333',
-//     backgroundImage:
-//       'https://cdn.pixabay.com/photo/2023/04/13/17/08/forest-7922999_1280.jpg',
-//   },
-// ];
+export const stickyNotes = [
+  {
+    stickyNoteTitle: 'Sticky one',
+    stickyNoteText: 'Research Paper Publication',
+    stickyNoteColor: '#FFB3B3',
+    _id: '111111111111111',
+  },
+  {
+    stickyNoteTitle: 'Sticky notes rule',
+    stickyNoteText:
+      'this is a testing text that would help me find a cure for cancer.\nAnd This is a new line.',
+    stickyNoteColor: '#B3FFF7',
+    _id: '22222222',
+  },
+  {
+    stickyNoteTitle: 'Testing my luck',
+    stickyNoteText: 'Research Paper Publication',
+    stickyNoteColor: '#B3FFB6',
+    _id: '3333333333',
+  },
+  {
+    stickyNoteTitle: 'Sticky notes rule',
+    stickyNoteText:
+      'this is a testing text that would help me find a cure for cancer.',
+    stickyNoteColor: '#F9FFB3',
+    _id: '444444',
+  },
+  {
+    stickyNoteTitle: 'Testing my luck',
+    stickyNoteText: 'Research Paper Publication',
+    stickyNoteColor: '#DAB3FF',
+    _id: '555555555',
+  },
+];
 
 export const projects = [
   {
