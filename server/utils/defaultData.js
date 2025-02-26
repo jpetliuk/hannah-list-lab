@@ -2,11 +2,40 @@ export const defaultProject = [
   {
     projectName: 'Project One',
     description: `Welcome to hannah's lab, this is your first Project.`,
-    tasks: [
-      { taskName: 'Task 1', completed: true },
-      { taskName: 'Task 2', completed: false },
-      { taskName: 'Task 3', completed: false },
+    backgroundImage:
+      'https://cdn.pixabay.com/photo/2023/04/13/17/08/forest-7922999_1280.jpg',
+    iconColor: '#f7653d',
+    items: [
+      {
+        itemName: 'Create a new project',
+        completed: false,
+        dueDate: '2025-02-23',
+        tasks: [
+          {
+            taskName: 'Go to navbar',
+            completed: false,
+          },
+          {
+            taskName: 'create new project',
+            completed: false,
+          },
+        ],
+      },
     ],
+  },
+];
+
+export const defaultStickyNotes = [
+  {
+    stickyNoteTitle: 'Sticky one',
+    stickyNoteText: 'Research Paper Publication',
+    stickyNoteColor: '#FFB3B3',
+  },
+  {
+    stickyNoteTitle: 'Sticky notes rule',
+    stickyNoteText:
+      'this is a testing text that would help me find a cure for cancer.\nAnd This is a new line.',
+    stickyNoteColor: '#B3FFF7',
   },
 ];
 

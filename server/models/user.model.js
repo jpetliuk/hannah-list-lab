@@ -6,21 +6,36 @@ const taskSchema = mongoose.Schema({
   completed: { type: Boolean, default: false },
 });
 
-const projectSchema = mongoose.Schema({
-  projectName: { type: String, required: true },
-  description: { type: String },
+const itemSchema = mongoose.Schema({
+  itemName: { type: String, required: true },
+  completed: { type: Boolean, default: false },
+  dueDate: { type: Date },
   tasks: {
     type: [taskSchema],
   },
 });
 
+const projectSchema = mongoose.Schema({
+  projectName: { type: String, required: true },
+  description: { type: String },
+  backgroundImage: { type: String },
+  iconColor: { type: String },
+  items: [itemSchema],
+});
+
+const stickyNotesSchema = mongoose.Schema({
+  stickyNoteTitle: { type: String, required: true },
+  stickyNoteText: { type: String, required: true },
+  stickyNoteColor: { type: String, required: true },
+});
+
 const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
-    username: { type: String },
     email: { type: String, required: true, unique: true },
-    profilePicture: { type: String },
     premiumAccount: { type: Boolean, default: false },
+    profilePicture: { type: String },
+    username: { type: String },
     oauthProvider: {
       type: String,
       enum: ['google'],
@@ -30,6 +45,7 @@ const userSchema = mongoose.Schema(
     projects: {
       type: [projectSchema],
     },
+    stickyNotes: [stickyNotesSchema],
     lastLogin: { type: Date, default: Date.now },
   },
   { timestamps: true },

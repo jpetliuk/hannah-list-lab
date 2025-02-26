@@ -8,7 +8,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "format": "prettier --write .",
-    "server": "node --watch server/server.js"
+    "server": "node --watch ./server.js"
   },
   "keywords": [],
   "author": "",

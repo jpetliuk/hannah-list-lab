@@ -2,7 +2,7 @@ import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
 import User from '../models/user.model.js';
-import { defaultProject } from '../utils/defaultData.js';
+import { defaultProject, defaultStickyNotes } from '../utils/defaultData.js';
 
 import dotenv from 'dotenv';
 
@@ -17,7 +17,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findById(id).select(
-      '-oauthId -oauthProvider -lastLogin -updatedAt -email -__v',
+      '-oauthId -oauthProvider -lastLogin -updatedAt -__v',
     );
     done(null, user);
   } catch (err) {
@@ -52,6 +52,7 @@ passport.use(
             oauthProvider: 'google',
             oauthId: profile.id,
             projects: defaultProject,
+            stickyNotes: defaultStickyNotes,
           });
           await user.save();
         }
