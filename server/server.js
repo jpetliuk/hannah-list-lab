@@ -23,7 +23,7 @@ const app = express();
 app.use(express.json());
 
 app.use(helmet());
-app.use(cors());
+app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
 
 // Database Connection
 dbConfig();
@@ -56,7 +56,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/dashboard', dashboardRoutes);
+app.use('/api/user', dashboardRoutes);
 
 // Start Server and DB
 const PORT = process.env.PORT || 5000;
