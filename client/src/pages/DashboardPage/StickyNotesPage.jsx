@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { stickyNotes } from '../../utils/MockData';
-import { useEffect } from 'react';
 
 const StickyNotesPage = () => {
   const [stickyNotesList, setStickyNotesList] = useState(stickyNotes);
 
-  const [updateServer, setUpdateServer] = useState(false);
+  const [sendToServer, setSendToServer] = useState(false);
+
   const [selectedNoteId, setSelectedNoteId] = useState(false);
+  const [newColor, setNewColor] = useState(false);
   const [newTitle, setNewTitle] = useState(false);
   const [newText, setNewText] = useState(false);
 
-  const newNote = () => {
+  const randomColor = () => {
     const colorOptions = [
       '#FFB3B3',
       '#B3FFF7',
@@ -36,15 +37,7 @@ const StickyNotesPage = () => {
       '#FFB3B3',
     ];
 
-    const newNote = {
-      stickyNoteTitle: '',
-      stickyNoteText: '',
-      stickyNoteColor:
-        colorOptions[Math.floor(Math.random() * colorOptions.length)],
-      _id: Date.now().toString(),
-    };
-
-    setStickyNotesList([...stickyNotesList, newNote]);
+    return colorOptions[Math.floor(Math.random() * colorOptions.length)];
   };
 
   const handleTextChange = (e) => {
@@ -55,16 +48,54 @@ const StickyNotesPage = () => {
     setNewTitle(e.target.value);
   };
 
+  const handleSelectNote = (note) => {
+    if (selectedNoteId === note._id) return;
+
+    if (selectedNoteId !== false) saveNote();
+
+    setSelectedNoteId(note._id);
+    setNewTitle(false);
+    setNewText(false);
+    setNewColor(note.stickyNoteColor);
+  };
+
+  const areArraysEqual = (arr1, arr2) => {
+    if (arr1.length !== arr2.length) return false;
+
+    return arr1.every((obj1, index) => {
+      const obj2 = arr2[index];
+
+      // Compare values directly (since keys are the same)
+      return Object.values(obj1).every(
+        (value, i) => value === Object.values(obj2)[i],
+      );
+    });
+  };
+
+  const newNote = () => {
+    const newNote = {
+      stickyNoteTitle: '',
+      stickyNoteText: '',
+      stickyNoteColor: randomColor(),
+      _id: Date.now().toString(),
+    };
+
+    setStickyNotesList([...stickyNotesList, newNote]);
+  };
+
   const removeNote = () => {
     const updatedNotes = stickyNotesList.filter(
       (note) => note._id != selectedNoteId,
     );
 
+    //reset states
     setNewTitle(false);
     setNewText(false);
     setSelectedNoteId(false);
+    setNewColor(false);
 
     setStickyNotesList(updatedNotes);
+    setSendToServer(true);
   };
 
   const saveNote = () => {
@@ -72,50 +103,38 @@ const StickyNotesPage = () => {
       note._id === selectedNoteId
         ? {
             ...note,
-            ...(newTitle && { stickyNoteTitle: newTitle }),
-            ...(newText && { stickyNoteText: newText }),
+            ...(newTitle !== false && { stickyNoteTitle: newTitle }),
+            ...(newText !== false && { stickyNoteText: newText }),
+            ...(newColor !== false && { stickyNoteColor: newColor }),
           }
         : note,
     );
+
+    //reset states
     setNewTitle(false);
     setNewText(false);
     setSelectedNoteId(false);
+    setNewColor(false);
+
+    if (areArraysEqual(updatedNotes, stickyNotesList))
+      return console.log('no changes');
 
     setStickyNotesList(updatedNotes);
+    setSendToServer(true);
   };
 
-  const handleSelectNote = (id) => {
-    if (selectedNoteId === id) return;
-    setSelectedNoteId(id);
-    setNewTitle(false);
-    setNewText(false);
-  };
+  const changeNoteColor = () => {
+    const color = randomColor();
 
-  const areArraysEqual = (arr1, arr2) => {
-    if (arr1.length !== arr2.length) return false;
-
-    for (let i = 0; i < arr1.length; i++) {
-      if (JSON.stringify(arr1[i]) !== JSON.stringify(arr2[i])) {
-        return false;
-      }
-    }
-    return true;
+    setNewColor(color);
   };
 
   useEffect(() => {
-    //send to server
-    const listToServer = stickyNotesList.filter(
-      (note) =>
-        note.stickyNoteTitle.trim() !== '' || note.stickyNoteText.trim() !== '',
-    );
+    if (sendToServer === true) {
+      console.log('sent to server: ', stickyNotesList);
 
-    setUpdateServer(listToServer);
-
-    if (areArraysEqual(updateServer, listToServer))
-      return console.log('no changes');
-
-    if (updateServer === false) return;
-    console.log('To Server: ', listToServer);
+      return setSendToServer(false);
+    }
   }, [stickyNotesList]);
 
   return (
@@ -129,9 +148,12 @@ const StickyNotesPage = () => {
           {stickyNotesList.map((note) => (
             <div
               key={note._id}
-              onClick={() => handleSelectNote(note._id)}
+              onClick={() => handleSelectNote(note)}
               className={`h-75 w-75 relative overflow-hidden ${selectedNoteId === note._id ? 'z-50 scale-110 cursor-auto shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]' : 'hover:scale-102 cursor-pointer'} rounded-[10px] p-2.5 shadow duration-300 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]`}
-              style={{ backgroundColor: note.stickyNoteColor }}
+              style={{
+                backgroundColor:
+                  selectedNoteId === note._id ? newColor : note.stickyNoteColor,
+              }}
             >
               {selectedNoteId === note._id ? (
                 <>
@@ -149,24 +171,30 @@ const StickyNotesPage = () => {
                     onChange={handleTextChange}
                   />
                   <button
-                    className="bg-button-yellow w-15 absolute bottom-0 right-0 h-7 cursor-pointer rounded-tl-lg text-sm font-semibold"
+                    className="bg-button-yellow text-default-text w-15 absolute bottom-0 right-0 h-7 cursor-pointer rounded-tl-lg text-sm font-semibold"
                     onClick={saveNote}
                   >
                     save
                   </button>
                   <button
-                    className="bg-light-gray w-15 absolute bottom-0 left-0 h-7 cursor-pointer rounded-tr-lg text-sm font-semibold"
+                    className="bg-light-gray text-default-text w-15 absolute bottom-0 left-0 h-7 cursor-pointer rounded-tr-lg text-sm font-semibold"
                     onClick={removeNote}
                   >
                     remove
                   </button>
+                  <button
+                    className="hover:text-default-text hover:w-15 absolute right-0 top-0 h-7 w-7 cursor-pointer rounded-bl-lg bg-[#f6f6f6B3] text-sm font-semibold text-transparent duration-300"
+                    onClick={changeNoteColor}
+                  >
+                    color
+                  </button>
                 </>
               ) : (
                 <>
-                  <h2 className="text-default-text pb-2 text-xl font-bold">
+                  <h2 className="text-default-text select-none pb-2 text-xl font-bold">
                     {note.stickyNoteTitle}
                   </h2>
-                  <p className="text-default-text space-mono-regular whitespace-pre-line text-xs">
+                  <p className="text-default-text space-mono-regular select-none whitespace-pre-line text-xs">
                     {note.stickyNoteText}
                   </p>
                 </>
