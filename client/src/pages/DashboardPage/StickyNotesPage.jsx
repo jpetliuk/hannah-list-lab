@@ -130,12 +130,12 @@ const StickyNotesPage = () => {
   };
 
   useEffect(() => {
-    if (sendToServer === true) {
+    if (sendToServer) {
       console.log('sent to server: ', stickyNotesList);
 
-      return setSendToServer(false);
+      setSendToServer(false);
     }
-  }, [stickyNotesList]);
+  }, [sendToServer, stickyNotesList]);
 
   return (
     <div className="bg-custom-white h-full w-full rounded-3xl p-8">
@@ -159,12 +159,14 @@ const StickyNotesPage = () => {
                 <>
                   <input
                     type="text"
+                    name="stickyNoteTitle"
                     defaultValue={note.stickyNoteTitle}
                     className="text-default-text focus:outline-stickyNote mb-2 w-full resize-none text-xl font-bold focus:rounded-md focus:outline-dashed focus:outline-1 focus:outline-offset-2"
                     onChange={handleTitleChange}
                     maxLength="24"
                   />
                   <textarea
+                    name="stickyNoteText"
                     className="space-mono-regular focus:outline-stickyNote text-default-text focus:outline-offset-3 h-60 w-full resize-none whitespace-pre-line text-xs focus:rounded-md focus:outline-dashed focus:outline-1"
                     defaultValue={note.stickyNoteText}
                     maxLength="300"
