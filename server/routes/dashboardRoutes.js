@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 
 router.get('/', isAuthenticated, (req, res) => {
-  res.json({ message: 'Welcome to your dashboard', user: req.user });
+  res.json(req.user);
 });
 
 router.post('/project/', isAuthenticated, createProject);
