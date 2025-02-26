@@ -31,12 +31,18 @@ const Login = () => {
         </div>
 
         <div className="flex w-full gap-10">
-          <button className="text-default-text bg-button-gray hover:bg-button-gray-hover active:bg-button-gray-active mb-3 w-full cursor-pointer rounded-2xl py-3.5 text-xl font-bold">
+          <Link
+            to={'http://localhost:4000/auth/google'}
+            className="text-default-text bg-button-gray hover:bg-button-gray-hover active:bg-button-gray-active mb-3 w-full cursor-pointer rounded-2xl py-3.5 text-center text-xl font-bold"
+          >
             Google
-          </button>
-          <button className="text-default-text bg-button-gray hover:bg-button-gray-hover active:bg-button-gray-active mb-3 w-full cursor-pointer rounded-2xl py-3.5 text-xl font-bold">
+          </Link>
+          <Link
+            to={'/login'}
+            className="text-default-text bg-button-gray hover:bg-button-gray-hover active:bg-button-gray-active mb-3 w-full cursor-pointer rounded-2xl py-3.5 text-center text-xl font-bold"
+          >
             Facebook
-          </button>
+          </Link>
         </div>
 
         <h3 className="text-default-text mx-auto w-fit cursor-pointer text-center text-sm font-medium">
