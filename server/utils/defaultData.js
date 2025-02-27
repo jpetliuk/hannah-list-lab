@@ -30,12 +30,14 @@ export const defaultStickyNotes = [
     stickyNoteTitle: 'Sticky one',
     stickyNoteText: 'Research Paper Publication',
     stickyNoteColor: '#FFB3B3',
+    _id: 'iaS_FSYNPHuw2gY-EAQgr',
   },
   {
     stickyNoteTitle: 'Sticky notes rule',
     stickyNoteText:
       'this is a testing text that would help me find a cure for cancer.\nAnd This is a new line.',
     stickyNoteColor: '#B3FFF7',
+    _id: 'q1SVO5EhyoEiwHix47h_M',
   },
 ];
 
