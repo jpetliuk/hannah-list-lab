@@ -24,9 +24,10 @@ const projectSchema = mongoose.Schema({
 });
 
 const stickyNotesSchema = mongoose.Schema({
-  stickyNoteTitle: { type: String, required: true },
-  stickyNoteText: { type: String, required: true },
+  stickyNoteTitle: { type: String },
+  stickyNoteText: { type: String },
   stickyNoteColor: { type: String, required: true },
+  _id: { type: String },
 });
 
 const userSchema = mongoose.Schema(
