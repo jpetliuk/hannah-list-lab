@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
+import { nanoid } from 'nanoid';
 
-import { stickyNotes } from '../../utils/MockData';
+import useUserStore from '../../store/userStore';
 
 const StickyNotesPage = () => {
+  const { stickyNotes, updateStickyNotes } = useUserStore();
+
+  // for ui
   const [stickyNotesList, setStickyNotesList] = useState(stickyNotes);
 
+  // validates if it should be sent to server
   const [sendToServer, setSendToServer] = useState(false);
 
   const [selectedNoteId, setSelectedNoteId] = useState(false);
@@ -54,9 +59,12 @@ const StickyNotesPage = () => {
     if (selectedNoteId !== false) saveNote();
 
     setSelectedNoteId(note._id);
-    setNewTitle(false);
-    setNewText(false);
     setNewColor(note.stickyNoteColor);
+
+    note.stickyNoteText ? setNewText(note.stickyNoteText) : setNewText(false);
+    note.stickyNoteTitle
+      ? setNewTitle(note.stickyNoteTitle)
+      : setNewTitle(false);
   };
 
   const areArraysEqual = (arr1, arr2) => {
@@ -77,7 +85,7 @@ const StickyNotesPage = () => {
       stickyNoteTitle: '',
       stickyNoteText: '',
       stickyNoteColor: randomColor(),
-      _id: Date.now().toString(),
+      _id: nanoid(),
     };
 
     setStickyNotesList([...stickyNotesList, newNote]);
@@ -110,17 +118,19 @@ const StickyNotesPage = () => {
         : note,
     );
 
+    if (!areArraysEqual(updatedNotes, stickyNotesList)) {
+      setStickyNotesList(updatedNotes);
+
+      if (newText != '' || newTitle != '') {
+        setSendToServer(true);
+      }
+    }
+
     //reset states
     setNewTitle(false);
     setNewText(false);
     setSelectedNoteId(false);
     setNewColor(false);
-
-    if (areArraysEqual(updatedNotes, stickyNotesList))
-      return console.log('no changes');
-
-    setStickyNotesList(updatedNotes);
-    setSendToServer(true);
   };
 
   const changeNoteColor = () => {
@@ -131,11 +141,16 @@ const StickyNotesPage = () => {
 
   useEffect(() => {
     if (sendToServer) {
-      console.log('sent to server: ', stickyNotesList);
+      const filteredStickyNotes = stickyNotesList.filter(
+        (note) =>
+          note.stickyNoteTitle.trim() !== '' ||
+          note.stickyNoteText.trim() !== '',
+      );
 
+      updateStickyNotes(filteredStickyNotes);
       setSendToServer(false);
     }
-  }, [sendToServer, stickyNotesList]);
+  }, [sendToServer, stickyNotesList, updateStickyNotes]);
 
   return (
     <div className="bg-custom-white h-full w-full rounded-3xl p-8">
@@ -149,7 +164,7 @@ const StickyNotesPage = () => {
             <div
               key={note._id}
               onClick={() => handleSelectNote(note)}
-              className={`h-75 w-75 relative overflow-hidden ${selectedNoteId === note._id ? 'z-50 scale-110 cursor-auto shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]' : 'hover:scale-102 cursor-pointer'} rounded-[10px] p-2.5 shadow duration-300 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]`}
+              className={`relative h-75 w-75 overflow-hidden ${selectedNoteId === note._id ? 'z-50 scale-110 cursor-auto shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]' : 'cursor-pointer hover:scale-102'} rounded-[10px] p-2.5 shadow duration-300 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]`}
               style={{
                 backgroundColor:
                   selectedNoteId === note._id ? newColor : note.stickyNoteColor,
@@ -161,31 +176,31 @@ const StickyNotesPage = () => {
                     type="text"
                     name="stickyNoteTitle"
                     defaultValue={note.stickyNoteTitle}
-                    className="text-default-text focus:outline-stickyNote mb-2 w-full resize-none text-xl font-bold focus:rounded-md focus:outline-dashed focus:outline-1 focus:outline-offset-2"
+                    className="text-default-text focus:outline-stickyNote mb-2 w-full resize-none text-xl font-bold focus:rounded-md focus:outline-1 focus:outline-offset-2 focus:outline-dashed"
                     onChange={handleTitleChange}
                     maxLength="24"
                   />
                   <textarea
                     name="stickyNoteText"
-                    className="space-mono-regular focus:outline-stickyNote text-default-text focus:outline-offset-3 h-60 w-full resize-none whitespace-pre-line text-xs focus:rounded-md focus:outline-dashed focus:outline-1"
+                    className="space-mono-regular focus:outline-stickyNote text-default-text h-60 w-full resize-none text-xs whitespace-pre-line focus:rounded-md focus:outline-1 focus:outline-offset-3 focus:outline-dashed"
                     defaultValue={note.stickyNoteText}
                     maxLength="300"
                     onChange={handleTextChange}
                   />
                   <button
-                    className="bg-button-yellow text-default-text w-15 absolute bottom-0 right-0 h-7 cursor-pointer rounded-tl-lg text-sm font-semibold"
+                    className="bg-button-yellow text-default-text absolute right-0 bottom-0 h-7 w-15 cursor-pointer rounded-tl-lg text-sm font-semibold"
                     onClick={saveNote}
                   >
                     save
                   </button>
                   <button
-                    className="bg-light-gray text-default-text w-15 absolute bottom-0 left-0 h-7 cursor-pointer rounded-tr-lg text-sm font-semibold"
+                    className="bg-light-gray text-default-text absolute bottom-0 left-0 h-7 w-15 cursor-pointer rounded-tr-lg text-sm font-semibold"
                     onClick={removeNote}
                   >
                     remove
                   </button>
                   <button
-                    className="hover:text-default-text hover:w-15 absolute right-0 top-0 h-7 w-7 cursor-pointer rounded-bl-lg bg-[#f6f6f6B3] text-sm font-semibold text-transparent duration-300"
+                    className="hover:text-default-text absolute top-0 right-0 h-7 w-7 cursor-pointer rounded-bl-lg bg-[#f6f6f6B3] text-sm font-semibold text-transparent duration-300 hover:w-15"
                     onClick={changeNoteColor}
                   >
                     color
@@ -193,10 +208,10 @@ const StickyNotesPage = () => {
                 </>
               ) : (
                 <>
-                  <h2 className="text-default-text select-none pb-2 text-xl font-bold">
+                  <h2 className="text-default-text pb-2 text-xl font-bold select-none">
                     {note.stickyNoteTitle}
                   </h2>
-                  <p className="text-default-text space-mono-regular select-none whitespace-pre-line text-xs">
+                  <p className="text-default-text space-mono-regular text-xs whitespace-pre-line select-none">
                     {note.stickyNoteText}
                   </p>
                 </>
@@ -205,7 +220,7 @@ const StickyNotesPage = () => {
           ))}
 
           <div
-            className="h-75 w-75 hover:scale-102 bg-light-gray flex cursor-pointer items-center justify-center rounded-[10px] p-2.5 duration-300 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]"
+            className="bg-light-gray flex h-75 w-75 cursor-pointer items-center justify-center rounded-[10px] p-2.5 duration-300 hover:scale-102 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]"
             onClick={newNote}
           >
             <h2 className="text-default-text pb-2 text-7xl font-light">+</h2>
