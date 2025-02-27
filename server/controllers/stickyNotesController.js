@@ -1,6 +1,6 @@
 import User from '../models/user.model.js';
 
-export const createStickyNote = async (req, res) => {
+export const upsertStickyNote = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     const { stickyNoteTitle, stickyNoteText, stickyNoteColor, _id } = req.body;
@@ -9,52 +9,16 @@ export const createStickyNote = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (!stickyNoteTitle && !stickyNoteText) {
+    if ((!stickyNoteTitle && !stickyNoteText) || !stickyNoteColor) {
       return res
         .status(400)
-        .json({ message: 'Sticky note name and description or required.' });
+        .json({ message: 'Sticky note title, text, and color are required.' });
     }
 
-    const newStickyNote = {
-      stickyNoteTitle,
-      stickyNoteText,
-      stickyNoteColor,
-      _id,
-    };
-
-    const updatedStickyNotes = await User.findOneAndUpdate(
-      { _id: req.user.id },
-      { $push: { stickyNotes: newStickyNote } },
-      { new: true, runValidators: true },
-    ).select('stickyNotes');
-
-    res.status(201).json({
-      message: 'Sticky note created successfully',
-      newStickyNote,
-      updatedStickyNotes,
-    });
-  } catch (error) {
-    console.log('Error creating Sticky note: ', error.message);
-    res.status(500).json({ message: error.message });
-  }
-};
-
-export const updateStickyNote = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id);
-    const { stickyNoteTitle, stickyNoteText, stickyNoteColor, _id } = req.body;
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    if (!stickyNoteTitle || !stickyNoteText || !stickyNoteColor || !_id) {
-      return res
-        .status(400)
-        .json({ message: 'Missing required fields for sticky note update.' });
-    }
-
-    const updatedStickyNotes = await User.findOneAndUpdate(
+    let isNew;
+    let updatedStickyNotes;
+    // Try to update the sticky note if it exists
+    updatedStickyNotes = await User.findOneAndUpdate(
       { _id: req.user.id, 'stickyNotes._id': _id },
       {
         $set: {
@@ -66,17 +30,35 @@ export const updateStickyNote = async (req, res) => {
       { new: true },
     ).select('stickyNotes');
 
-    if (!updatedStickyNotes) {
-      return res.status(404).json({ message: 'Sticky note not found.' });
+    if (updatedStickyNotes) {
+      isNew = false;
+    } else {
+      isNew = true;
+
+      // If no sticky note was updated, create a new one
+      const newStickyNote = {
+        _id,
+        stickyNoteTitle,
+        stickyNoteText,
+        stickyNoteColor,
+      };
+
+      updatedStickyNotes = await User.findOneAndUpdate(
+        { _id: req.user.id },
+        { $push: { stickyNotes: newStickyNote } },
+        { new: true, runValidators: true },
+      ).select('stickyNotes');
     }
 
     res.status(200).json({
-      message: 'Sticky note updated successfully',
+      message: isNew
+        ? 'Sticky note created successfully'
+        : 'Sticky note updated successfully',
       updatedStickyNotes,
     });
   } catch (error) {
-    console.log('Error updating the project: ', error.message);
-    res.status(400).json({ message: error.message });
+    console.log('Error processing sticky note:', error.message);
+    res.status(500).json({ message: error.message });
   }
 };
 

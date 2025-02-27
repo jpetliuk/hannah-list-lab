@@ -23,7 +23,13 @@ const app = express();
 app.use(express.json());
 
 app.use(helmet());
-app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
+app.use(
+  cors({
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    origin: process.env.CLIENT_URL,
+  }),
+);
 
 // Database Connection
 dbConfig();

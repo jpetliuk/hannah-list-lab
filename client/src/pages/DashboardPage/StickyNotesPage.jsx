@@ -1,16 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { nanoid } from 'nanoid';
 
 import useUserStore from '../../store/userStore';
 
 const StickyNotesPage = () => {
-  const { stickyNotes, updateStickyNotes } = useUserStore();
-
-  // for ui
+  const { stickyNotes, upsertStickyNote, deleteStickyNote } = useUserStore();
   const [stickyNotesList, setStickyNotesList] = useState(stickyNotes);
-
-  // validates if it should be sent to server
-  const [sendToServer, setSendToServer] = useState(false);
 
   const [selectedNoteId, setSelectedNoteId] = useState(false);
   const [newColor, setNewColor] = useState(false);
@@ -44,15 +39,12 @@ const StickyNotesPage = () => {
 
     return colorOptions[Math.floor(Math.random() * colorOptions.length)];
   };
-
   const handleTextChange = (e) => {
     setNewText(e.target.value);
   };
-
   const handleTitleChange = (e) => {
     setNewTitle(e.target.value);
   };
-
   const handleSelectNote = (note) => {
     if (selectedNoteId === note._id) return;
 
@@ -66,20 +58,6 @@ const StickyNotesPage = () => {
       ? setNewTitle(note.stickyNoteTitle)
       : setNewTitle(false);
   };
-
-  const areArraysEqual = (arr1, arr2) => {
-    if (arr1.length !== arr2.length) return false;
-
-    return arr1.every((obj1, index) => {
-      const obj2 = arr2[index];
-
-      // Compare values directly (since keys are the same)
-      return Object.values(obj1).every(
-        (value, i) => value === Object.values(obj2)[i],
-      );
-    });
-  };
-
   const newNote = () => {
     const newNote = {
       stickyNoteTitle: '',
@@ -96,14 +74,14 @@ const StickyNotesPage = () => {
       (note) => note._id != selectedNoteId,
     );
 
+    deleteStickyNote(selectedNoteId);
+    setStickyNotesList(updatedNotes);
+
     //reset states
     setNewTitle(false);
     setNewText(false);
     setSelectedNoteId(false);
     setNewColor(false);
-
-    setStickyNotesList(updatedNotes);
-    setSendToServer(true);
   };
 
   const saveNote = () => {
@@ -118,13 +96,9 @@ const StickyNotesPage = () => {
         : note,
     );
 
-    if (!areArraysEqual(updatedNotes, stickyNotesList)) {
-      setStickyNotesList(updatedNotes);
+    verifyChanges(updatedNotes);
 
-      if (newText != '' || newTitle != '') {
-        setSendToServer(true);
-      }
-    }
+    setStickyNotesList(updatedNotes);
 
     //reset states
     setNewTitle(false);
@@ -133,24 +107,35 @@ const StickyNotesPage = () => {
     setNewColor(false);
   };
 
+  const verifyChanges = (updatedNotes) => {
+    const changedNote = updatedNotes.filter(
+      (item2) =>
+        !stickyNotesList.some(
+          (item1) =>
+            item1._id === item2._id &&
+            item1.stickyNoteTitle === item2.stickyNoteTitle &&
+            item1.stickyNoteText === item2.stickyNoteText &&
+            item1.stickyNoteColor === item2.stickyNoteColor,
+        ),
+    );
+
+    if (changedNote.length === 1) {
+      const { stickyNoteTitle, stickyNoteText, stickyNoteColor, _id } =
+        changedNote[0];
+      return upsertStickyNote(
+        stickyNoteTitle,
+        stickyNoteText,
+        stickyNoteColor,
+        _id,
+      );
+    }
+  };
+
   const changeNoteColor = () => {
     const color = randomColor();
 
     setNewColor(color);
   };
-
-  useEffect(() => {
-    if (sendToServer) {
-      const filteredStickyNotes = stickyNotesList.filter(
-        (note) =>
-          note.stickyNoteTitle.trim() !== '' ||
-          note.stickyNoteText.trim() !== '',
-      );
-
-      updateStickyNotes(filteredStickyNotes);
-      setSendToServer(false);
-    }
-  }, [sendToServer, stickyNotesList, updateStickyNotes]);
 
   return (
     <div className="bg-custom-white h-full w-full rounded-3xl p-8">

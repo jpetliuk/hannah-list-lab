@@ -10,8 +10,7 @@ import {
 } from '../controllers/projectController.js';
 
 import {
-  createStickyNote,
-  updateStickyNote,
+  upsertStickyNote,
   deleteStickyNote,
 } from '../controllers/stickyNotesController.js';
 
@@ -22,9 +21,8 @@ router.get('/', isAuthenticated, (req, res) => {
 });
 
 //sticky notes
-router.post('/sticky-note/', isAuthenticated, createStickyNote);
-router.patch('/sticky-note/', isAuthenticated, updateStickyNote);
-router.delete('/sticky-note/', isAuthenticated, deleteStickyNote);
+router.put('/sticky-notes/', isAuthenticated, upsertStickyNote);
+router.delete('/sticky-notes/', isAuthenticated, deleteStickyNote);
 
 //projects
 router.post('/project/', isAuthenticated, createProject);
