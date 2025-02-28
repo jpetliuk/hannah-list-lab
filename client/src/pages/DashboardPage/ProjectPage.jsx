@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { projects } from '../../utils/MockData';
+import useUserStore from '../../store/userStore';
 
 import NotFound404Page from './NotFound404Page';
 import ProjectDisplay from '../../components/ProjectPage/ProjectDisplay';
@@ -7,13 +7,13 @@ import ProjectDisplay from '../../components/ProjectPage/ProjectDisplay';
 const ProjectPage = () => {
   const { id } = useParams();
 
-  //replace
-  const foundProject = projects.find((item) => item._id === id);
+  const { projects } = useUserStore();
+  const projectFound = projects.find((project) => project._id === id);
 
   return (
     <div className="border-outline bg-custom-white min-h-full w-full rounded-3xl border">
-      {foundProject ? (
-        <ProjectDisplay project={foundProject} />
+      {projectFound ? (
+        <ProjectDisplay project={projectFound} />
       ) : (
         <NotFound404Page />
       )}
