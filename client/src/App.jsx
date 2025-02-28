@@ -10,6 +10,7 @@ import ProjectPage from './pages/DashboardPage/ProjectPage';
 import CalendarPage from './pages/DashboardPage/CalendarPage';
 import StickyNotesPage from './pages/DashboardPage/StickyNotesPage';
 import TaskProgressPage from './pages/DashboardPage/TaskProgressPage';
+import HamsterWheel from './components/Loaders/HamsterWheel';
 
 import { useEffect } from 'react';
 import useUserStore from './store/userStore';
@@ -53,9 +54,9 @@ function App() {
     fetchUserData();
   }, []);
 
-  if (isLoading) return <h1>Loading</h1>;
-
-  return (
+  return isLoading ? (
+    <HamsterWheel />
+  ) : (
     <Routes>
       <Route
         path="/"

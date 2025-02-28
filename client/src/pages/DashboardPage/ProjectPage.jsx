@@ -10,10 +10,14 @@ const ProjectPage = () => {
   //replace
   const foundProject = projects.find((item) => item._id === id);
 
-  return foundProject ? (
-    <ProjectDisplay project={foundProject} />
-  ) : (
-    <NotFound404Page />
+  return (
+    <div className="border-outline bg-custom-white min-h-full w-full rounded-3xl border">
+      {foundProject ? (
+        <ProjectDisplay project={foundProject} />
+      ) : (
+        <NotFound404Page />
+      )}
+    </div>
   );
 };
 

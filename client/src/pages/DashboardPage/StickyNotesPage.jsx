@@ -138,7 +138,7 @@ const StickyNotesPage = () => {
   };
 
   return (
-    <div className="bg-custom-white h-full w-full rounded-3xl p-8">
+    <div className="bg-custom-white border-outline h-full w-full rounded-3xl border p-8">
       <div>
         <h1 className="text-default-text p-6 pt-0 text-4xl font-bold">
           Sticky Wall

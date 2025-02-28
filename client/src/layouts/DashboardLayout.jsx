@@ -1,4 +1,3 @@
-
 import { Outlet } from 'react-router-dom';
 
 import Logo from '../components/Logo';
@@ -7,7 +6,7 @@ import Navbar from '../components/Navbar';
 const DashboardLayout = () => {
   return (
     <div className="flex min-h-screen w-full">
-      <div className="w-75 fixed flex h-full flex-col gap-4 p-5 pr-3">
+      <div className="fixed flex h-full w-75 flex-col gap-4 p-5 pr-3">
         <Logo />
         <Navbar />
       </div>
