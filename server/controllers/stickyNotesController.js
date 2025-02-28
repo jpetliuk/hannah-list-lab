@@ -9,10 +9,10 @@ export const upsertStickyNote = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if ((!stickyNoteTitle && !stickyNoteText) || !stickyNoteColor) {
+    if (!_id || !stickyNoteColor) {
       return res
         .status(400)
-        .json({ message: 'Sticky note title, text, and color are required.' });
+        .json({ message: 'Sticky note color and _id are required.' });
     }
 
     let isNew;
@@ -50,6 +50,8 @@ export const upsertStickyNote = async (req, res) => {
       ).select('stickyNotes');
     }
 
+    console.log(updatedStickyNotes);
+
     res.status(200).json({
       message: isNew
         ? 'Sticky note created successfully'
@@ -77,7 +79,7 @@ export const deleteStickyNote = async (req, res) => {
 
     res.status(200).json({
       message: 'Sticky note deleted successfully',
-      stickyNotes: user.stickyNotes,
+      updatedStickyNotes: user.stickyNotes,
     });
   } catch (error) {
     console.log('Error deleting the project: ', error.message);

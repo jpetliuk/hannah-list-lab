@@ -12,7 +12,7 @@ const StickyNotesPage = () => {
   const [newTitle, setNewTitle] = useState(false);
   const [newText, setNewText] = useState(false);
 
-  const randomColor = () => {
+  const randomColorGenerator = () => {
     const colorOptions = [
       '#FFB3B3',
       '#B3FFF7',
@@ -39,42 +39,60 @@ const StickyNotesPage = () => {
 
     return colorOptions[Math.floor(Math.random() * colorOptions.length)];
   };
+
   const handleTextChange = (e) => {
+    // sets newText === to note text
     setNewText(e.target.value);
   };
   const handleTitleChange = (e) => {
+    // sets newTitle === to note title
     setNewTitle(e.target.value);
   };
+  const handleChangeNoteColor = () => {
+    const color = randomColorGenerator();
+
+    setNewColor(color);
+  };
   const handleSelectNote = (note) => {
+    // prevents reselection of a selected note
     if (selectedNoteId === note._id) return;
 
-    if (selectedNoteId !== false) saveNote();
+    // if there was a note already selected it saves it before selecting new one
+    if (selectedNoteId !== false) updateNotes();
 
-    setSelectedNoteId(note._id);
+    // selects a new note
+    setNewTitle(note.stickyNoteTitle);
+    setNewText(note.stickyNoteText);
     setNewColor(note.stickyNoteColor);
-
-    note.stickyNoteText ? setNewText(note.stickyNoteText) : setNewText(false);
-    note.stickyNoteTitle
-      ? setNewTitle(note.stickyNoteTitle)
-      : setNewTitle(false);
+    setSelectedNoteId(note._id);
   };
+
   const newNote = () => {
+    // creates new note
     const newNote = {
       stickyNoteTitle: '',
       stickyNoteText: '',
-      stickyNoteColor: randomColor(),
+      stickyNoteColor: randomColorGenerator(),
       _id: nanoid(),
     };
 
+    // push new note to stickyNotesList
     setStickyNotesList([...stickyNotesList, newNote]);
+
+    // creates new empty note in the db
+    return upsertStickyNote({ ...newNote });
   };
 
   const removeNote = () => {
+    // sends _id of the selected note to the delete method
+    deleteStickyNote(selectedNoteId);
+
+    // filters through the stickyNotesList, removes note with matching _id and returns the new array
     const updatedNotes = stickyNotesList.filter(
       (note) => note._id != selectedNoteId,
     );
 
-    deleteStickyNote(selectedNoteId);
+    // updates the stickyNotesList
     setStickyNotesList(updatedNotes);
 
     //reset states
@@ -84,21 +102,24 @@ const StickyNotesPage = () => {
     setNewColor(false);
   };
 
-  const saveNote = () => {
+  const updateNotes = () => {
+    // creates a modify array of stickyNotesList using the selected note title, text, or color if new values are provided
     const updatedNotes = stickyNotesList.map((note) =>
       note._id === selectedNoteId
         ? {
             ...note,
             ...(newTitle !== false && { stickyNoteTitle: newTitle }),
             ...(newText !== false && { stickyNoteText: newText }),
-            ...(newColor !== false && { stickyNoteColor: newColor }),
+            ...(newColor && { stickyNoteColor: newColor }),
           }
         : note,
     );
 
-    verifyChanges(updatedNotes);
-
+    // updates the stickyNotesList
     setStickyNotesList(updatedNotes);
+
+    // verifies that the changes are enough to make an update request to the server
+    verifyChanges(updatedNotes);
 
     //reset states
     setNewTitle(false);
@@ -108,6 +129,7 @@ const StickyNotesPage = () => {
   };
 
   const verifyChanges = (updatedNotes) => {
+    // verifies and returns what notes have been changed in a new array
     const changedNote = updatedNotes.filter(
       (item2) =>
         !stickyNotesList.some(
@@ -119,22 +141,10 @@ const StickyNotesPage = () => {
         ),
     );
 
+    // if only one has been changed it sends it to the upsertStickyNote method
     if (changedNote.length === 1) {
-      const { stickyNoteTitle, stickyNoteText, stickyNoteColor, _id } =
-        changedNote[0];
-      return upsertStickyNote(
-        stickyNoteTitle,
-        stickyNoteText,
-        stickyNoteColor,
-        _id,
-      );
+      return upsertStickyNote({ ...changedNote[0] });
     }
-  };
-
-  const changeNoteColor = () => {
-    const color = randomColor();
-
-    setNewColor(color);
   };
 
   return (
@@ -174,7 +184,7 @@ const StickyNotesPage = () => {
                   />
                   <button
                     className="bg-button-yellow text-default-text absolute right-0 bottom-0 h-7 w-15 cursor-pointer rounded-tl-lg text-sm font-semibold"
-                    onClick={saveNote}
+                    onClick={updateNotes}
                   >
                     save
                   </button>
@@ -186,7 +196,7 @@ const StickyNotesPage = () => {
                   </button>
                   <button
                     className="hover:text-default-text absolute top-0 right-0 h-7 w-7 cursor-pointer rounded-bl-lg bg-[#f6f6f6B3] text-sm font-semibold text-transparent duration-300 hover:w-15"
-                    onClick={changeNoteColor}
+                    onClick={handleChangeNoteColor}
                   >
                     color
                   </button>

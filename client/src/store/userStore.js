@@ -25,8 +25,6 @@ const useUserStore = create((set) => ({
       });
       const data = response.data;
 
-      console.log(data);
-
       set({
         isAuthenticated: true,
         isLoading: false,
@@ -48,12 +46,12 @@ const useUserStore = create((set) => ({
 
   updateStickyNotes: (newStickyNotes) => set({ stickyNotes: newStickyNotes }),
 
-  upsertStickyNote: async (
+  upsertStickyNote: async ({
     stickyNoteTitle,
     stickyNoteText,
     stickyNoteColor,
     _id,
-  ) => {
+  }) => {
     try {
       const response = await axios.put(
         `${API_URL}/sticky-notes`,
@@ -63,7 +61,7 @@ const useUserStore = create((set) => ({
 
       const data = response.data;
 
-      console.log(data);
+      set({ stickyNotes: data.updatedStickyNotes.stickyNotes });
     } catch (error) {
       console.error('Error upserting sticky note:', error);
     }
@@ -78,7 +76,7 @@ const useUserStore = create((set) => ({
 
       const data = response.data;
 
-      console.log(data);
+      set({ stickyNotes: data.updatedStickyNotes });
     } catch (error) {
       console.error('Error deleting sticky note:', error);
     }
