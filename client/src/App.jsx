@@ -52,7 +52,7 @@ function App() {
 
   useEffect(() => {
     fetchUserData();
-  }, []);
+  }, [fetchUserData]);
 
   return isLoading ? (
     <HamsterWheel />
@@ -84,7 +84,7 @@ function App() {
         <Route path="task-progress" element={<TaskProgressPage />} />
         <Route path="project/:id" element={<ProjectPage />} />
 
-        <Route path="*" element={<HomePage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />
