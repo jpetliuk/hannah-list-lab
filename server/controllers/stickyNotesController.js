@@ -50,8 +50,6 @@ export const upsertStickyNote = async (req, res) => {
       ).select('stickyNotes');
     }
 
-    console.log(updatedStickyNotes);
-
     res.status(200).json({
       message: isNew
         ? 'Sticky note created successfully'
