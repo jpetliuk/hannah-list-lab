@@ -45,7 +45,20 @@ const useUserStore = create((set) => ({
     }
   },
 
-  updateStickyNotes: (newStickyNotes) => set({ stickyNotes: newStickyNotes }),
+  logout: async () => {
+    set({ isAuthenticated: false, isLoading: true });
+    try {
+      const response = await axios.post('http://localhost:4000/auth/logout', {}, {
+        withCredentials: true,
+      });
+      const data = response.data;
+      console.log(data);
+      set({ isAuthenticated: false, isLoading: false });
+    } catch (error) {
+      console.error('Error logging out:', error);
+      set({ isAuthenticated: true, isLoading: false });
+    }
+  },
 
   upsertStickyNote: async ({
     stickyNoteTitle,

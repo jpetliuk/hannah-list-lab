@@ -36,7 +36,12 @@ router.post('/logout', (req, res) => {
       if (err) {
         return res.status(500).json({ message: 'Could not destroy session' });
       }
-      res.clearCookie('connect.sid');
+      res.clearCookie('connect.sid', {
+        httpOnly: true, // This matches the cookie settings
+        secure: process.env.NODE_ENV === 'production', // HTTPS in production
+        sameSite: 'lax', // Match with your session cookie setting
+        path: '/', // This matches the path of the session cookie
+      });
       res.json({ message: 'Logged out successfully' });
     });
   });

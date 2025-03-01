@@ -38,7 +38,7 @@ const tools = [
 ];
 
 const Navbar = () => {
-  const { projects, user } = useUserStore();
+  const { projects, user, logout } = useUserStore();
   const { handleModal } = useAppStates();
 
   const location = useLocation();
@@ -55,7 +55,7 @@ const Navbar = () => {
   }, [location.pathname, id]);
 
   return (
-    <div className="border-outline bg-custom-white flex h-full w-full flex-col justify-between rounded-3xl border p-3">
+    <div className="border-outline bg-custom-white relative flex h-full w-full flex-col justify-between rounded-3xl border p-3">
       <div>
         <div className="border-white-gray flex w-full items-center gap-3 border-b pb-4">
           <img
@@ -133,7 +133,10 @@ const Navbar = () => {
           <Settings className="h-5 w-5" />
           <h3 className="text-light-text text-[15px] font-light">Settings</h3>
         </div>
-        <div className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1">
+        <div
+          className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
+          onClick={logout}
+        >
           <LogOut className="h-5 w-5" />
           <h3 className="text-light-text text-[15px] font-light">Sign-out</h3>
         </div>
