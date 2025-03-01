@@ -5,7 +5,14 @@ import { useLocation, useParams } from 'react-router-dom';
 import useUserStore from '../store/userStore';
 import useAppStates from '../store/appStates';
 
-import { House, Calendar, Sticker, ChartLine, Settings } from 'lucide-react';
+import {
+  House,
+  Calendar,
+  Sticker,
+  ChartLine,
+  Settings,
+  LogOut,
+} from 'lucide-react';
 
 const tools = [
   {
@@ -31,7 +38,7 @@ const tools = [
 ];
 
 const Navbar = () => {
-  const { projects } = useUserStore();
+  const { projects, user } = useUserStore();
   const { handleModal } = useAppStates();
 
   const location = useLocation();
@@ -52,7 +59,7 @@ const Navbar = () => {
       <div>
         <div className="border-white-gray flex w-full items-center gap-3 border-b pb-4">
           <img
-            src="/banner-image.jpeg"
+            src={user.profilePicture}
             alt="user icon photo"
             className="h-10 w-10 rounded-full object-cover"
           />
@@ -90,18 +97,18 @@ const Navbar = () => {
             Projects
           </h2>
 
-          {projects.map((project) => (
-            <Link key={project._id} to={`/dashboard/project/${project._id}`}>
+          {projects.map(({ _id, iconColor, projectName }) => (
+            <Link key={_id} to={`/dashboard/project/${_id}`}>
               <div
-                className={`hover:bg-navbar-select-button flex w-full cursor-pointer items-center gap-2 rounded-3xl py-1.5 pl-4 duration-200 ${selected === project._id ? 'bg-navbar-select-button' : 'bg-none'}`}
+                className={`hover:bg-navbar-select-button flex w-full cursor-pointer items-center gap-2 rounded-3xl py-1.5 pl-4 duration-200 ${selected === _id ? 'bg-navbar-select-button' : 'bg-none'}`}
               >
-                <p className="font-bold" style={{ color: project.iconColor }}>
+                <p className="font-bold" style={{ color: iconColor }}>
                   #
                 </p>
                 <h3
-                  className={`${selected === project._id ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-[15px] duration-100`}
+                  className={`${selected === _id ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-[15px] duration-100`}
                 >
-                  {project.projectName}
+                  {projectName}
                 </h3>
               </div>
             </Link>
@@ -123,17 +130,11 @@ const Navbar = () => {
           onClick={handleModal}
           className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
         >
-          <Settings
-            className="h-5 w-5 rounded-full object-cover"
-          />
+          <Settings className="h-5 w-5" />
           <h3 className="text-light-text text-[15px] font-light">Settings</h3>
         </div>
         <div className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1">
-          <img
-            src="/banner-image.jpeg"
-            alt="user icon photo"
-            className="h-5 w-5 rounded-full object-cover"
-          />
+          <LogOut className="h-5 w-5" />
           <h3 className="text-light-text text-[15px] font-light">Sign-out</h3>
         </div>
       </div>
