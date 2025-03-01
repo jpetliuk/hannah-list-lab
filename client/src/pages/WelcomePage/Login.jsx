@@ -11,11 +11,12 @@ const Login = () => {
         <input
           className="text-light-text border-light-gray mb-3 w-full rounded-2xl border p-2.5"
           placeholder="email@example.com"
-        ></input>
+        />
         <input
+          autoComplete="off"
           className="text-light-text border-light-gray mb-6 w-full rounded-2xl border p-2.5"
           placeholder="**********"
-        ></input>
+        />
 
         <Link to="/dashboard">
           <button className="text-default-text bg-button-yellow hover:bg-button-yellow-hover active:bg-button-yellow-active mb-3 w-full cursor-pointer rounded-2xl py-3.5 text-xl font-bold">

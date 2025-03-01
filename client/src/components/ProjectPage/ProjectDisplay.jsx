@@ -30,9 +30,10 @@ const ProjectDisplay = ({ project }) => {
       ) : null}
 
       <input
+        autoComplete="off"
         className="text-light-text border-light-gray mb-3 w-full rounded-2xl border py-2.5 pl-10"
         placeholder="+    Add New Task"
-      ></input>
+      />
       <ItemTaskPrinter items={project.items} />
     </div>
   );

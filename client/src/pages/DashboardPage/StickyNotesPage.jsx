@@ -169,6 +169,7 @@ const StickyNotesPage = () => {
                 <>
                   <input
                     type="text"
+                    autoComplete="off"
                     name="stickyNoteTitle"
                     defaultValue={note.stickyNoteTitle}
                     className="text-default-text focus:outline-stickyNote mb-2 w-full resize-none text-xl font-bold focus:rounded-md focus:outline-1 focus:outline-offset-2 focus:outline-dashed"
