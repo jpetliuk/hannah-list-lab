@@ -30,9 +30,17 @@
   --color-stickyNote: #5f616b4d;
 
   --color-navbar-create-button: #ffebeb;
+
   --color-navbar-select-button: #f6f6f6;
+  --color-navbar-select-button-active: #f6f6f6;
+
   --color-navbar-text: ;
   --color-navbar-text-active: #1e1e2c;
+
+  --color-transparency-modal: #5f616b80;
+  --color-navbar-select-button-orange-active: #f7653d;
+
+  --color-blue-button: #2f92f0;
 }
 
 :root {

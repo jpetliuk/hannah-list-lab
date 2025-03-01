@@ -5,6 +5,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import { tools } from '../utils/MockData';
 
 import useUserStore from '../store/userStore';
+import ModalSettings from './ModalSettings';
 
 const Navbar = () => {
   const { projects } = useUserStore();
@@ -13,6 +14,8 @@ const Navbar = () => {
   const { id } = useParams();
 
   const [selected, setSelected] = useState(location.pathname);
+
+  const [handleModal, setHandleModal] = useState(true);
 
   useEffect(() => {
     if (id) {
@@ -31,8 +34,8 @@ const Navbar = () => {
             alt="user icon photo"
             className="h-10 w-10 rounded-full object-cover"
           />
-          <h2 className="text-default-text text-base font-semibold">
-            Welcome Hannah!
+          <h2 className="text-default-text text- h-6 w-38 overflow-hidden font-semibold">
+            Welcome Back!
           </h2>
         </div>
 
@@ -96,7 +99,10 @@ const Navbar = () => {
 
       {/* Settings section */}
       <div className="border-white-gray flex w-full flex-col gap-1 border-t pt-2">
-        <div className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1">
+        <div
+          onClick={() => setHandleModal(!handleModal)}
+          className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
+        >
           <img
             src="/banner-image.jpeg"
             alt="user icon photo"
@@ -104,7 +110,6 @@ const Navbar = () => {
           />
           <h3 className="text-light-text text-[15px] font-light">Settings</h3>
         </div>
-
         <div className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1">
           <img
             src="/banner-image.jpeg"
@@ -115,6 +120,7 @@ const Navbar = () => {
         </div>
       </div>
       {/* Settings section */}
+      {handleModal ? <ModalSettings setHandleModal={setHandleModal} /> : null}
     </div>
   );
 };

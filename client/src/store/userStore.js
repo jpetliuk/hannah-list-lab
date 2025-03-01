@@ -34,6 +34,7 @@ const useUserStore = create((set) => ({
           email: data.email,
           profilePicture: data.profilePicture,
           premiumAccount: data.premiumAccount,
+          description: 'this is my description',
         },
         projects: data.projects,
         stickyNotes: data.stickyNotes,
@@ -80,6 +81,17 @@ const useUserStore = create((set) => ({
     } catch (error) {
       console.error('Error deleting sticky note:', error);
     }
+  },
+
+  // Modal Setting
+  changeNameAndDescription: (newName, newDescription) => {
+    set((state) => ({
+      user: {
+        ...state.user,
+        ...(newName !== false && { name: newName }),
+        ...(newDescription !== false && { description: newDescription }),
+      },
+    }));
   },
 }));
 
