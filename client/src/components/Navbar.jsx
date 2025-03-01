@@ -2,20 +2,42 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
-import { tools } from '../utils/MockData';
-
 import useUserStore from '../store/userStore';
-import ModalSettings from './ModalSettings';
+import useAppStates from '../store/appStates';
+
+import { House, Calendar, Sticker, ChartLine, Settings } from 'lucide-react';
+
+const tools = [
+  {
+    label: 'Home',
+    Icon: House,
+    path: '/dashboard',
+  },
+  {
+    label: 'Calendar',
+    Icon: Calendar,
+    path: '/dashboard/calendar',
+  },
+  {
+    label: 'Sticky notes',
+    Icon: Sticker,
+    path: '/dashboard/sticky-notes',
+  },
+  {
+    label: 'Task progress',
+    Icon: ChartLine,
+    path: '/dashboard/task-progress',
+  },
+];
 
 const Navbar = () => {
   const { projects } = useUserStore();
+  const { handleModal } = useAppStates();
 
   const location = useLocation();
   const { id } = useParams();
 
   const [selected, setSelected] = useState(location.pathname);
-
-  const [handleModal, setHandleModal] = useState(true);
 
   useEffect(() => {
     if (id) {
@@ -43,20 +65,18 @@ const Navbar = () => {
         <div className="border-white-gray mt-2 flex w-full flex-col gap-1 border-b pb-4">
           <h2 className="text-default-text text-base font-semibold">Tools</h2>
 
-          {tools.map((item) => (
-            <Link to={item.path} key={item.label}>
+          {tools.map(({ label, path, Icon }) => (
+            <Link to={path} key={label}>
               <div
-                className={`hover:bg-navbar-select-button flex w-full cursor-pointer items-center gap-2 rounded-3xl py-1.5 pl-4 duration-200 ${selected === item.path ? 'bg-navbar-select-button' : 'bg-none'}`}
+                className={`hover:bg-navbar-select-button flex w-full cursor-pointer items-center gap-2 rounded-3xl py-1.5 pl-4 duration-200 ${selected === path ? 'bg-navbar-select-button' : 'bg-none'}`}
               >
-                <img
-                  src={item.icon}
-                  alt="user icon photo"
-                  className="h-5 w-5 rounded-full object-cover"
+                <Icon
+                  className={`h-[22px] w-[22px] ${selected === path ? 'text-orange-text' : 'text-light-text'}`}
                 />
                 <h3
-                  className={`duration-100 ${selected === item.path ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-[15px]`}
+                  className={`${selected === path ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-[15px]`}
                 >
-                  {item.label}
+                  {label}
                 </h3>
               </div>
             </Link>
@@ -100,12 +120,10 @@ const Navbar = () => {
       {/* Settings section */}
       <div className="border-white-gray flex w-full flex-col gap-1 border-t pt-2">
         <div
-          onClick={() => setHandleModal(!handleModal)}
+          onClick={handleModal}
           className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
         >
-          <img
-            src="/banner-image.jpeg"
-            alt="user icon photo"
+          <Settings
             className="h-5 w-5 rounded-full object-cover"
           />
           <h3 className="text-light-text text-[15px] font-light">Settings</h3>
@@ -120,7 +138,6 @@ const Navbar = () => {
         </div>
       </div>
       {/* Settings section */}
-      {handleModal ? <ModalSettings setHandleModal={setHandleModal} /> : null}
     </div>
   );
 };

@@ -1,25 +1,3 @@
-export const tools = [
-  {
-    label: 'Home',
-    icon: '/banner-image.jpeg',
-    path: '/dashboard',
-  },
-  {
-    label: 'Calendar',
-    icon: '/banner-image.jpeg',
-    path: '/dashboard/calendar',
-  },
-  {
-    label: 'Sticky notes',
-    icon: '/banner-image.jpeg',
-    path: '/dashboard/sticky-notes',
-  },
-  {
-    label: 'Task progress',
-    icon: '/banner-image.jpeg',
-    path: '/dashboard/task-progress',
-  },
-];
 
 export const stickyNotes = [
   {

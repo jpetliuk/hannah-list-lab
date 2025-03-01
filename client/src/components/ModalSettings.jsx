@@ -1,6 +1,8 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import useUserStore from '../store/userStore';
+import useAppStates from '../store/appStates';
+
+import { UserPen, Lightbulb, Wrench } from 'lucide-react';
 
 export const Profile = () => {
   const { user, changeNameAndDescription } = useUserStore();
@@ -8,7 +10,11 @@ export const Profile = () => {
   const [newDescription, setNewDescription] = useState(false);
 
   const saveChanges = () => {
+    if (newName && newDescription) return;
+
     changeNameAndDescription(newName, newDescription);
+    setNewName(false);
+    setNewDescription(false);
   };
 
   return (
@@ -77,11 +83,12 @@ export const Account = () => {
   return <div>Account</div>;
 };
 
-const ModalSettings = ({ setHandleModal }) => {
+const ModalSettings = () => {
   const [selected, setSelected] = useState('profile');
+  const { handleModal } = useAppStates();
 
   return (
-    <div className="bg-transparency-modal absolute top-0 left-0 flex min-h-screen w-screen items-center justify-center">
+    <div className="bg-transparency-modal fixed top-0 left-0 z-50 flex min-h-screen w-screen items-center justify-center">
       <div className="bg-custom-white m-10 grid h-[650px] w-5xl grid-rows-[80px_auto] overflow-hidden rounded-3xl shadow-lg">
         <div className="border-light-gray flex h-[80px] w-full justify-between border-b">
           <h1 className="border-light-gray flex w-48 items-center justify-center border-r text-xl font-bold">
@@ -89,7 +96,7 @@ const ModalSettings = ({ setHandleModal }) => {
           </h1>
           <button
             className="text-light-text hover:text-default-text w-20 cursor-pointer text-3xl font-bold duration-300"
-            onClick={() => setHandleModal(false)}
+            onClick={handleModal}
           >
             X
           </button>
@@ -99,21 +106,24 @@ const ModalSettings = ({ setHandleModal }) => {
           <div className="border-light-gray h-full w-48 border-r">
             <div
               onClick={() => setSelected('profile')}
-              className={`flex h-12 cursor-pointer items-center font-semibold duration-200 ${selected === 'profile' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
+              className={`flex h-12 cursor-pointer items-center gap-3 pl-5 font-semibold duration-200 ${selected === 'profile' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
             >
-              <h1 className="">Profile</h1>
+              <UserPen />
+              <h1>Profile</h1>
             </div>
             <div
               onClick={() => setSelected('appearance')}
-              className={`flex h-12 cursor-pointer items-center font-semibold duration-200 ${selected === 'appearance' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
+              className={`flex h-12 cursor-pointer items-center gap-3 pl-5 font-semibold duration-200 ${selected === 'appearance' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
             >
-              <h1 className="">Appearance</h1>
+              <Lightbulb />
+              <h1>Appearance</h1>
             </div>
             <div
               onClick={() => setSelected('account')}
-              className={`flex h-12 cursor-pointer items-center font-semibold duration-200 ${selected === 'account' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
+              className={`flex h-12 cursor-pointer items-center gap-3 pl-5 font-semibold duration-200 ${selected === 'account' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
             >
-              <h1 className="">Account</h1>
+              <Wrench />
+              <h1>Account</h1>
             </div>
           </div>
 
@@ -132,10 +142,6 @@ const ModalSettings = ({ setHandleModal }) => {
       </div>
     </div>
   );
-};
-
-ModalSettings.propTypes = {
-  setHandleModal: PropTypes.func.isRequired,
 };
 
 export default ModalSettings;
