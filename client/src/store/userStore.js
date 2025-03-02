@@ -26,8 +26,6 @@ const useUserStore = create((set) => ({
       const data = response.data;
 
       set({
-        isAuthenticated: true,
-        isLoading: false,
         user: {
           name: data.name,
           username: data.username,
@@ -39,6 +37,9 @@ const useUserStore = create((set) => ({
         projects: data.projects,
         stickyNotes: data.stickyNotes,
       });
+
+      set({ isAuthenticated: true, isLoading: false });
+      
     } catch (error) {
       console.error('Error fetching user data:', error);
       set({ isAuthenticated: false, isLoading: false });
@@ -48,9 +49,13 @@ const useUserStore = create((set) => ({
   logout: async () => {
     set({ isAuthenticated: false, isLoading: true });
     try {
-      const response = await axios.post('http://localhost:4000/auth/logout', {}, {
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        'http://localhost:4000/auth/logout',
+        {},
+        {
+          withCredentials: true,
+        },
+      );
       const data = response.data;
       console.log(data);
       set({ isAuthenticated: false, isLoading: false });
