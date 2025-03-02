@@ -4,7 +4,7 @@ import useUserStore from '../../store/userStore';
 import NotFound404Page from './NotFound404Page';
 
 import ItemTaskPrinter from '../../components/ProjectPage/ItemTaskPrinter';
-import { SlidersHorizontal } from 'lucide-react';
+import { SlidersHorizontal, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
@@ -15,6 +15,7 @@ const ProjectPage = () => {
   const [currentProject, setCurrentProject] = useState(false);
 
   useEffect(() => {
+    setCurrentProject(null);
     const projectFound = projects.find((project) => project._id === id);
 
     setCurrentProject(projectFound);
@@ -48,11 +49,14 @@ const ProjectPage = () => {
           ) : null}
 
           <div className="mt-16">
-            <input
-              autoComplete="off"
-              className="text-light-text border-light-gray mb-3 w-full rounded-2xl border py-2.5 pl-10"
-              placeholder="+    Add New Task"
-            />
+            <div className="relative mb-3">
+              <input
+                autoComplete="off"
+                className="text-light-text border-light-gray w-full rounded-2xl border py-2.5 pl-20 focus:outline-offset-2"
+                placeholder="Add New Task"
+              />
+              <Plus className="text-light-text border-light-gray hover:text-default-text absolute top-0 h-full w-12 cursor-pointer rounded-l-2xl border border-r bg-[#FBB19D] p-2" />
+            </div>
             <ItemTaskPrinter items={currentProject.items} />
           </div>
         </div>

@@ -20,7 +20,7 @@ const ItemTaskPrinter = ({ items }) => {
     <>
       {items.map((item) => (
         <div key={item._id}>
-          <div className="pl-15 border-light-gray w-full border-b py-3">
+          <div className="border-light-gray w-full border-b py-3 pl-10">
             <h3 className="pb-1 text-xl font-semibold">{item.itemName}</h3>
             <div>
               <p className="text-light-text pl-2 text-xs font-light">
