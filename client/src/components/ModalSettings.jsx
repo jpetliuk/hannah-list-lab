@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useUserStore from '../store/userStore';
 import useAppStates from '../store/appStates';
 
-import { UserPen, Lightbulb, Wrench } from 'lucide-react';
+import { UserPen, Lightbulb, Wrench, X } from 'lucide-react';
 
 export const Profile = () => {
   const { user, changeNameAndDescription } = useUserStore();
@@ -90,16 +90,14 @@ const ModalSettings = () => {
   return (
     <div className="bg-transparency-modal fixed top-0 left-0 z-50 flex min-h-screen w-screen items-center justify-center">
       <div className="bg-custom-white m-10 grid h-[650px] w-5xl grid-rows-[80px_auto] overflow-hidden rounded-3xl shadow-lg">
-        <div className="border-light-gray flex h-[80px] w-full justify-between border-b">
-          <h1 className="border-light-gray flex w-48 items-center justify-center border-r text-xl font-bold">
+        <div className="border-light-gray flex h-[80px] w-full items-center justify-between border-b">
+          <h1 className="border-light-gray flex h-full w-48 items-center justify-center border-r text-xl font-bold">
             Settings
           </h1>
-          <button
-            className="text-light-text hover:text-default-text w-20 cursor-pointer text-3xl font-bold duration-300"
+          <X
+            className="text-light-text hover:text-default-text mr-3 h-12 w-12 cursor-pointer duration-300"
             onClick={handleModal}
-          >
-            X
-          </button>
+          />
         </div>
 
         <div className="grid h-full grid-cols-[192px_auto] overflow-hidden">

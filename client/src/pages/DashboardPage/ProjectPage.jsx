@@ -28,7 +28,7 @@ const ProjectPage = () => {
             style={{
               backgroundImage: `url(${currentProject.backgroundImage})`,
             }}
-            className="relative flex h-64 w-full justify-center rounded-3xl bg-cover bg-center"
+            className="bg-light-gray relative mb-10 flex h-64 w-full justify-center rounded-3xl bg-cover bg-center"
           >
             <h1 className="text-custom-white absolute bottom-14 mx-2 max-w-[500px] px-4 text-center text-4xl font-bold underline decoration-2 underline-offset-5">
               {currentProject.projectName}
@@ -40,19 +40,21 @@ const ProjectPage = () => {
           </div>
 
           {currentProject.description ? (
-            <div className="border-comment-blue-line bg-comment-blue-background m-auto mt-8 mb-16 max-w-10/12 border-l-4">
+            <div className="border-comment-blue-line bg-comment-blue-background m-auto w-10/12 border-l-4">
               <p className="p-5 text-left whitespace-pre-line">
                 {currentProject.description}
               </p>
             </div>
           ) : null}
 
-          <input
-            autoComplete="off"
-            className="text-light-text border-light-gray mb-3 w-full rounded-2xl border py-2.5 pl-10"
-            placeholder="+    Add New Task"
-          />
-          <ItemTaskPrinter items={currentProject.items} />
+          <div className="mt-16">
+            <input
+              autoComplete="off"
+              className="text-light-text border-light-gray mb-3 w-full rounded-2xl border py-2.5 pl-10"
+              placeholder="+    Add New Task"
+            />
+            <ItemTaskPrinter items={currentProject.items} />
+          </div>
         </div>
       ) : (
         <NotFound404Page />
