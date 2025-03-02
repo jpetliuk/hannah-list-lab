@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 import Logo from '../components/Logo';
 import Navbar from '../components/Navbar';
-import ModalSettings from '../components/ModalSettings';
+import ModalUserSettings from '../components/ModalUserSettings';
 
 import useAppStates from '../store/appStates';
 
@@ -19,7 +19,7 @@ const DashboardLayout = () => {
         <Outlet />
       </div>
 
-      {modalUserSettings ? <ModalSettings /> : null}
+      {modalUserSettings ? <ModalUserSettings /> : null}
     </div>
   );
 };

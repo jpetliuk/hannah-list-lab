@@ -83,7 +83,7 @@ export const Account = () => {
   return <div>Account</div>;
 };
 
-const ModalSettings = () => {
+const ModalUserSettings = () => {
   const [selected, setSelected] = useState('profile');
   const { handleModalUserSettings } = useAppStates();
 
@@ -142,4 +142,4 @@ const ModalSettings = () => {
   );
 };
 
-export default ModalSettings;
+export default ModalUserSettings;
