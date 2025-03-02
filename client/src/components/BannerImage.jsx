@@ -1,10 +1,12 @@
 const BannerImage = () => {
+  const selectRandomImage = `/banners/banner-${Math.floor(Math.random() * 14) + 1}.jpeg`;
+
   return (
     <div className="border-light-gray h-full w-full rounded-3xl border">
       <img
-        src="/6f44c7d0-c64b-49bc-8fdf-8a41b98f9001.jpeg"
+        src={selectRandomImage}
         alt="Banner image"
-        className="h-full w-full rounded-3xl object-cover"
+        className="h-full w-full rounded-3xl"
       />
     </div>
   );
