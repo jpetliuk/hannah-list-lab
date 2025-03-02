@@ -39,7 +39,7 @@ const tools = [
 
 const Navbar = () => {
   const { projects, user, logout } = useUserStore();
-  const { handleModal } = useAppStates();
+  const { handleModalUserSettings } = useAppStates();
 
   const location = useLocation();
   const { id } = useParams();
@@ -127,7 +127,7 @@ const Navbar = () => {
       {/* Settings section */}
       <div className="border-white-gray flex w-full flex-col gap-1 border-t pt-2">
         <div
-          onClick={handleModal}
+          onClick={handleModalUserSettings}
           className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
         >
           <Settings className="h-5 w-5" />

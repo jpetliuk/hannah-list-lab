@@ -85,7 +85,7 @@ export const Account = () => {
 
 const ModalSettings = () => {
   const [selected, setSelected] = useState('profile');
-  const { handleModal } = useAppStates();
+  const { handleModalUserSettings } = useAppStates();
 
   return (
     <div className="bg-transparency-modal fixed top-0 left-0 z-50 flex min-h-screen w-screen items-center justify-center">
@@ -96,7 +96,7 @@ const ModalSettings = () => {
           </h1>
           <X
             className="text-light-text hover:text-default-text mr-3 h-12 w-12 cursor-pointer duration-300"
-            onClick={handleModal}
+            onClick={handleModalUserSettings}
           />
         </div>
 

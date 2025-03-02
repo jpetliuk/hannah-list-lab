@@ -1,11 +1,13 @@
 import { create } from 'zustand';
 
 const useAppStates = create((set) => ({
-  modal: false,
+  modalUserSettings: false,
 
-  handleModal: () => {
-    set((state) => ({ modal: !state.modal }));
+  handleModalUserSettings: () => {
+    set((state) => ({ modalUserSettings: !state.modalUserSettings }));
   },
+
+
 }));
 
 export default useAppStates;

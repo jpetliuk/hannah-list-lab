@@ -7,7 +7,7 @@ import ModalSettings from '../components/ModalSettings';
 import useAppStates from '../store/appStates';
 
 const DashboardLayout = () => {
-  const { modal } = useAppStates();
+  const { modalUserSettings } = useAppStates();
 
   return (
     <div className="flex min-h-screen w-full">
@@ -19,7 +19,7 @@ const DashboardLayout = () => {
         <Outlet />
       </div>
 
-      {modal ? <ModalSettings /> : null}
+      {modalUserSettings ? <ModalSettings /> : null}
     </div>
   );
 };
