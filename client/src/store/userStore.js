@@ -12,6 +12,7 @@ const useUserStore = create((set) => ({
   isLoading: true,
 
   projects: [],
+  currentProject: false,
 
   stickyNotes: [],
 
@@ -39,11 +40,55 @@ const useUserStore = create((set) => ({
       });
 
       set({ isAuthenticated: true, isLoading: false });
-      
     } catch (error) {
       console.error('Error fetching user data:', error);
       set({ isAuthenticated: false, isLoading: false });
     }
+  },
+
+  setCurrentProject: (project) => {
+    if (!project._id) return set({ currentProject: false });
+
+    set({
+      currentProject: project,
+    });
+  },
+
+  saveProjectSettings: ({
+    _id,
+    projectName,
+    description,
+    backgroundImage,
+    iconColor,
+  }) => {
+    set((state) => {
+      if (_id === state.currentProject._id) {
+        return {
+          currentProject: {
+            ...state.currentProject,
+            projectName: projectName ?? state.currentProject.projectName,
+            description: description ?? state.currentProject.description,
+            backgroundImage:
+              backgroundImage ?? state.currentProject.backgroundImage,
+            iconColor: iconColor ?? state.currentProject.iconColor,
+          },
+        };
+      }
+    });
+
+    set((state) => ({
+      projects: state.projects.map((project) =>
+        project._id === _id
+          ? {
+              ...project,
+              projectName: projectName,
+              description: description,
+              backgroundImage: backgroundImage,
+              iconColor: iconColor,
+            }
+          : project,
+      ),
+    }));
   },
 
   logout: async () => {

@@ -1,11 +1,14 @@
-import { SlidersHorizontal, Plus } from 'lucide-react';
+import { SlidersHorizontal, Plus, Pencil } from 'lucide-react';
 import PropTypes from 'prop-types';
 
-import ItemTaskPrinter from './ItemTaskPrinter';
+import userStore from '../../store/userStore';
 
-const ProjectDisplayer = ({ currentProject }) => {
+const ProjectDisplayer = ({ setModalProject, setProjectOrItem }) => {
+  const { currentProject } = userStore();
+
   return (
     <div className="min-h-full w-full p-4">
+      {/* Header */}
       <div
         style={{
           backgroundImage: `url(${currentProject.backgroundImage})`,
@@ -15,12 +18,17 @@ const ProjectDisplayer = ({ currentProject }) => {
         <h1 className="text-custom-white absolute bottom-14 mx-2 max-w-[500px] px-4 text-center text-4xl font-bold underline decoration-2 underline-offset-5">
           {currentProject.projectName}
         </h1>
-        <div className="bg-light-transparent-gray hover:bg-light-transparent-gray-hover active:bg-light-transparent-gray text-light-text hover:text-default-text absolute top-0 left-0 flex h-10 w-40 cursor-pointer items-center justify-center gap-1.5 rounded-tl-3xl rounded-br-3xl">
+        <div
+          onClick={() => (setModalProject(true), setProjectOrItem('project'))}
+          className="bg-light-transparent-gray hover:bg-light-transparent-gray-hover active:bg-light-transparent-gray text-light-text hover:text-default-text absolute top-0 left-0 flex h-10 w-40 cursor-pointer items-center justify-center gap-1.5 rounded-tl-3xl rounded-br-3xl"
+        >
           <SlidersHorizontal className="h-4 w-4" />
           <h3 className="text-base font-bold">Settings</h3>
         </div>
       </div>
+      {/* Header */}
 
+      {/* Description */}
       {currentProject.description ? (
         <div className="border-comment-blue-line bg-comment-blue-background m-auto w-10/12 border-l-4">
           <p className="p-5 text-left whitespace-pre-line">
@@ -28,7 +36,9 @@ const ProjectDisplayer = ({ currentProject }) => {
           </p>
         </div>
       ) : null}
+      {/* Description */}
 
+      {/* Add New */}
       <div className="mt-16">
         <div className="relative mb-3">
           <input
@@ -38,19 +48,51 @@ const ProjectDisplayer = ({ currentProject }) => {
           />
           <Plus className="text-light-text border-light-gray hover:text-default-text absolute top-0 h-full w-12 cursor-pointer rounded-l-2xl border border-r bg-[#FBB19D] p-2" />
         </div>
-        <ItemTaskPrinter items={currentProject.items} />
+        {/* Add New */}
+
+        {/* Map Items */}
+        {currentProject.items.map((item) => (
+          <div key={item._id}>
+            <div className="border-light-gray w-full border-b py-3 pl-10">
+              <div className="flex items-center justify-between">
+                <h3 className="pb-1 text-xl font-semibold">{item.itemName}</h3>
+                <Pencil
+                  size={22}
+                  className="text-light-text hover:text-default-text cursor-pointer"
+                  onClick={() => (
+                    setModalProject(true), setProjectOrItem(item._id)
+                  )}
+                />
+              </div>
+              <div>
+                <p className="text-light-text pl-2 text-xs font-light">
+                  {item.date}
+                </p>
+              </div>
+            </div>
+            {/* Map Tasks */}
+            <div className="px-3">
+              {item.tasks.map((task) => (
+                <div
+                  key={task._id}
+                  className="border-light-gray mx-auto border-b py-4 pl-20"
+                >
+                  <h3 className="text-light-text">{task.taskName}</h3>
+                </div>
+              ))}
+              {/* Map Tasks */}
+            </div>
+          </div>
+        ))}
+        {/* Map Items */}
       </div>
     </div>
   );
 };
 
 ProjectDisplayer.propTypes = {
-  currentProject: PropTypes.shape({
-    backgroundImage: PropTypes.string,
-    projectName: PropTypes.string,
-    description: PropTypes.string,
-    items: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
+  setModalProject: PropTypes.func.isRequired,
+  setProjectOrItem: PropTypes.func.isRequired,
 };
 
 export default ProjectDisplayer;

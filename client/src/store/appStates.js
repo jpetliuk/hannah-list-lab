@@ -6,8 +6,6 @@ const useAppStates = create((set) => ({
   handleModalUserSettings: () => {
     set((state) => ({ modalUserSettings: !state.modalUserSettings }));
   },
-
-
 }));
 
 export default useAppStates;
