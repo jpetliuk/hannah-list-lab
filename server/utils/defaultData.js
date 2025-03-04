@@ -5,18 +5,18 @@ export const defaultProject = [
     backgroundImage:
       'https://cdn.pixabay.com/photo/2023/04/13/17/08/forest-7922999_1280.jpg',
     iconColor: '#f7653d',
-    items: [
+    tasks: [
       {
-        itemName: 'Create a new project',
+        taskName: 'Create a new project',
         completed: false,
         dueDate: '2025-02-23',
-        tasks: [
+        subtasks: [
           {
-            taskName: 'Go to navbar',
+            subtaskName: 'Go to navbar',
             completed: false,
           },
           {
-            taskName: 'create new project',
+            subtaskName: 'create new project',
             completed: false,
           },
         ],

@@ -20,7 +20,7 @@ const ProjectPage = () => {
 
   // Modal editing
   const [modalProject, setModalProject] = useState(false);
-  const [projectOrItem, setProjectOrItem] = useState('project');
+  const [projectOrTaskId, setProjectOrTaskId] = useState('project');
 
   // Close modal on project id change (navbar)
   useEffect(() => {
@@ -50,7 +50,7 @@ const ProjectPage = () => {
         {currentProject ? (
           <ProjectDisplayer
             setModalProject={setModalProject}
-            setProjectOrItem={setProjectOrItem}
+            setProjectOrTaskId={setProjectOrTaskId}
           />
         ) : (
           <NotFound404Page />
@@ -61,7 +61,7 @@ const ProjectPage = () => {
           parentWidth={parentWidth}
           modalProject={modalProject}
           setModalProject={setModalProject}
-          projectOrItem={projectOrItem}
+          projectOrTaskId={projectOrTaskId}
         />
       ) : null}
     </div>

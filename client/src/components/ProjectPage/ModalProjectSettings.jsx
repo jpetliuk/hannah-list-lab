@@ -134,26 +134,28 @@ const ProjectSettings = () => {
   );
 };
 
-const ProjectItem = ({ projectOrItem }) => {
+const ProjectTask = ({ projectOrTaskId }) => {
   // note: projectOrItem === item._id
   const { currentProject } = useUserStore();
-  const [currentItem, setCurrentItem] = useState(null);
+  const [currentTask, setCurrentTask] = useState(null);
 
-  const updateProjectItem = (updatedItem) => {
-    setCurrentItem(updatedItem);
+  const updateProjectTask = (updatedTask) => {
+    setCurrentTask(updatedTask);
   };
 
   useEffect(() => {
-    const itemFound = currentProject.items.find(
-      (item) => item._id === projectOrItem,
+    const taskFound = currentProject.tasks.find(
+      (task) => task._id === projectOrTaskId,
     );
 
-    console.log(itemFound);
+    console.log(projectOrTaskId);
 
-    setCurrentItem(itemFound || null);
-  }, [currentProject.items, projectOrItem]);
+    console.log(taskFound);
 
-  if (!currentItem) return;
+    setCurrentTask(taskFound || null);
+  }, [currentProject.tasks, projectOrTaskId]);
+
+  if (!currentTask) return;
 
   return (
     <div className="-mt-3.5 flex flex-col gap-5">
@@ -169,9 +171,9 @@ const ProjectItem = ({ projectOrItem }) => {
           className="text-light-text border-light-gray w-full rounded-2xl border py-2.5 pl-10"
           placeholder="Project name"
           maxLength={35}
-          value={currentItem.itemName || ''}
+          value={currentTask.taskName || ''}
           onChange={(e) =>
-            updateProjectItem({ ...currentItem, itemName: e.target.value })
+            updateProjectTask({ ...currentTask, taskName: e.target.value })
           }
         />
       </div>
@@ -185,9 +187,9 @@ const ProjectItem = ({ projectOrItem }) => {
           autoComplete="off"
           className="text-light-text border-light-gray w-20 rounded-lg border"
           placeholder="Project name"
-          value={currentItem.dueDate || ''}
+          value={currentTask.dueDate || ''}
           onChange={(e) =>
-            updateProjectItem({ ...currentItem, dueDate: e.target.value })
+            updateProjectTask({ ...currentTask, dueDate: e.target.value })
           }
         />
       </div>
@@ -198,8 +200,8 @@ const ProjectItem = ({ projectOrItem }) => {
           Subtasks:
         </h2>
         <div className="h-40 w-full border">
-          {currentItem.tasks.map((subtask) => (
-            <h1 key={subtask._id}>{subtask.taskName}</h1>
+          {currentTask.subtasks.map((subtask) => (
+            <h1 key={subtask._id}>{subtask.subtaskName}</h1>
           ))}
         </div>
       </div>
@@ -228,7 +230,7 @@ const ModalProjectSettings = ({
   parentWidth,
   modalProject,
   setModalProject,
-  projectOrItem,
+  projectOrTaskId,
 }) => {
   return (
     <div
@@ -254,10 +256,10 @@ const ModalProjectSettings = ({
           className="text-light-text hover:text-default-text ml-auto h-10 w-10 cursor-pointer"
         />
 
-        {projectOrItem === 'project' ? (
+        {projectOrTaskId === 'project' ? (
           <ProjectSettings />
         ) : (
-          <ProjectItem projectOrItem={projectOrItem} />
+          <ProjectTask projectOrTaskId={projectOrTaskId} />
         )}
       </div>
     </div>
@@ -266,13 +268,13 @@ const ModalProjectSettings = ({
 
 ModalProjectSettings.propTypes = {
   parentWidth: PropTypes.number.isRequired,
-  projectOrItem: PropTypes.string.isRequired,
+  projectOrTaskId: PropTypes.string.isRequired,
   modalProject: PropTypes.bool.isRequired,
   setModalProject: PropTypes.func.isRequired,
 };
 
-ProjectItem.propTypes = {
-  projectOrItem: PropTypes.string.isRequired,
+ProjectTask.propTypes = {
+  projectOrTaskId: PropTypes.string.isRequired,
 };
 
 export default ModalProjectSettings;

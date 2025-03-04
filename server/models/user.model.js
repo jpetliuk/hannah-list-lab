@@ -2,15 +2,15 @@ import mongoose from 'mongoose';
 
 // Embedded Schemas
 const taskSchema = mongoose.Schema({
-  taskName: { type: String, required: true },
+  subtaskName: { type: String, required: true },
   completed: { type: Boolean, default: false },
 });
 
 const itemSchema = mongoose.Schema({
-  itemName: { type: String, required: true },
+  taskName: { type: String, required: true },
   completed: { type: Boolean, default: false },
   dueDate: { type: Date },
-  tasks: {
+  subtasks: {
     type: [taskSchema],
   },
 });
@@ -20,7 +20,7 @@ const projectSchema = mongoose.Schema({
   description: { type: String },
   backgroundImage: { type: String },
   iconColor: { type: String },
-  items: [itemSchema],
+  tasks: [itemSchema],
 });
 
 const stickyNotesSchema = mongoose.Schema({

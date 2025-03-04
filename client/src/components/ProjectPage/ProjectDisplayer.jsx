@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import userStore from '../../store/userStore';
 
-const ProjectDisplayer = ({ setModalProject, setProjectOrItem }) => {
+const ProjectDisplayer = ({ setModalProject, setProjectOrTaskId }) => {
   const { currentProject } = userStore();
 
   return (
@@ -19,7 +19,7 @@ const ProjectDisplayer = ({ setModalProject, setProjectOrItem }) => {
           {currentProject.projectName}
         </h1>
         <div
-          onClick={() => (setModalProject(true), setProjectOrItem('project'))}
+          onClick={() => (setModalProject(true), setProjectOrTaskId('project'))}
           className="bg-light-transparent-gray hover:bg-light-transparent-gray-hover active:bg-light-transparent-gray text-light-text hover:text-default-text absolute top-0 left-0 flex h-10 w-40 cursor-pointer items-center justify-center gap-1.5 rounded-tl-3xl rounded-br-3xl"
         >
           <SlidersHorizontal className="h-4 w-4" />
@@ -51,33 +51,33 @@ const ProjectDisplayer = ({ setModalProject, setProjectOrItem }) => {
         {/* Add New */}
 
         {/* Map Items */}
-        {currentProject.items.map((item) => (
-          <div key={item._id}>
+        {currentProject.tasks.map((task) => (
+          <div key={task._id}>
             <div className="border-light-gray w-full border-b py-3 pl-10">
               <div className="flex items-center justify-between">
-                <h3 className="pb-1 text-xl font-semibold">{item.itemName}</h3>
+                <h3 className="pb-1 text-xl font-semibold">{task.taskName}</h3>
                 <Pencil
                   size={22}
                   className="text-light-text hover:text-default-text cursor-pointer"
                   onClick={() => (
-                    setModalProject(true), setProjectOrItem(item._id)
+                    setModalProject(true), setProjectOrTaskId(task._id)
                   )}
                 />
               </div>
               <div>
                 <p className="text-light-text pl-2 text-xs font-light">
-                  {item.date}
+                  {task.date}
                 </p>
               </div>
             </div>
             {/* Map Tasks */}
             <div className="px-3">
-              {item.tasks.map((task) => (
+              {task.subtasks.map((subtask) => (
                 <div
-                  key={task._id}
+                  key={subtask._id}
                   className="border-light-gray mx-auto border-b py-4 pl-20"
                 >
-                  <h3 className="text-light-text">{task.taskName}</h3>
+                  <h3 className="text-light-text">{subtask.subtaskName}</h3>
                 </div>
               ))}
               {/* Map Tasks */}
@@ -92,7 +92,7 @@ const ProjectDisplayer = ({ setModalProject, setProjectOrItem }) => {
 
 ProjectDisplayer.propTypes = {
   setModalProject: PropTypes.func.isRequired,
-  setProjectOrItem: PropTypes.func.isRequired,
+  setProjectOrTaskId: PropTypes.func.isRequired,
 };
 
 export default ProjectDisplayer;
