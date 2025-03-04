@@ -11,18 +11,21 @@ const ProjectPage = () => {
   const { id } = useParams();
   const { currentProject, setCurrentProject, projects } = useUserStore();
 
-  // Modal editing
-  const [modalProject, setModalProject] = useState(false);
-  const [projectOrItem, setProjectOrItem] = useState('project');
-
   // Set current project
   useEffect(() => {
-    setModalProject(false);
-    
     const projectFound = projects.find((project) => project._id === id);
 
     setCurrentProject(projectFound);
   }, [projects, id, setCurrentProject]);
+
+  // Modal editing
+  const [modalProject, setModalProject] = useState(false);
+  const [projectOrItem, setProjectOrItem] = useState('project');
+
+  // Close modal on project id change (navbar)
+  useEffect(() => {
+    setModalProject(false);
+  }, [id]);
 
   // Parent width for modal
   const parentRef = useRef(null);
