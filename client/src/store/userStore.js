@@ -54,37 +54,43 @@ const useUserStore = create((set) => ({
     });
   },
 
-  saveProjectSettings: ({
-    _id,
-    projectName,
-    description,
-    backgroundImage,
-    iconColor,
-  }) => {
+  saveProject: (updatedProject) => {
+    console.log(updatedProject);
+    // validate updated project
+    // if valid update current project
     set((state) => {
-      if (_id === state.currentProject._id) {
+      if (updatedProject._id === state.currentProject._id) {
         return {
           currentProject: {
             ...state.currentProject,
-            projectName: projectName ?? state.currentProject.projectName,
-            description: description ?? state.currentProject.description,
+            projectName:
+              updatedProject.projectName ?? state.currentProject.projectName,
+            description:
+              updatedProject.description ?? state.currentProject.description,
             backgroundImage:
-              backgroundImage ?? state.currentProject.backgroundImage,
-            iconColor: iconColor ?? state.currentProject.iconColor,
+              updatedProject.backgroundImage ??
+              state.currentProject.backgroundImage,
+            iconColor:
+              updatedProject.iconColor ?? state.currentProject.iconColor,
+            tasks: updatedProject.tasks ?? state.currentProject.tasks,
           },
         };
       }
     });
 
+    // send current project to server
+    // server looks for project with id and updates it
+    // await for response from server if successful update projects
     set((state) => ({
       projects: state.projects.map((project) =>
-        project._id === _id
+        updatedProject._id === project._id
           ? {
               ...project,
-              projectName: projectName,
-              description: description,
-              backgroundImage: backgroundImage,
-              iconColor: iconColor,
+              projectName: updatedProject.projectName,
+              description: updatedProject.description,
+              backgroundImage: updatedProject.backgroundImage,
+              iconColor: updatedProject.iconColor,
+              tasks: updatedProject.tasks ?? state.currentProject.tasks,
             }
           : project,
       ),

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import useUserStore from '../../store/userStore';
 
 const ProjectSettings = () => {
-  const { currentProject, saveProjectSettings } = useUserStore();
+  const { currentProject, saveProject } = useUserStore();
 
   const [currentProjectSettings, setCurrentProjectSettings] = useState(null);
 
@@ -19,9 +19,13 @@ const ProjectSettings = () => {
 
   if (!currentProjectSettings) return;
 
-  const saveNewProjectSettings = () => {
-    saveProjectSettings({ ...currentProjectSettings });
+  const saveNewProject = () => {
+    saveProject({ ...currentProjectSettings });
+
+    console.log(currentProjectSettings);
   };
+
+  if (!currentProjectSettings) return <div>Loading...</div>;
 
   return (
     <div className="-mt-3.5 flex flex-col gap-5">
@@ -124,7 +128,7 @@ const ProjectSettings = () => {
         </button>
 
         <button
-          onClick={saveNewProjectSettings}
+          onClick={saveNewProject}
           className="bg-button-yellow text-default-text hover:bg-button-yellow-hover active:bg-button-yellow h-11 w-40 cursor-pointer rounded-2xl font-semibold"
         >
           Save Changes
@@ -136,11 +140,19 @@ const ProjectSettings = () => {
 
 const ProjectTask = ({ projectOrTaskId }) => {
   // note: projectOrItem === item._id
-  const { currentProject } = useUserStore();
+  const { saveProject, currentProject } = useUserStore();
   const [currentTask, setCurrentTask] = useState(null);
 
   const updateProjectTask = (updatedTask) => {
     setCurrentTask(updatedTask);
+  };
+
+  const updateSubtask = (updatedTask) => {
+    console.log(updatedTask);
+    const updatedSubtasks = currentTask.subtasks.map((subtask) =>
+      subtask._id === updatedTask._id ? updatedTask : subtask,
+    );
+    setCurrentTask({ ...currentTask, subtasks: updatedSubtasks });
   };
 
   useEffect(() => {
@@ -148,14 +160,22 @@ const ProjectTask = ({ projectOrTaskId }) => {
       (task) => task._id === projectOrTaskId,
     );
 
-    console.log(projectOrTaskId);
-
-    console.log(taskFound);
-
     setCurrentTask(taskFound || null);
   }, [currentProject.tasks, projectOrTaskId]);
 
-  if (!currentTask) return;
+  const saveNewProject = () => {
+    const updatedProjects = {
+      ...currentProject,
+      tasks: currentProject.tasks.map((task) =>
+        task._id === currentTask._id ? { ...task, ...currentTask } : task,
+      ),
+    };
+
+    saveProject({ ...updatedProjects });
+    console.log(updatedProjects);
+  };
+
+  if (!currentTask) return <div>Loading...</div>;
 
   return (
     <div className="-mt-3.5 flex flex-col gap-5">
@@ -165,11 +185,11 @@ const ProjectTask = ({ projectOrTaskId }) => {
           Task:
         </h2>
         <input
-          name="project-title"
+          name="task-name"
           type="text"
           autoComplete="off"
           className="text-light-text border-light-gray w-full rounded-2xl border py-2.5 pl-10"
-          placeholder="Project name"
+          placeholder="Task name"
           maxLength={35}
           value={currentTask.taskName || ''}
           onChange={(e) =>
@@ -184,6 +204,7 @@ const ProjectTask = ({ projectOrTaskId }) => {
           Due date:
         </h2>
         <input
+          name="due-date"
           autoComplete="off"
           className="text-light-text border-light-gray w-20 rounded-lg border"
           placeholder="Project name"
@@ -199,9 +220,37 @@ const ProjectTask = ({ projectOrTaskId }) => {
         <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
           Subtasks:
         </h2>
-        <div className="h-40 w-full border">
+        <div className="h-40 w-full">
           {currentTask.subtasks.map((subtask) => (
-            <h1 key={subtask._id}>{subtask.subtaskName}</h1>
+            <div key={subtask._id} className="flex items-center gap-1">
+              <input
+                type="checkbox"
+                className="h-6 w-6 appearance-none rounded-md border-2 border-gray-500 checked:border-transparent checked:bg-blue-500"
+                checked={subtask.completed}
+                onChange={(e) =>
+                  updateSubtask({
+                    ...subtask,
+                    completed: e.target.checked,
+                  })
+                }
+              />
+
+              <input
+                name="subtask-name"
+                type="text"
+                autoComplete="off"
+                className="text-light-text border-light-gray w-full rounded-2xl border py-2.5 pl-10"
+                placeholder="subtask"
+                maxLength={35}
+                value={subtask.subtaskName || ''}
+                onChange={(e) =>
+                  updateSubtask({
+                    ...subtask,
+                    subtaskName: e.target.value,
+                  })
+                }
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -216,7 +265,7 @@ const ProjectTask = ({ projectOrTaskId }) => {
         </button>
 
         <button
-          onClick={''}
+          onClick={saveNewProject}
           className="bg-button-yellow text-default-text hover:bg-button-yellow-hover active:bg-button-yellow h-11 w-40 cursor-pointer rounded-2xl font-semibold"
         >
           Save Changes
@@ -237,30 +286,42 @@ const ModalProjectSettings = ({
       style={
         modalProject
           ? {
-              width: `${parentWidth / 2 - 20}px`,
-              minWidth: `${parentWidth / 2 - 20}px`,
+              width: `${(parentWidth * 2) / 5 + 20}px`,
+              minWidth: `${(parentWidth * 2) / 5 + 20}px`,
             }
           : { width: 0, minWidth: 0 }
       }
-      className="min-h-full overflow-hidden duration-600 ease-in-out"
+      className="min-h-full duration-600 ease-in-out"
     >
       <div
-        style={{
-          minWidth: `${parentWidth / 2 - 20}px`,
-          width: `${parentWidth / 2 - 20}px`,
-        }}
-        className="border-outline bg-custom-white min-h-full max-w-full rounded-3xl border p-3"
+        style={
+          modalProject
+            ? {
+                width: `${(parentWidth * 2) / 5}px`,
+                minWidth: `${(parentWidth * 2) / 5}px`,
+              }
+            : { width: 0, minWidth: 0 }
+        }
+        className="fixed top-0 ml-5 h-screen overflow-hidden py-5 duration-600 ease-in-out"
       >
-        <X
-          onClick={() => setModalProject(false)}
-          className="text-light-text hover:text-default-text ml-auto h-10 w-10 cursor-pointer"
-        />
+        <div
+          style={{
+            width: `${(parentWidth * 2) / 5}px`,
+            minWidth: `${(parentWidth * 2) / 5}px`,
+          }}
+          className="border-outline bg-custom-white h-full w-full overflow-y-auto rounded-3xl border p-3"
+        >
+          <X
+            onClick={() => setModalProject(false)}
+            className="text-light-text hover:text-default-text ml-auto h-10 w-10 cursor-pointer"
+          />
 
-        {projectOrTaskId === 'project' ? (
-          <ProjectSettings />
-        ) : (
-          <ProjectTask projectOrTaskId={projectOrTaskId} />
-        )}
+          {projectOrTaskId === 'project' ? (
+            <ProjectSettings />
+          ) : (
+            <ProjectTask projectOrTaskId={projectOrTaskId} />
+          )}
+        </div>
       </div>
     </div>
   );

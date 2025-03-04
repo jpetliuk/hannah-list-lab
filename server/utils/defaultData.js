@@ -21,6 +21,45 @@ export const defaultProject = [
           },
         ],
       },
+      {
+        taskName: 'Create a new project',
+        completed: false,
+        dueDate: '2025-02-23',
+        subtasks: [
+          {
+            subtaskName: 'Go to navbar',
+            completed: false,
+          },
+          {
+            subtaskName: 'create new project',
+            completed: false,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    projectName: 'Project Two',
+    description: `Welcome to hannah's lab, this is your first Project.`,
+    backgroundImage:
+      'https://cdn.pixabay.com/photo/2023/04/13/17/08/forest-7922999_1280.jpg',
+    iconColor: '#f7653d',
+    tasks: [
+      {
+        taskName: 'Create a new project',
+        completed: false,
+        dueDate: '2025-02-23',
+        subtasks: [
+          {
+            subtaskName: 'Go to navbar',
+            completed: false,
+          },
+          {
+            subtaskName: 'create new project',
+            completed: false,
+          },
+        ],
+      },
     ],
   },
 ];
