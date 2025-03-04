@@ -45,10 +45,12 @@ const ProjectPage = () => {
   }, []);
 
   return (
-    <div ref={parentRef} className="flex min-h-full w-full gap-5">
+    <div ref={parentRef} className="flex min-h-full w-full">
       <div className="border-outline bg-custom-white min-h-full w-full rounded-3xl border">
         {currentProject ? (
           <ProjectDisplayer
+            projectOrTaskId={projectOrTaskId}
+            modalProject={modalProject}
             setModalProject={setModalProject}
             setProjectOrTaskId={setProjectOrTaskId}
           />

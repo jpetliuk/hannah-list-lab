@@ -3,8 +3,29 @@ import PropTypes from 'prop-types';
 
 import userStore from '../../store/userStore';
 
-const ProjectDisplayer = ({ setModalProject, setProjectOrTaskId }) => {
+const ProjectDisplayer = ({
+  modalProject,
+  setModalProject,
+  projectOrTaskId,
+  setProjectOrTaskId,
+}) => {
   const { currentProject } = userStore();
+
+  const settingsButton = () => {
+    projectOrTaskId === 'project' && modalProject
+      ? setModalProject(false)
+      : setModalProject(true);
+
+    setProjectOrTaskId('project');
+  };
+
+  const taskButton = (taskId) => {
+    projectOrTaskId === taskId && modalProject
+      ? setModalProject(false)
+      : setModalProject(true);
+
+    setProjectOrTaskId(taskId);
+  };
 
   return (
     <div className="min-h-full w-full p-4">
@@ -19,7 +40,7 @@ const ProjectDisplayer = ({ setModalProject, setProjectOrTaskId }) => {
           {currentProject.projectName}
         </h1>
         <div
-          onClick={() => (setModalProject(true), setProjectOrTaskId('project'))}
+          onClick={settingsButton}
           className="bg-light-transparent-gray hover:bg-light-transparent-gray-hover active:bg-light-transparent-gray text-light-text hover:text-default-text absolute top-0 left-0 flex h-10 w-40 cursor-pointer items-center justify-center gap-1.5 rounded-tl-3xl rounded-br-3xl"
         >
           <SlidersHorizontal className="h-4 w-4" />
@@ -59,9 +80,7 @@ const ProjectDisplayer = ({ setModalProject, setProjectOrTaskId }) => {
                 <Pencil
                   size={22}
                   className="text-light-text hover:text-default-text cursor-pointer"
-                  onClick={() => (
-                    setModalProject(true), setProjectOrTaskId(task._id)
-                  )}
+                  onClick={() => taskButton(task._id)}
                 />
               </div>
               <div>
@@ -91,7 +110,9 @@ const ProjectDisplayer = ({ setModalProject, setProjectOrTaskId }) => {
 };
 
 ProjectDisplayer.propTypes = {
+  modalProject: PropTypes.bool.isRequired,
   setModalProject: PropTypes.func.isRequired,
+  projectOrTaskId: PropTypes.string.isRequired,
   setProjectOrTaskId: PropTypes.func.isRequired,
 };
 
