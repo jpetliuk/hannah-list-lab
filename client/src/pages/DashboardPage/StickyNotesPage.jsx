@@ -31,7 +31,6 @@ const StickyNotesPage = () => {
       '#FFD1DC',
       '#DAB3FF',
       '#FAFAD2',
-      '#ADD8E6',
       '#FFDAB9',
       '#F3E5AB',
       '#FFB3B3',
