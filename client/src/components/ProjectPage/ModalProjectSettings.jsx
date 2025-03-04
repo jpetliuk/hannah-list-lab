@@ -75,7 +75,7 @@ const ProjectSettings = () => {
       </div>
 
       <div className="flex items-center justify-around">
-      {/* Due Date */}
+        {/* Due Date */}
         <div className="flex items-center justify-center gap-3">
           <h2 className="text-light-text pb-1 pl-4 text-base font-normal">
             Due date:
@@ -94,7 +94,7 @@ const ProjectSettings = () => {
           />
         </div>
 
-      {/* Color */}
+        {/* Color */}
         <div className="flex items-center justify-center gap-3">
           <h2 className="text-light-text pb-1 pl-4 text-base font-normal">
             color:
@@ -157,6 +157,7 @@ const ProjectItem = ({ projectOrItem }) => {
 
   return (
     <div className="-mt-3.5 flex flex-col gap-5">
+      {/* Task Title */}
       <div>
         <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
           Task:
@@ -175,6 +176,7 @@ const ProjectItem = ({ projectOrItem }) => {
         />
       </div>
 
+      {/* Task Due Date */}
       <div className="flex items-center justify-center gap-3">
         <h2 className="text-light-text pb-1 pl-4 text-base font-normal">
           Due date:
@@ -190,13 +192,19 @@ const ProjectItem = ({ projectOrItem }) => {
         />
       </div>
 
+      {/* Subtasks */}
       <div>
         <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
           Subtasks:
         </h2>
-        <div className="h-40 w-full border"></div>
+        <div className="h-40 w-full border">
+          {currentItem.tasks.map((subtask) => (
+            <h1 key={subtask._id}>{subtask.taskName}</h1>
+          ))}
+        </div>
       </div>
 
+      {/* Save/Delete Task */}
       <div className="flex justify-between p-3 pt-15">
         <button
           onClick={''}
