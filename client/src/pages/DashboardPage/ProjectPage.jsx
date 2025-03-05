@@ -3,7 +3,7 @@ import useUserStore from '../../store/userStore';
 
 import NotFound404Page from './NotFound404Page';
 import ProjectDisplayer from '../../components/ProjectPage/ProjectDisplayer';
-import ModalProjectSettings from '../../components/ProjectPage/ModalProjectSettings';
+import ModalProject from '../../components/ProjectPage/ModalProject/ModalProject';
 import JumpingNote from '../../components/Loaders/JumpingNote';
 
 import { useState, useEffect, useRef } from 'react';
@@ -75,7 +75,7 @@ const ProjectPage = () => {
       )}
 
       {currentProject ? (
-        <ModalProjectSettings
+        <ModalProject
           parentWidth={parentWidth}
           modalProject={modalProject}
           setModalProject={setModalProject}
