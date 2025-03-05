@@ -17,6 +17,8 @@ const ModalProjectSettings = () => {
       currentProjectSettings.projectName === currentProject.projectName &&
       currentProjectSettings.description === currentProject.description &&
       currentProjectSettings.dueDate === currentProject.dueDate &&
+      currentProjectSettings.backgroundImage ===
+        currentProject.backgroundImage &&
       currentProjectSettings.color === currentProject.color
     )
       return console.log('No changes made');
@@ -61,7 +63,86 @@ const ModalProjectSettings = () => {
         <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
           Project Picture:
         </h2>
-        <div className="h-40 w-full border"></div>
+      </div>
+
+      <div className="grid w-full grid-rows-1 gap-2">
+        {/* <!-- First row --> */}
+        <div className="grid h-35 grid-cols-[2fr_1fr] gap-2">
+          <div
+            className="h-35 cursor-pointer rounded-2xl bg-cover bg-[center_bottom_30%] duration-300 hover:scale-102 hover:shadow-lg"
+            style={{
+              backgroundImage: `url(${currentProjectSettings.backgroundImage})`,
+            }}
+          ></div>
+          <div className="h-35 cursor-pointer rounded-2xl bg-red-500 duration-300 hover:scale-102"></div>
+        </div>
+
+        {/* <!-- Second row --> */}
+        <div className="grid h-12.5 grid-cols-5 gap-2">
+          <div
+            onClick={() =>
+              updateProjectSettings({
+                ...currentProjectSettings,
+                backgroundImage: '/projectBackgrounds/egyptian-background.jpg',
+              })
+            }
+            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+            style={{
+              backgroundImage:
+                'url(/projectBackgrounds/egyptian-background.jpg)',
+            }}
+          ></div>
+          <div
+            onClick={() =>
+              updateProjectSettings({
+                ...currentProjectSettings,
+                backgroundImage: '/projectBackgrounds/city-background.jpg',
+              })
+            }
+            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+            style={{
+              backgroundImage: 'url(/projectBackgrounds/city-background.jpg)',
+            }}
+          ></div>
+          <div
+            onClick={() =>
+              updateProjectSettings({
+                ...currentProjectSettings,
+                backgroundImage: '/projectBackgrounds/firewatch-background.jpg',
+              })
+            }
+            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+            style={{
+              backgroundImage:
+                'url(/projectBackgrounds/firewatch-background.jpg)',
+            }}
+          ></div>
+          <div
+            onClick={() =>
+              updateProjectSettings({
+                ...currentProjectSettings,
+                backgroundImage: '/projectBackgrounds/mountain-background.webp',
+              })
+            }
+            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+            style={{
+              backgroundImage:
+                'url(/projectBackgrounds/mountain-background.webp)',
+            }}
+          ></div>
+          <div
+            onClick={() =>
+              updateProjectSettings({
+                ...currentProjectSettings,
+                backgroundImage: '/projectBackgrounds/tree-background.png',
+              })
+            }
+            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+            style={{
+              backgroundImage: 'url(/projectBackgrounds/tree-background.png)',
+            }}
+          ></div>
+        </div>
       </div>
 
       {/* Project Description */}
@@ -83,8 +164,8 @@ const ModalProjectSettings = () => {
         />
       </div>
 
+      {/* Due Date */}
       <div className="flex items-center justify-around">
-        {/* Due Date */}
         <div className="flex items-center justify-center gap-3">
           <h2 className="text-light-text pb-1 pl-4 text-base font-normal">
             Due date:
@@ -125,10 +206,7 @@ const ModalProjectSettings = () => {
 
       {/* Save/Delete Project */}
       <div className="flex justify-between p-3 pt-15">
-        <button
-          onClick={''}
-          className="h-11 w-40 cursor-pointer rounded-2xl border border-[#D9D9D9] bg-[#F6F6F6] text-sm font-semibold text-[#BD3D3D] hover:bg-[#ebebeb] active:bg-[#F6F6F6]"
-        >
+        <button className="h-11 w-40 cursor-pointer rounded-2xl border border-[#D9D9D9] bg-[#F6F6F6] text-sm font-semibold text-[#BD3D3D] hover:bg-[#ebebeb] active:bg-[#F6F6F6]">
           Delete Project
         </button>
 

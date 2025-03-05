@@ -15,8 +15,8 @@ const ModalProject = ({
       style={
         modalProject
           ? {
-              width: `${(parentWidth * 2) / 5 + 20}px`,
-              minWidth: `${(parentWidth * 2) / 5 + 20}px`,
+              width: `${(parentWidth * 9 / 20 + 20)}px`,
+              minWidth: `${(parentWidth * 9 / 20 + 20)}px`,
             }
           : { width: 0, minWidth: 0 }
       }
@@ -26,8 +26,8 @@ const ModalProject = ({
         style={
           modalProject
             ? {
-                width: `${(parentWidth * 2) / 5}px`,
-                minWidth: `${(parentWidth * 2) / 5}px`,
+                width: `${(parentWidth * 9 / 20)}px`,
+                minWidth: `${(parentWidth * 9 / 20)}px`,
               }
             : { width: 0, minWidth: 0 }
         }
@@ -35,17 +35,17 @@ const ModalProject = ({
       >
         <div
           style={{
-            width: `${(parentWidth * 2) / 5}px`,
-            minWidth: `${(parentWidth * 2) / 5}px`,
+            width: `${(parentWidth * 9 / 20)}px`,
+            minWidth: `${(parentWidth * 9 / 20)}px`,
           }}
-          className="border-outline bg-custom-white h-full w-full overflow-y-auto rounded-3xl border p-3"
+          className="border-outline bg-custom-white h-full overflow-y-auto rounded-3xl border p-3"
         >
           <X
             onClick={() => setModalProject(false)}
             className="text-light-text hover:text-default-text ml-auto h-10 w-10 cursor-pointer duration-300"
           />
 
-          {projectOrTaskId === 'project' ? (
+          {projectOrTaskId === 'project' && parentWidth ? (
             <ModalProjectSettings />
           ) : (
             <ModalProjectTask projectOrTaskId={projectOrTaskId} />
