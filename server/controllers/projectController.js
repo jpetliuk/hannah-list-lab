@@ -71,27 +71,41 @@ export const getProject = async (req, res) => {
 };
 
 export const updateProject = async (req, res) => {
-  const { projectId } = req.params;
+  const { updatedProject } = req.body;
 
   try {
+    console.log('User from req.user:', req.user.id); // Log the authenticated user
+
+    // Ensure the user is authenticated, using Passport's `req.user` to get the authenticated user
+    if (!req.user) {
+      return res.status(401).json({ message: 'User not authenticated' });
+    }
+
+    // Find the project in the user's document by matching the project ID and user ID
     const user = await User.findOneAndUpdate(
-      { _id: req.user.id, 'projects._id': projectId },
+      { _id: req.user.id, 'projects._id': updatedProject._id },
       {
         $set: {
-          'projects.$.projectName': req.body.projectName,
-          'projects.$.description': req.body.description,
-          'projects.$.tasks': req.body.tasks,
+          'projects.$': updatedProject, // Update the matched project
         },
       },
-      { new: true },
-    ).select('projects');
+      { new: true }, // This returns the updated user document
+    );
 
-    if (!user) return res.status(404).json({ message: 'Project not found' });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: 'Project not found or user not authorized' });
+    }
 
-    res.status(200).json('Project updated successfully');
+    // If the project was found and updated, return the updated project
+    return res.status(200).json({
+      message: 'Project updated successfully',
+      project: updatedProject, // Send the updated project back to the client
+    });
   } catch (error) {
-    console.log('Error updating the project: ', error.message);
-    res.status(400).json({ message: error.message });
+    console.error('Error updating project: ', error.message);
+    return res.status(500).json({ message: error.message });
   }
 };
 

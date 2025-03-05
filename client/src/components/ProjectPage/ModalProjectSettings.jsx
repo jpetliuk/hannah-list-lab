@@ -6,26 +6,34 @@ import useUserStore from '../../store/userStore';
 
 const ProjectSettings = () => {
   const { currentProject, saveProject } = useUserStore();
-
   const [currentProjectSettings, setCurrentProjectSettings] = useState(null);
 
+  // update state of currentProjectSettings
   const updateProjectSettings = (updatedSettings) => {
     setCurrentProjectSettings(updatedSettings);
   };
 
-  useEffect(() => {
-    setCurrentProjectSettings(currentProject);
-  }, [currentProject]);
-
-  if (!currentProjectSettings) return;
-
+  // saves currentProjectSettings to the currentProject
   const saveNewProject = () => {
-    saveProject({ ...currentProjectSettings });
+    //validates if there are any changes made
+    if (
+      currentProjectSettings.projectName === currentProject.projectName &&
+      currentProjectSettings.description === currentProject.description &&
+      currentProjectSettings.dueDate === currentProject.dueDate &&
+      currentProjectSettings.color === currentProject.color
+    )
+      return console.log('No changes made');
 
+    saveProject({ ...currentProjectSettings });
     console.log(currentProjectSettings);
   };
 
-  if (!currentProjectSettings) return <div>Loading...</div>;
+  // sets currentProjectSettings to the currentProject from the store (id of project from params)
+  useEffect(() => {
+    setCurrentProjectSettings(currentProject || null);
+  }, [currentProject]);
+
+  if (currentProjectSettings === null) return <div>error</div>;
 
   return (
     <div className="-mt-3.5 flex flex-col gap-5">
@@ -142,28 +150,31 @@ const ProjectTask = ({ projectOrTaskId }) => {
   // note: projectOrItem === item._id
   const { saveProject, currentProject } = useUserStore();
   const [currentTask, setCurrentTask] = useState(null);
+  const [currentTaskPreChanges, setCurrentTaskPreChanges] = useState(null);
 
+  // update state of currentTask
   const updateProjectTask = (updatedTask) => {
     setCurrentTask(updatedTask);
   };
 
+  // update state of currentTask subtasks
   const updateSubtask = (updatedTask) => {
-    console.log(updatedTask);
     const updatedSubtasks = currentTask.subtasks.map((subtask) =>
       subtask._id === updatedTask._id ? updatedTask : subtask,
     );
     setCurrentTask({ ...currentTask, subtasks: updatedSubtasks });
   };
 
-  useEffect(() => {
-    const taskFound = currentProject.tasks.find(
-      (task) => task._id === projectOrTaskId,
-    );
-
-    setCurrentTask(taskFound || null);
-  }, [currentProject.tasks, projectOrTaskId]);
-
+  // saves currentTask to the currentProject
   const saveNewProject = () => {
+    //validates if there are any changes made
+    if (
+      currentTask.taskName === currentTaskPreChanges.taskName &&
+      currentTask.dueDate === currentTaskPreChanges.dueDate &&
+      currentTask.subtasks === currentTaskPreChanges.subtasks
+    )
+      return console.log('No changes made');
+
     const updatedProjects = {
       ...currentProject,
       tasks: currentProject.tasks.map((task) =>
@@ -175,7 +186,17 @@ const ProjectTask = ({ projectOrTaskId }) => {
     console.log(updatedProjects);
   };
 
-  if (!currentTask) return <div>Loading...</div>;
+  // sets currentTask to the task with the id of projectOrTaskId
+  useEffect(() => {
+    const taskFound = currentProject.tasks.find(
+      (task) => task._id === projectOrTaskId,
+    );
+
+    setCurrentTask(taskFound || null);
+    setCurrentTaskPreChanges(taskFound);
+  }, [currentProject.tasks, projectOrTaskId]);
+
+  if (currentTask === null) return <div>error</div>;
 
   return (
     <div className="-mt-3.5 flex flex-col gap-5">
@@ -313,7 +334,7 @@ const ModalProjectSettings = ({
         >
           <X
             onClick={() => setModalProject(false)}
-            className="text-light-text hover:text-default-text ml-auto h-10 w-10 duration-300 cursor-pointer"
+            className="text-light-text hover:text-default-text ml-auto h-10 w-10 cursor-pointer duration-300"
           />
 
           {projectOrTaskId === 'project' ? (

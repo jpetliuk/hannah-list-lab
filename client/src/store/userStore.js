@@ -28,6 +28,7 @@ const useUserStore = create((set) => ({
 
       set({
         user: {
+          _id: data._id,
           name: data.name,
           username: data.username,
           email: data.email,
@@ -54,8 +55,7 @@ const useUserStore = create((set) => ({
     });
   },
 
-  saveProject: (updatedProject) => {
-    console.log(updatedProject);
+  saveProject: async (updatedProject) => {
     // validate updated project
     // if valid update current project
     set((state) => {
@@ -77,24 +77,44 @@ const useUserStore = create((set) => ({
         };
       }
     });
+    //
+    //
+
+    try {
+      const response = await axios.put(
+        `${API_URL}/project/update`, // Adjust your API endpoint
+        { updatedProject }, // Send the updated project object
+        { withCredentials: true }, // Include credentials if needed (e.g., for cookie-based auth)
+      );
+
+      const data = response.data;
+
+      set((state) => ({
+        projects: state.projects.map((project) =>
+          updatedProject._id === project._id
+            ? {
+                ...project,
+                projectName: updatedProject.projectName,
+                description: updatedProject.description,
+                backgroundImage: updatedProject.backgroundImage,
+                iconColor: updatedProject.iconColor,
+                tasks: updatedProject.tasks ?? state.currentProject.tasks,
+              }
+            : project,
+        ),
+      }));
+
+      console.log(data);
+    } catch (error) {
+      console.error('Error updating project:', error);
+    }
+
+    //
+    //
 
     // send current project to server
     // server looks for project with id and updates it
     // await for response from server if successful update projects
-    set((state) => ({
-      projects: state.projects.map((project) =>
-        updatedProject._id === project._id
-          ? {
-              ...project,
-              projectName: updatedProject.projectName,
-              description: updatedProject.description,
-              backgroundImage: updatedProject.backgroundImage,
-              iconColor: updatedProject.iconColor,
-              tasks: updatedProject.tasks ?? state.currentProject.tasks,
-            }
-          : project,
-      ),
-    }));
   },
 
   logout: async () => {

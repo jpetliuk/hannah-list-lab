@@ -27,7 +27,7 @@ router.delete('/sticky-notes/', isAuthenticated, deleteStickyNote);
 //projects
 router.post('/project/', isAuthenticated, createProject);
 router.get('/project/:projectId', isAuthenticated, getProject);
-router.put('/project/:projectId', isAuthenticated, updateProject);
+router.put('/project/update', isAuthenticated, updateProject);
 router.delete('/project/:projectId', isAuthenticated, deleteProject);
 
 export default router;
