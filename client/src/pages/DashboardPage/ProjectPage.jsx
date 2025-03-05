@@ -48,32 +48,32 @@ const ProjectPage = () => {
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  if (isLoading)
-    return (
-      <div className="flex min-h-full w-full">
-        <div className="border-outline bg-custom-white flex min-h-full w-full flex-col items-center justify-center gap-15 rounded-3xl border">
-          <JumpingNote />
-          <h1 className="text-light-text text-center text-2xl font-bold">
-            Loading...
-          </h1>
-        </div>
-      </div>
-    );
-
   return (
     <div ref={parentRef} className="flex min-h-full w-full">
-      <div className="border-outline bg-custom-white min-h-full w-full rounded-3xl border">
-        {currentProject ? (
-          <ProjectDisplayer
-            projectOrTaskId={projectOrTaskId}
-            modalProject={modalProject}
-            setModalProject={setModalProject}
-            setProjectOrTaskId={setProjectOrTaskId}
-          />
-        ) : (
-          <NotFound404Page />
-        )}
-      </div>
+      {isLoading ? (
+        <div className="flex min-h-full w-full">
+          <div className="border-outline bg-custom-white flex min-h-full w-full flex-col items-center justify-center gap-15 rounded-3xl border">
+            <JumpingNote />
+            <h1 className="text-light-text text-center text-2xl font-bold">
+              Loading...
+            </h1>
+          </div>
+        </div>
+      ) : (
+        <div className="border-outline bg-custom-white min-h-full w-full rounded-3xl border">
+          {currentProject ? (
+            <ProjectDisplayer
+              projectOrTaskId={projectOrTaskId}
+              modalProject={modalProject}
+              setModalProject={setModalProject}
+              setProjectOrTaskId={setProjectOrTaskId}
+            />
+          ) : (
+            <NotFound404Page />
+          )}
+        </div>
+      )}
+
       {currentProject ? (
         <ModalProjectSettings
           parentWidth={parentWidth}

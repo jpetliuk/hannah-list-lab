@@ -313,7 +313,7 @@ const ModalProjectSettings = ({
         >
           <X
             onClick={() => setModalProject(false)}
-            className="text-light-text hover:text-default-text ml-auto h-10 w-10 cursor-pointer"
+            className="text-light-text hover:text-default-text ml-auto h-10 w-10 duration-300 cursor-pointer"
           />
 
           {projectOrTaskId === 'project' ? (

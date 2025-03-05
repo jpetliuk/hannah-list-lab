@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
+import { Plus } from 'lucide-react';
 
 import useUserStore from '../../store/userStore';
 
@@ -215,10 +216,10 @@ const StickyNotesPage = () => {
           ))}
 
           <div
-            className="bg-light-gray flex h-75 w-75 cursor-pointer items-center justify-center rounded-[10px] p-2.5 duration-300 hover:scale-102 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]"
+            className="bg-light-gray flex h-75 w-75 cursor-pointer items-center justify-center rounded-[10px] duration-300 hover:scale-102 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]"
             onClick={newNote}
           >
-            <h2 className="text-default-text pb-2 text-7xl font-light">+</h2>
+            <Plus className="text-light-text hover:text-default-text h-full w-full p-30 font-light duration-300 hover:p-29.5" />
           </div>
         </div>
       </div>
