@@ -4,12 +4,14 @@ import mongoose from 'mongoose';
 const taskSchema = mongoose.Schema({
   subtaskName: { type: String, required: true },
   completed: { type: Boolean, default: false },
+  _id: { type: String },
 });
 
 const itemSchema = mongoose.Schema({
   taskName: { type: String, required: true },
   completed: { type: Boolean, default: false },
   dueDate: { type: Date },
+  _id: { type: String },
   subtasks: {
     type: [taskSchema],
   },

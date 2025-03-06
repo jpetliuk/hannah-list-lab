@@ -55,9 +55,8 @@ const useUserStore = create((set) => ({
     });
   },
 
+  // save project with updated data to the server and update the state with the updated project
   saveProject: async (updatedProject) => {
-    // validate updated project
-    // if valid update current project
     set((state) => {
       if (updatedProject._id === state.currentProject._id) {
         return {
@@ -77,18 +76,17 @@ const useUserStore = create((set) => ({
         };
       }
     });
-    //
-    //
 
     try {
       const response = await axios.put(
-        `${API_URL}/project/update`, // Adjust your API endpoint
-        { updatedProject }, // Send the updated project object
-        { withCredentials: true }, // Include credentials if needed (e.g., for cookie-based auth)
+        `${API_URL}/project/update`,
+        { updatedProject },
+        { withCredentials: true },
       );
 
       const data = response.data;
 
+      // if the update was successful, update the project in the store to be on sync with the server
       set((state) => ({
         projects: state.projects.map((project) =>
           updatedProject._id === project._id
@@ -98,7 +96,7 @@ const useUserStore = create((set) => ({
                 description: updatedProject.description,
                 backgroundImage: updatedProject.backgroundImage,
                 iconColor: updatedProject.iconColor,
-                tasks: updatedProject.tasks ?? state.currentProject.tasks,
+                tasks: updatedProject.tasks,
               }
             : project,
         ),
@@ -106,15 +104,19 @@ const useUserStore = create((set) => ({
 
       console.log(data);
     } catch (error) {
+      // Roll back to the previous state if the update fails
+      set((state) => {
+        const restoredCurrentProject = state.projects.find(
+          (project) => project._id === state.currentProject._id,
+        );
+
+        return restoredCurrentProject
+          ? { currentProject: restoredCurrentProject }
+          : console.error('Error restoring project');
+      });
+
       console.error('Error updating project:', error);
     }
-
-    //
-    //
-
-    // send current project to server
-    // server looks for project with id and updates it
-    // await for response from server if successful update projects
   },
 
   logout: async () => {
@@ -136,6 +138,7 @@ const useUserStore = create((set) => ({
     }
   },
 
+  // Upsert (create or update) a sticky note and update state
   upsertStickyNote: async ({
     stickyNoteTitle,
     stickyNoteText,

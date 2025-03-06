@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useUserStore from '../../../store/userStore';
+import { Images } from 'lucide-react';
 
 const ModalProjectSettings = () => {
   const { currentProject, saveProject } = useUserStore();
@@ -35,113 +36,126 @@ const ModalProjectSettings = () => {
   if (currentProjectSettings === null) return <div>error</div>;
 
   return (
-    <div className="-mt-3.5 flex flex-col gap-5">
-      {/* Project Title */}
-      <div>
-        <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
-          Project Title:
-        </h2>
-        <input
-          name="project-title"
-          type="text"
-          autoComplete="off"
-          className="text-light-text border-light-gray w-full rounded-2xl border py-2.5 pl-10"
-          placeholder="Project name"
-          maxLength={35}
-          value={currentProjectSettings.projectName || ''}
-          onChange={(e) =>
-            updateProjectSettings({
-              ...currentProjectSettings,
-              projectName: e.target.value,
-            })
-          }
-        />
-      </div>
-
-      {/* Project Picture */}
-      <div>
-        <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
-          Project Picture:
-        </h2>
-      </div>
-
-      <div className="grid w-full grid-rows-1 gap-2">
-        {/* <!-- First row --> */}
-        <div className="grid h-35 grid-cols-[2fr_1fr] gap-2">
-          <div
-            className="h-35 cursor-pointer rounded-2xl bg-cover bg-[center_bottom_30%] duration-300 hover:scale-102 hover:shadow-lg"
-            style={{
-              backgroundImage: `url(${currentProjectSettings.backgroundImage})`,
-            }}
-          ></div>
-          <div className="h-35 cursor-pointer rounded-2xl bg-red-500 duration-300 hover:scale-102"></div>
+    <div
+      style={{ height: 'calc(100% - 40px)' }}
+      className="-mt-3.5 flex flex-col justify-between"
+    >
+      <div className="flex flex-col gap-5">
+        {/* Project Title */}
+        <div>
+          <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
+            Project Title:
+          </h2>
+          <input
+            name="project-title"
+            type="text"
+            autoComplete="off"
+            className="text-light-text border-light-gray w-full rounded-2xl border py-2.5 pl-10"
+            placeholder="Project name"
+            maxLength={35}
+            value={currentProjectSettings.projectName || ''}
+            onChange={(e) =>
+              updateProjectSettings({
+                ...currentProjectSettings,
+                projectName: e.target.value,
+              })
+            }
+          />
         </div>
 
-        {/* <!-- Second row --> */}
-        <div className="grid h-12.5 grid-cols-5 gap-2">
-          <div
-            onClick={() =>
-              updateProjectSettings({
-                ...currentProjectSettings,
-                backgroundImage: '/projectBackgrounds/egyptian-background.jpg',
-              })
-            }
-            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
-            style={{
-              backgroundImage:
-                'url(/projectBackgrounds/egyptian-background.jpg)',
-            }}
-          ></div>
-          <div
-            onClick={() =>
-              updateProjectSettings({
-                ...currentProjectSettings,
-                backgroundImage: '/projectBackgrounds/city-background.jpg',
-              })
-            }
-            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
-            style={{
-              backgroundImage: 'url(/projectBackgrounds/city-background.jpg)',
-            }}
-          ></div>
-          <div
-            onClick={() =>
-              updateProjectSettings({
-                ...currentProjectSettings,
-                backgroundImage: '/projectBackgrounds/firewatch-background.jpg',
-              })
-            }
-            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
-            style={{
-              backgroundImage:
-                'url(/projectBackgrounds/firewatch-background.jpg)',
-            }}
-          ></div>
-          <div
-            onClick={() =>
-              updateProjectSettings({
-                ...currentProjectSettings,
-                backgroundImage: '/projectBackgrounds/mountain-background.webp',
-              })
-            }
-            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
-            style={{
-              backgroundImage:
-                'url(/projectBackgrounds/mountain-background.webp)',
-            }}
-          ></div>
-          <div
-            onClick={() =>
-              updateProjectSettings({
-                ...currentProjectSettings,
-                backgroundImage: '/projectBackgrounds/tree-background.png',
-              })
-            }
-            className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
-            style={{
-              backgroundImage: 'url(/projectBackgrounds/tree-background.png)',
-            }}
-          ></div>
+        {/* Project Picture */}
+        <div>
+          <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
+            Project Picture:
+          </h2>
+        </div>
+
+        <div className="grid w-full grid-rows-1 gap-2">
+          {/* <!-- First row --> */}
+          <div className="grid h-35 grid-cols-[2fr_1fr] gap-2">
+            <div
+              className="border-light-gray h-35 rounded-2xl border bg-cover bg-[center_bottom_30%]"
+              style={{
+                backgroundImage: `url(${currentProjectSettings.backgroundImage})`,
+              }}
+            ></div>
+            <div className="flex h-35 flex-col items-center justify-center">
+              <h3 className="text-light-text">Upload Image:</h3>
+              <div className="border-light-gray text-light-text hover:border-dark-gray hover:text-default-text h-fit w-fit cursor-pointer rounded-full border p-4 duration-200">
+                <Images />
+              </div>
+            </div>
+          </div>
+
+          {/* <!-- Second row --> */}
+          <div className="grid h-12.5 grid-cols-5 gap-2">
+            <div
+              onClick={() =>
+                updateProjectSettings({
+                  ...currentProjectSettings,
+                  backgroundImage:
+                    '/projectBackgrounds/egyptian-background.jpg',
+                })
+              }
+              className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+              style={{
+                backgroundImage:
+                  'url(/projectBackgrounds/egyptian-background.jpg)',
+              }}
+            ></div>
+            <div
+              onClick={() =>
+                updateProjectSettings({
+                  ...currentProjectSettings,
+                  backgroundImage: '/projectBackgrounds/city-background.jpg',
+                })
+              }
+              className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+              style={{
+                backgroundImage: 'url(/projectBackgrounds/city-background.jpg)',
+              }}
+            ></div>
+            <div
+              onClick={() =>
+                updateProjectSettings({
+                  ...currentProjectSettings,
+                  backgroundImage:
+                    '/projectBackgrounds/firewatch-background.jpg',
+                })
+              }
+              className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+              style={{
+                backgroundImage:
+                  'url(/projectBackgrounds/firewatch-background.jpg)',
+              }}
+            ></div>
+            <div
+              onClick={() =>
+                updateProjectSettings({
+                  ...currentProjectSettings,
+                  backgroundImage:
+                    '/projectBackgrounds/mountain-background.webp',
+                })
+              }
+              className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+              style={{
+                backgroundImage:
+                  'url(/projectBackgrounds/mountain-background.webp)',
+              }}
+            ></div>
+            <div
+              onClick={() =>
+                updateProjectSettings({
+                  ...currentProjectSettings,
+                  backgroundImage: '/projectBackgrounds/tree-background.png',
+                })
+              }
+              className="h-12.5 cursor-pointer rounded-2xl bg-cover bg-bottom duration-300 hover:scale-105 hover:shadow-lg"
+              style={{
+                backgroundImage: 'url(/projectBackgrounds/tree-background.png)',
+              }}
+            ></div>
+          </div>
         </div>
       </div>
 
@@ -152,15 +166,17 @@ const ModalProjectSettings = () => {
         </h2>
         <textarea
           autoComplete="off"
-          className="text-light-text border-light-gray h-40 w-full resize-none rounded-2xl border px-3 py-2"
-          placeholder="Project name"
+          className={`text-light-text border-light-gray max-h-40 w-full resize-none rounded-2xl border px-3 py-2 transition-all duration-300 ${
+            currentProjectSettings.description === '' ? 'h-12' : 'h-40'
+          }`}
+          placeholder="Your project description"
           value={currentProjectSettings.description || ''}
-          onChange={(e) =>
+          onChange={(e) => {
             updateProjectSettings({
               ...currentProjectSettings,
               description: e.target.value,
-            })
-          }
+            });
+          }}
         />
       </div>
 

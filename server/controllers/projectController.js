@@ -72,10 +72,10 @@ export const getProject = async (req, res) => {
 
 export const updateProject = async (req, res) => {
   const { updatedProject } = req.body;
+  console.log('Updated project:', updatedProject);
 
   try {
-    console.log('User from req.user:', req.user.id); // Log the authenticated user
-
+    // Log the authenticated user
     // Ensure the user is authenticated, using Passport's `req.user` to get the authenticated user
     if (!req.user) {
       return res.status(401).json({ message: 'User not authenticated' });
