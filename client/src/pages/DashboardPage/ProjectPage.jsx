@@ -80,6 +80,7 @@ const ProjectPage = () => {
           modalProject={modalProject}
           setModalProject={setModalProject}
           projectOrTaskId={projectOrTaskId}
+          setProjectOrTaskId={setProjectOrTaskId}
         />
       ) : null}
     </div>

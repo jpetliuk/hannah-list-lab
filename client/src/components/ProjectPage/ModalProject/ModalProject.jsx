@@ -9,14 +9,15 @@ const ModalProject = ({
   modalProject,
   setModalProject,
   projectOrTaskId,
+  setProjectOrTaskId,
 }) => {
   return (
     <div
       style={
         modalProject
           ? {
-              width: `${(parentWidth * 9 / 20 + 20)}px`,
-              minWidth: `${(parentWidth * 9 / 20 + 20)}px`,
+              width: `${(parentWidth * 9) / 20 + 20}px`,
+              minWidth: `${(parentWidth * 9) / 20 + 20}px`,
             }
           : { width: 0, minWidth: 0 }
       }
@@ -26,8 +27,8 @@ const ModalProject = ({
         style={
           modalProject
             ? {
-                width: `${(parentWidth * 9 / 20)}px`,
-                minWidth: `${(parentWidth * 9 / 20)}px`,
+                width: `${(parentWidth * 9) / 20}px`,
+                minWidth: `${(parentWidth * 9) / 20}px`,
               }
             : { width: 0, minWidth: 0 }
         }
@@ -35,8 +36,8 @@ const ModalProject = ({
       >
         <div
           style={{
-            width: `${(parentWidth * 9 / 20)}px`,
-            minWidth: `${(parentWidth * 9 / 20)}px`,
+            width: `${(parentWidth * 9) / 20}px`,
+            minWidth: `${(parentWidth * 9) / 20}px`,
           }}
           className="border-outline bg-custom-white h-full overflow-y-auto rounded-3xl border p-3"
         >
@@ -48,7 +49,11 @@ const ModalProject = ({
           {projectOrTaskId === 'project' && parentWidth ? (
             <ModalProjectSettings />
           ) : (
-            <ModalProjectTask projectOrTaskId={projectOrTaskId} />
+            <ModalProjectTask
+              projectOrTaskId={projectOrTaskId}
+              setProjectOrTaskId={setProjectOrTaskId}
+              setModalProject={setModalProject}
+            />
           )}
         </div>
       </div>
@@ -61,6 +66,7 @@ ModalProject.propTypes = {
   projectOrTaskId: PropTypes.string.isRequired,
   modalProject: PropTypes.bool.isRequired,
   setModalProject: PropTypes.func.isRequired,
+  setProjectOrTaskId: PropTypes.func.isRequired,
 };
 
 export default ModalProject;

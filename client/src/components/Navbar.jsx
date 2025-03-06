@@ -38,7 +38,7 @@ const tools = [
 ];
 
 const Navbar = () => {
-  const { projects, user, logout } = useUserStore();
+  const { projects, user, logout, createNewProject } = useUserStore();
   const { handleModalUserSettings } = useAppStates();
 
   const location = useLocation();
@@ -114,7 +114,10 @@ const Navbar = () => {
             </Link>
           ))}
           <div className="hover:text-default-text h-4 overflow-hidden text-transparent duration-200 hover:h-9">
-            <div className="hover:bg-navbar-create-button flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1.5 duration-200">
+            <div
+              onClick={() => createNewProject('new project')}
+              className="hover:bg-navbar-create-button flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1.5 duration-200"
+            >
               <h3 className="mr-5 text-center text-[15px] font-light select-none">
                 Create new Project
               </h3>

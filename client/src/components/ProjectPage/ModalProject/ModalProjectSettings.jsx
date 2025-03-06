@@ -3,7 +3,7 @@ import useUserStore from '../../../store/userStore';
 import { Images } from 'lucide-react';
 
 const ModalProjectSettings = () => {
-  const { currentProject, saveProject } = useUserStore();
+  const { currentProject, saveProject, deleteProject } = useUserStore();
   const [currentProjectSettings, setCurrentProjectSettings] = useState(null);
 
   // update state of currentProjectSettings
@@ -222,7 +222,10 @@ const ModalProjectSettings = () => {
 
       {/* Save/Delete Project */}
       <div className="flex justify-between p-3 pt-15">
-        <button className="h-11 w-40 cursor-pointer rounded-2xl border border-[#D9D9D9] bg-[#F6F6F6] text-sm font-semibold text-[#BD3D3D] hover:bg-[#ebebeb] active:bg-[#F6F6F6]">
+        <button
+          onClick={() => deleteProject(currentProject._id)}
+          className="h-11 w-40 cursor-pointer rounded-2xl border border-[#D9D9D9] bg-[#F6F6F6] text-sm font-semibold text-[#BD3D3D] hover:bg-[#ebebeb] active:bg-[#F6F6F6]"
+        >
           Delete Project
         </button>
 

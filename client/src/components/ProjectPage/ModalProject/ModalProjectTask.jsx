@@ -6,9 +6,13 @@ import { nanoid } from 'nanoid';
 
 import useUserStore from '../../../store/userStore';
 
-const ModalProjectTask = ({ projectOrTaskId }) => {
+const ModalProjectTask = ({
+  projectOrTaskId,
+  setProjectOrTaskId,
+  setModalProject,
+}) => {
   // note: projectOrItem === item._id
-  const { saveProject, currentProject } = useUserStore();
+  const { currentProject, updateTask, deleteTask } = useUserStore();
   const [currentTask, setCurrentTask] = useState(null);
   const [currentTaskPreChanges, setCurrentTaskPreChanges] = useState(null);
 
@@ -39,8 +43,6 @@ const ModalProjectTask = ({ projectOrTaskId }) => {
   const createSubtask = () => {
     const newSubtask = { subtaskName: '', completed: false, _id: nanoid() };
 
-    console.log(newSubtask);
-
     setCurrentTask({
       ...currentTask,
       subtasks: [...currentTask.subtasks, newSubtask],
@@ -48,7 +50,7 @@ const ModalProjectTask = ({ projectOrTaskId }) => {
   };
 
   // saves currentTask to the currentProject
-  const saveNewProject = () => {
+  const saveNewProjectHandler = () => {
     //validates if there are any changes made
     if (
       currentTask.taskName === currentTaskPreChanges.taskName &&
@@ -57,29 +59,14 @@ const ModalProjectTask = ({ projectOrTaskId }) => {
     )
       return console.log('No changes made');
 
-    const updatedProjects = {
-      ...currentProject,
-      tasks: currentProject.tasks.map((task) =>
-        task._id === currentTask._id ? { ...task, ...currentTask } : task,
-      ),
-    };
-
-    saveProject({ ...updatedProjects });
+    updateTask(currentTask, currentProject._id);
   };
 
   // delete task
-  const deleteTask = () => {
-    const updatedProjects = {
-      ...currentProject,
-      tasks: currentProject.tasks.filter(
-        (task) => task._id !== currentTask._id,
-      ), // Remove the task
-    };
-
-    // saveProject(updatedProjects);
-    console.log(updatedProjects);
-
-    console.log('Task deleted:', currentTask);
+  const deleteTaskHandler = () => {
+    deleteTask(currentTask._id, currentProject._id);
+    setProjectOrTaskId('project');
+    setModalProject(false);
   };
 
   // sets currentTask to the task with the id of projectOrTaskId
@@ -99,7 +86,7 @@ const ModalProjectTask = ({ projectOrTaskId }) => {
       style={{ height: 'calc(100% - 40px)' }}
       className="-mt-3.5 flex flex-col justify-between"
     >
-      <div className='flex flex-col gap-5'>
+      <div className="flex flex-col gap-5">
         {/* Task Title */}
         <div>
           <h2 className="text-light-text pb-1 pl-4 text-2xl font-semibold">
@@ -187,14 +174,14 @@ const ModalProjectTask = ({ projectOrTaskId }) => {
       {/* Save/Delete Task */}
       <div className="flex justify-between p-3 pt-15">
         <button
-          onClick={deleteTask}
+          onClick={deleteTaskHandler}
           className="h-11 w-40 cursor-pointer rounded-2xl border border-[#D9D9D9] bg-[#F6F6F6] text-sm font-semibold text-[#BD3D3D] hover:bg-[#ebebeb] active:bg-[#F6F6F6]"
         >
           Delete Project
         </button>
 
         <button
-          onClick={saveNewProject}
+          onClick={saveNewProjectHandler}
           className="bg-button-yellow text-default-text hover:bg-button-yellow-hover active:bg-button-yellow h-11 w-40 cursor-pointer rounded-2xl font-semibold"
         >
           Save Changes
@@ -206,6 +193,8 @@ const ModalProjectTask = ({ projectOrTaskId }) => {
 
 ModalProjectTask.propTypes = {
   projectOrTaskId: PropTypes.string.isRequired,
+  setProjectOrTaskId: PropTypes.func.isRequired,
+  setModalProject: PropTypes.func.isRequired,
 };
 
 export default ModalProjectTask;
