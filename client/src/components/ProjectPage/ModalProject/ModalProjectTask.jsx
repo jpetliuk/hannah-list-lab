@@ -41,7 +41,11 @@ const ModalProjectTask = ({
 
   // create subtask in currentTask
   const createSubtask = () => {
-    const newSubtask = { subtaskName: '', completed: false, _id: nanoid() };
+    const newSubtask = {
+      subtaskName: '',
+      completed: false,
+      _id: nanoid(),
+    };
 
     setCurrentTask({
       ...currentTask,
@@ -131,17 +135,17 @@ const ModalProjectTask = ({
           <div className="flex h-fit w-full flex-col gap-1">
             {currentTask.subtasks.map((subtask) => (
               <div key={subtask._id} className="flex h-8 items-center gap-1">
-                {/* <input
-                type="checkbox"
-                className="h-6 w-6 appearance-none rounded-md border-2 border-gray-500 checked:border-transparent checked:bg-blue-500"
-                checked={subtask.completed}
-                onChange={(e) =>
-                  updateSubtask({
-                    ...subtask,
-                    completed: e.target.checked,
-                  })
-                }
-              /> */}
+                <input
+                  type="checkbox"
+                  className="h-6 w-6 appearance-none rounded-md border-2 border-gray-500 checked:border-transparent checked:bg-blue-500"
+                  checked={subtask.completed}
+                  onChange={(e) =>
+                    updateSubtask({
+                      ...subtask,
+                      completed: e.target.checked,
+                    })
+                  }
+                />
 
                 <input
                   name="subtask-name"

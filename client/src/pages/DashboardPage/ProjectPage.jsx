@@ -9,7 +9,7 @@ import JumpingNote from '../../components/Loaders/JumpingNote';
 import { useState, useEffect, useRef } from 'react';
 
 const ProjectPage = () => {
-  const [isLoading, setISLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const { currentProject, setCurrentProject, projects } = useUserStore();
 
@@ -19,7 +19,7 @@ const ProjectPage = () => {
 
     projectFound ? setCurrentProject(projectFound) : setCurrentProject(false);
 
-    setISLoading(false);
+    setIsLoading(false);
   }, [projects, id, setCurrentProject]);
 
   // Modal editing

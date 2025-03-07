@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import userStore from '../../store/userStore';
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const ProjectDisplayer = ({
   modalProject,
@@ -12,6 +12,7 @@ const ProjectDisplayer = ({
   setProjectOrTaskId,
 }) => {
   const [newTaskName, setNewTaskName] = useState('');
+  const [completionPercentage, setCompletionPercentage] = useState('');
   const { currentProject, createTask } = userStore();
 
   const settingsButton = () => {
@@ -34,6 +35,7 @@ const ProjectDisplayer = ({
     const newTask = {
       taskName: newTaskName,
       completed: false,
+      dueDate: new Date(),
       subtasks: [],
       _id: nanoid(),
     };
@@ -41,17 +43,36 @@ const ProjectDisplayer = ({
     createTask(newTask, currentProject._id);
   };
 
-  const projectPercentageCompletion = () => {
-    const completionPercentage =
-      (currentProject.tasks.reduce(
-        (count, task) => count + (task.completed ? 1 : 0),
-        0,
-      ) /
-        currentProject.tasks.length) *
-      100;
+  useEffect(() => {
+    const projectPercentageCompletion = () => {
+      const { completedItems, totalItems } = currentProject.tasks.reduce(
+        (acc, task) => {
+          // Check if the task itself is completed
+          const isTaskCompleted = task.completed;
 
-    return completionPercentage.toFixed(0);
-  };
+          // Check if all subtasks are completed
+          const areAllSubtasksCompleted =
+            task.subtasks.length > 0 &&
+            task.subtasks.every((sub) => sub.completed);
+
+          if (isTaskCompleted || areAllSubtasksCompleted) {
+            acc.completedItems++; // Count this task as completed
+          }
+
+          acc.totalItems++; // Count total tasks
+
+          return acc;
+        },
+        { completedItems: 0, totalItems: 0 },
+      );
+
+      const completionPercentage =
+        totalItems > 0 ? (completedItems / totalItems) * 100 : 0;
+
+      return setCompletionPercentage(completionPercentage.toFixed(0));
+    };
+    projectPercentageCompletion();
+  }, [currentProject]);
 
   return (
     <div className="min-h-full w-full p-4">
@@ -66,7 +87,7 @@ const ProjectDisplayer = ({
           {currentProject.projectName}
         </h1>
         <h1 className="text-custom-white ml-auto pt-2 pr-4 text-4xl font-semibold">
-          {projectPercentageCompletion()}%
+          {completionPercentage}%
         </h1>
         <div
           onClick={settingsButton}

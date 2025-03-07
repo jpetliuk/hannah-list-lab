@@ -229,6 +229,8 @@ const useUserStore = create((set) => ({
       const data = response.data;
       console.log(data);
 
+      set({ project: data.tasksFullList.projects });
+
       console.log('Task created successfully:', response.data.message);
     } catch (error) {
       console.error('Error creating task:', error.message);
