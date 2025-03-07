@@ -181,7 +181,7 @@ const ModalProjectTask = ({
           onClick={deleteTaskHandler}
           className="h-11 w-40 cursor-pointer rounded-2xl border border-[#D9D9D9] bg-[#F6F6F6] text-sm font-semibold text-[#BD3D3D] hover:bg-[#ebebeb] active:bg-[#F6F6F6]"
         >
-          Delete Project
+          Delete Task
         </button>
 
         <button
