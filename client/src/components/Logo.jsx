@@ -3,31 +3,27 @@ import { useState } from 'react';
 const Logo = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  return isDarkMode ? (
+  return (
     <div
       onClick={() => setIsDarkMode(!isDarkMode)}
-      className="border-outline flex h-14 w-full items-center rounded-3xl border bg-black"
+      className={`border-outline hidden h-14 w-65 items-center rounded-3xl border select-none md:flex ${isDarkMode ? 'bg-black' : 'bg-custom-white'}`}
     >
-      <img
-        src="/hannahListLabIcon-dark.png"
-        alt="icon"
-        className="ml-3 w-14 rounded-full object-cover object-center"
-      />
-      <h1 className="my-auto text-center text-lg font-bold text-white">
-        HANNAH&apos;S LIST LAB
-      </h1>
-    </div>
-  ) : (
-    <div
-      onClick={() => setIsDarkMode(!isDarkMode)}
-      className="border-outline bg-custom-white flex h-14 w-full items-center rounded-3xl border"
-    >
-      <img
-        src="/hannahListLabIcon.png"
-        alt="icon"
-        className="ml-3 w-14 rounded-full object-cover object-center"
-      />
-      <h1 className="text-default-text my-auto text-center text-lg font-bold">
+      {isDarkMode ? (
+        <img
+          src="/hannahListLabIcon-dark.png"
+          alt="icon"
+          className="ml-3 size-14 rounded-full object-cover object-center"
+        />
+      ) : (
+        <img
+          src="/hannahListLabIcon.png"
+          alt="icon"
+          className="ml-3 size-14 rounded-full object-cover object-center"
+        />
+      )}
+      <h1
+        className={`my-auto text-center text-lg font-bold ${isDarkMode ? 'text-white' : 'text-default-text'}`}
+      >
         HANNAH&apos;S LIST LAB
       </h1>
     </div>

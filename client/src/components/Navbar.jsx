@@ -55,7 +55,7 @@ const Navbar = () => {
   }, [location.pathname, id]);
 
   return (
-    <div className="border-outline bg-custom-white relative flex h-full min-h-full w-full flex-1 flex-col justify-between rounded-3xl border p-3">
+    <div className="border-outline bg-custom-white relative hidden h-full min-h-full w-65 flex-1 flex-col justify-between rounded-3xl border p-3 md:flex">
       <div>
         <div className="border-white-gray flex w-full items-center gap-3 border-b pb-4">
           <img

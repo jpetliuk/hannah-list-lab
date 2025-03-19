@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Login = () => {
   return (
-    <div className="border-light-gray flex h-full w-full items-center justify-center rounded-3xl border p-8">
+    <section className="border-light-gray flex h-full w-full items-center justify-center rounded-3xl border p-8">
       <div className="w-[450px]">
         <h1 className="text-default-text mb-3 text-left text-4xl font-bold">
           Sign in
@@ -50,7 +50,7 @@ const Login = () => {
           Already have an account? Sign in
         </h3>
       </div>
-    </div>
+    </section>
   );
 };
 export default Login;

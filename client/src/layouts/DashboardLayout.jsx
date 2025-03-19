@@ -10,12 +10,14 @@ const DashboardLayout = () => {
   const { modalUserSettings } = useAppStates();
 
   return (
-    <div className="flex min-h-screen w-full">
-      <div className="fixed flex min-h-screen flex-1 w-75 flex-col gap-4 p-5 pr-3">
-        <Logo />
-        <Navbar />
+    <div className="relative block min-h-screen w-full md:grid md:grid-cols-[300px_1fr]">
+      <div>
+        <div className="fixed hidden min-h-screen flex-col gap-4 p-5 md:flex">
+          <Logo />
+          <Navbar />
+        </div>
       </div>
-      <div className="ml-75 min-h-screen flex-1 p-5 pl-3">
+      <div className="min-h-screen w-full md:p-5 md:pl-0">
         <Outlet />
       </div>
 

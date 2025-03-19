@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const GetStarted = () => {
   return (
-    <div className="border-light-gray flex h-full w-full items-center justify-center rounded-3xl border p-8">
+    <section className="border-light-gray flex h-full w-full items-center justify-center rounded-3xl border p-8">
       <div className="w-[450px]">
         <h1 className="text-default-text mb-3 text-center text-4xl font-bold">
           Get Started
@@ -21,7 +21,7 @@ const GetStarted = () => {
           Already have an account? Sign in
         </h3>
       </div>
-    </div>
+    </section>
   );
 };
 export default GetStarted;
