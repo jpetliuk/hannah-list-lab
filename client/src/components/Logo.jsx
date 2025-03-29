@@ -4,7 +4,7 @@ const Logo = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
-    <div
+    <section
       onClick={() => setIsDarkMode(!isDarkMode)}
       className={`border-outline hidden h-14 w-65 items-center rounded-3xl border select-none md:flex ${isDarkMode ? 'bg-black' : 'bg-custom-white'}`}
     >
@@ -26,7 +26,7 @@ const Logo = () => {
       >
         HANNAH&apos;S LIST LAB
       </h1>
-    </div>
+    </section>
   );
 };
 export default Logo;

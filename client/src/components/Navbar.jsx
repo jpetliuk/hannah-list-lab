@@ -55,9 +55,9 @@ const Navbar = () => {
   }, [location.pathname, id]);
 
   return (
-    <div className="border-outline bg-custom-white relative hidden h-full min-h-full w-65 flex-1 flex-col justify-between rounded-3xl border p-3 md:flex">
+    <nav className="border-outline bg-custom-white relative hidden h-full min-h-full w-65 flex-1 flex-col justify-between rounded-3xl border p-3 md:flex">
       <div>
-        <div className="border-white-gray flex w-full items-center gap-3 border-b pb-4">
+        <section className="border-white-gray flex w-full items-center gap-3 border-b pb-4">
           <img
             src={user.profilePicture}
             alt="user icon photo"
@@ -66,10 +66,10 @@ const Navbar = () => {
           <h2 className="text-default-text text- h-6 w-38 overflow-hidden font-semibold">
             Welcome Back!
           </h2>
-        </div>
+        </section>
 
         {/* Tools builder */}
-        <div className="border-white-gray mt-2 flex w-full flex-col gap-1 border-b pb-4">
+        <section className="border-white-gray mt-2 flex w-full flex-col gap-1 border-b pb-4">
           <h2 className="text-default-text text-base font-semibold">Tools</h2>
 
           {tools.map(({ label, path, Icon }) => (
@@ -88,11 +88,11 @@ const Navbar = () => {
               </div>
             </Link>
           ))}
-        </div>
+        </section>
         {/* Tools builder */}
 
         {/* Projects builder */}
-        <div className="border-white-gray mt-2 flex w-full flex-col gap-1 border-b pb-1.5">
+        <section className="border-white-gray mt-2 flex w-full flex-col gap-1 border-b pb-1.5">
           <h2 className="text-default-text text-base font-semibold">
             Projects
           </h2>
@@ -123,12 +123,12 @@ const Navbar = () => {
               </h3>
             </div>
           </div>
-        </div>
+        </section>
         {/* Projects builder */}
       </div>
 
       {/* Settings section */}
-      <div className="border-white-gray flex w-full flex-col gap-1 border-t pt-2">
+      <section className="border-white-gray flex w-full flex-col gap-1 border-t pt-2">
         <div
           onClick={handleModalUserSettings}
           className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
@@ -143,9 +143,9 @@ const Navbar = () => {
           <LogOut className="h-5 w-5" />
           <h3 className="text-light-text text-[15px] font-light">Sign-out</h3>
         </div>
-      </div>
+      </section>
       {/* Settings section */}
-    </div>
+    </nav>
   );
 };
 export default Navbar;

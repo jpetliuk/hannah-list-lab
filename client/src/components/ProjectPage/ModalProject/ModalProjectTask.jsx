@@ -86,7 +86,7 @@ const ModalProjectTask = ({
   if (currentTask === null) return <div>error</div>;
 
   return (
-    <div
+    <aside
       style={{ height: 'calc(100% - 40px)' }}
       className="-mt-3.5 flex flex-col justify-between"
     >
@@ -191,7 +191,7 @@ const ModalProjectTask = ({
           Save Changes
         </button>
       </div>
-    </div>
+    </aside>
   );
 };
 

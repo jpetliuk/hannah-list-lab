@@ -1,0 +1,31 @@
+{
+   "name": "hannah-list-lab",
+   "version": "1.0.0",
+   "description": "Hannah's List Lab is a full-stack to-do list app built with the MERN stack (MongoDB, Express, React, Node.js). It features OAuth authentication for secure access and a clean, modern UI for efficient task management.",
+   "main": "index.js",
+   "private": true,
+   "scripts": {
+      "start": "(cd server && npm run server) & (cd client && npm run dev)",
+      "install:all": "(cd server && npm install) && (cd client && npm install)",
+      "build": "cd client && npm run build"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/jpetliuk/hannah-list-lab.git"
+   },
+   "keywords": [
+      "todo",
+      "mern",
+      "react",
+      "express",
+      "mongodb",
+      "oauth",
+      "task management"
+   ],
+   "author": "",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/jpetliuk/hannah-list-lab/issues"
+   },
+   "homepage": "https://jpetliuk.github.io/hannah-list-lab/"
+}
