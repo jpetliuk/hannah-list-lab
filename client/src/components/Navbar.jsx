@@ -7,9 +7,9 @@ import useAppStates from '../store/appStates';
 
 import {
   House,
-  Calendar,
+  // Calendar,
   Sticker,
-  ChartLine,
+  // ChartLine,
   Settings,
   LogOut,
 } from 'lucide-react';
@@ -20,21 +20,21 @@ const tools = [
     Icon: House,
     path: '/dashboard',
   },
-  {
-    label: 'Calendar',
-    Icon: Calendar,
-    path: '/dashboard/calendar',
-  },
+  // {
+  //   label: 'Calendar',
+  //   Icon: Calendar,
+  //   path: '/dashboard/calendar',
+  // },
   {
     label: 'Sticky notes',
     Icon: Sticker,
     path: '/dashboard/sticky-notes',
   },
-  {
-    label: 'Task progress',
-    Icon: ChartLine,
-    path: '/dashboard/task-progress',
-  },
+  // {
+  //   label: 'Task progress',
+  //   Icon: ChartLine,
+  //   path: '/dashboard/task-progress',
+  // },
 ];
 
 const Navbar = () => {
@@ -45,6 +45,13 @@ const Navbar = () => {
   const { id } = useParams();
 
   const [selected, setSelected] = useState(location.pathname);
+
+  const [loading, setLoading] = useState(false);
+  const newProjectHandler = async () => {
+    setLoading(true);
+    await createNewProject('new project');
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (id) {
@@ -113,15 +120,18 @@ const Navbar = () => {
               </div>
             </Link>
           ))}
-          <div className="hover:text-default-text h-4 overflow-hidden text-transparent duration-200 hover:h-9">
-            <div
-              onClick={() => createNewProject('new project')}
-              className="hover:bg-navbar-create-button flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1.5 duration-200"
+          <div
+            className={`${loading ? 'text-default-text h-9' : 'h-4 text-transparent'} hover:text-default-text overflow-hidden duration-200 hover:h-9`}
+          >
+            <button
+              disabled={loading}
+              onClick={newProjectHandler}
+              className={`${loading ? 'bg-navbar-create-button' : 'bg-transparent'} hover:bg-navbar-create-button flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1.5 duration-200`}
             >
               <h3 className="mr-5 text-center text-[15px] font-light select-none">
-                Create new Project
+                {loading ? 'Loading...' : '+'}
               </h3>
-            </div>
+            </button>
           </div>
         </section>
         {/* Projects builder */}
