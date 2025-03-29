@@ -44,34 +44,31 @@ const ProjectDisplayer = ({
   };
 
   useEffect(() => {
-    const projectPercentageCompletion = () => {
-      const { completedItems, totalItems } = currentProject.tasks.reduce(
-        (acc, task) => {
-          // Check if the task itself is completed
-          const isTaskCompleted = task.completed;
+    const { completedItems, totalItems } = currentProject.tasks.reduce(
+      (acc, task) => {
+        // Check if the task itself is completed
+        const isTaskCompleted = task.completed;
 
-          // Check if all subtasks are completed
-          const areAllSubtasksCompleted =
-            task.subtasks.length > 0 &&
-            task.subtasks.every((sub) => sub.completed);
+        // Check if all subtasks are completed
+        const areAllSubtasksCompleted =
+          task.subtasks.length > 0 &&
+          task.subtasks.every((sub) => sub.completed);
 
-          if (isTaskCompleted || areAllSubtasksCompleted) {
-            acc.completedItems++; // Count this task as completed
-          }
+        if (isTaskCompleted || areAllSubtasksCompleted) {
+          acc.completedItems++; // Count this task as completed
+        }
 
-          acc.totalItems++; // Count total tasks
+        acc.totalItems++; // Count total tasks
 
-          return acc;
-        },
-        { completedItems: 0, totalItems: 0 },
-      );
+        return acc;
+      },
+      { completedItems: 0, totalItems: 0 },
+    );
 
-      const completionPercentage =
-        totalItems > 0 ? (completedItems / totalItems) * 100 : 0;
+    const completionPercentage =
+      totalItems > 0 ? (completedItems / totalItems) * 100 : 0;
 
-      return setCompletionPercentage(completionPercentage.toFixed(0));
-    };
-    projectPercentageCompletion();
+    return setCompletionPercentage(completionPercentage.toFixed(0));
   }, [currentProject]);
 
   return (
@@ -128,10 +125,13 @@ const ProjectDisplayer = ({
         {/* Add New */}
 
         {/* Map Items */}
-        <div className="flex flex-col gap-5">
+        <section className="flex flex-col rounded-2xl">
           {currentProject.tasks.map((task) => (
-            <div key={task._id} className="border">
-              <div className="border-light-gray flex h-12 w-full items-center justify-between border border-b pl-10">
+            <div
+              key={task._id}
+              className="bg-custom-white border-white-gray my-2.5 rounded-2xl border shadow-md"
+            >
+              <div className="border-light-gray flex h-12 w-full items-center justify-between border-b pl-10">
                 <div className="flex items-center justify-between">
                   <h3 className="pb-1 text-xl font-semibold">
                     {task.taskName}
@@ -149,19 +149,19 @@ const ProjectDisplayer = ({
               </div>
               {/* Map Tasks */}
               <div className="px-3">
-                {task.subtasks.map((subtask) => (
+                {task.subtasks.map((subtask, index) => (
                   <div
                     key={subtask._id}
-                    className="border-light-gray mx-auto border-b py-4 pl-20"
+                    className={`border-light-gray mx-auto border-b py-3 pl-16 ${index === task.subtasks.length - 1 ? 'border-b-0' : ''}`}
                   >
                     <h3 className="text-light-text">{subtask.subtaskName}</h3>
                   </div>
                 ))}
-                {/* Map Tasks */}
               </div>
+              {/* Map Tasks */}
             </div>
           ))}
-        </div>
+        </section>
         {/* Map Items */}
       </div>
     </div>
