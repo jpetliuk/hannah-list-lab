@@ -21,7 +21,9 @@ const DashboardLayout = () => {
         <Outlet />
       </div>
 
-      {modalUserSettings ? <ModalUserSettings /> : null}
+      <div className="fixed">
+        {modalUserSettings ? <ModalUserSettings /> : null}
+      </div>
     </div>
   );
 };

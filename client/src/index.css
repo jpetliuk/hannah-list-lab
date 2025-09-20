@@ -92,6 +92,22 @@
   --color-navbar-select-button-orange-active: #f7653d;
 
   --color-blue-button: #2f92f0;
+
+  --shadow-inner-1:
+    inset 0 2px 4px rgba(0, 0, 0, 0.14), inset 0 1px 2px rgba(0, 0, 0, 0.1);
+
+  --shadow-inner-2:
+    inset 0 3px 6px rgba(0, 0, 0, 0.18), inset 0 2px 3px rgba(0, 0, 0, 0.12);
+
+  --shadow-drop-1: 0 1px 2px rgba(0, 0, 0, 0.24), 0 1px 3px rgba(0, 0, 0, 0.12);
+
+  --shadow-drop-2: 0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12);
+
+  --shadow-drop-3:
+    0 3px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.15);
+
+  --shadow-drop-4:
+    0 5px 10px rgba(0, 0, 0, 0.05), 0 15px 25px rgba(0, 0, 0, 0.15);
 }
 
 :root {
@@ -105,8 +121,4 @@
   font-family: 'Space Mono', serif;
   font-weight: 400;
   font-style: normal;
-}
-
-.nav-title {
-  @apply text-neutral-2 dark:text-neutral-9 overflow-hidden text-xl font-semibold;
 }

@@ -1,15 +1,8 @@
-import { useDarkMode } from '../utils/useDarkMode';
-
 const Logo = () => {
-  const { isDark, toggleDarkMode } = useDarkMode();
-
   return (
-    <section
-      className="bg-neutral-10 dark:bg-neutral-1 hidden h-16 w-80 items-center rounded-2xl select-none md:flex"
-      onClick={toggleDarkMode}
-    >
+    <section className="bg-neutral-10 dark:bg-neutral-1 hidden h-16 w-80 items-center rounded-2xl select-none md:flex">
       <img
-        src={isDark ? '/hannahListLabIcon-dark.png' : '/hannahListLabIcon.png'}
+        src="/hannahListLabIcon.png"
         alt="icon"
         className="ml-3 size-14 rounded-full object-cover object-center"
       />

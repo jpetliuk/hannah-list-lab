@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import useUserStore from '../store/userStore';
 import useAppStates from '../store/appStates';
+import { useDarkMode } from '../utils/useDarkMode';
 
 import { UserPen, Lightbulb, Wrench, X } from 'lucide-react';
 
@@ -28,10 +29,10 @@ export const Profile = () => {
         <div>
           <h2 className="text-xl font-semibold">Profile picture</h2>
           <div className="p-5">
-            <button className="bg-blue-button h-10 w-35 cursor-pointer rounded-2xl text-sm font-semibold text-white">
+            <button className="bg-primary-3 hover:bg-primary-2 active:bg-primary-2 text-neutral-10 shadow-drop-1 active:shadow-inner-1 h-11 w-38 cursor-pointer rounded-2xl text-base font-medium duration-100">
               Upload picture
             </button>
-            <button className="ml-4 h-10 w-35 cursor-pointer rounded-2xl border border-[#D9D9D9] bg-[#F6F6F6] text-sm font-semibold text-[#BD3D3D] hover:bg-[#ebebeb] active:bg-[#F6F6F6]">
+            <button className="bg-neutral-10 text-semantics-red-1 shadow-drop-1 hover:bg-neutral-9 active:bg-neutral-9 active:shadow-inner-1 ml-4 h-11 w-38 cursor-pointer rounded-2xl border border-transparent text-base font-medium duration-100">
               Delete picture
             </button>
           </div>
@@ -67,7 +68,7 @@ export const Profile = () => {
 
       <button
         onClick={saveChanges}
-        className="bg-button-yellow text-default-text hover:bg-button-yellow-hover active:bg-button-yellow mt-15 ml-auto h-11 w-40 cursor-pointer rounded-2xl font-semibold"
+        className="bg-secondary-4 text-default-text hover:bg-secondary-3 active:bg-secondary-3 shadow-drop-1 active:shadow-inner-1 mt-15 ml-auto h-11 w-40 cursor-pointer rounded-2xl font-semibold duration-100"
       >
         Save Changes
       </button>
@@ -76,7 +77,9 @@ export const Profile = () => {
 };
 
 export const Appearance = () => {
-  return <div>Appearance</div>;
+  const { toggleDarkMode } = useDarkMode();
+
+  return <div onClick={toggleDarkMode}>Appearance</div>;
 };
 
 export const Account = () => {
@@ -87,42 +90,37 @@ const ModalUserSettings = () => {
   const [selected, setSelected] = useState('profile');
   const { handleModalUserSettings } = useAppStates();
 
+  const navItems = [
+    { key: 'profile', icon: UserPen, label: 'Profile' },
+    { key: 'appearance', icon: Lightbulb, label: 'Appearance' },
+    { key: 'account', icon: Wrench, label: 'Account' },
+  ];
+
   return (
-    <div className="bg-transparency-modal fixed top-0 left-0 z-50 flex min-h-screen w-screen items-center justify-center">
-      <div className="bg-custom-white m-10 grid h-[650px] w-5xl grid-rows-[80px_auto] overflow-hidden rounded-3xl shadow-lg">
-        <div className="border-light-gray flex h-[80px] w-full items-center justify-between border-b">
-          <h1 className="border-light-gray flex h-full w-48 items-center justify-center border-r text-xl font-bold">
+    <div className="fixed top-0 left-0 z-50 flex min-h-screen w-screen items-center justify-center bg-[rgba(0,0,0,0.5)]">
+      <div className="bg-neutral-10 dark:bg-neutral-1 m-10 grid h-[650px] w-5xl grid-rows-[80px_auto] overflow-hidden rounded-3xl shadow-lg">
+        <div className="border-neutral-6 dark:border-neutral-3 flex h-[80px] w-full items-center justify-between border-b">
+          <h1 className="border-neutral-6 dark:border-neutral-3 text-neutral-1 dark:text-neutral-8 flex h-full w-48 items-center justify-center border-r text-2xl font-bold">
             Settings
           </h1>
           <X
-            className="text-light-text hover:text-default-text mr-3 h-12 w-12 cursor-pointer duration-300"
+            className="text-neutral-5 hover:text-neutral-4 dark:hover:text-neutral-6 mr-3 h-12 w-12 cursor-pointer duration-300"
             onClick={handleModalUserSettings}
           />
         </div>
 
         <div className="grid h-full grid-cols-[192px_auto] overflow-hidden">
-          <div className="border-light-gray h-full w-48 border-r">
-            <div
-              onClick={() => setSelected('profile')}
-              className={`flex h-12 cursor-pointer items-center gap-3 pl-5 font-semibold duration-200 ${selected === 'profile' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
-            >
-              <UserPen />
-              <h1>Profile</h1>
-            </div>
-            <div
-              onClick={() => setSelected('appearance')}
-              className={`flex h-12 cursor-pointer items-center gap-3 pl-5 font-semibold duration-200 ${selected === 'appearance' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
-            >
-              <Lightbulb />
-              <h1>Appearance</h1>
-            </div>
-            <div
-              onClick={() => setSelected('account')}
-              className={`flex h-12 cursor-pointer items-center gap-3 pl-5 font-semibold duration-200 ${selected === 'account' ? 'bg-navbar-select-button-active border-navbar-select-button-orange-active text-orange-text border-r-2 shadow-inner' : 'text-light-text border-r-transparent'}`}
-            >
-              <Wrench />
-              <h1>Account</h1>
-            </div>
+          <div className="border-neutral-6 dark:border-neutral-3 h-full w-48 border-r">
+            {navItems.map(({ key, icon: Icon, label }) => (
+              <div
+                key={key}
+                onClick={() => setSelected(key)}
+                className={`flex h-16 cursor-pointer items-center gap-3 pl-5 font-bold duration-200 ${selected === key ? 'bg-neutral-9 dark:bg-neutral-2 shadow-drop-1 border-primary-3 text-primary-3 border-r-3' : 'text-neutral-2 dark:text-neutral-7 border-r-transparent'}`}
+              >
+                <Icon />
+                <h1>{label}</h1>
+              </div>
+            ))}
           </div>
 
           <div className="h-full w-full overflow-y-auto">

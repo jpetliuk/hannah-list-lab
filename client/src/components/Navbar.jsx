@@ -63,12 +63,16 @@ const Navbar = () => {
             alt="user icon photo"
             className="h-10 w-10 rounded-full object-cover"
           />
-          <h2 className="nav-title">Welcome Back!</h2>
+          <h2 className="text-neutral-2 dark:text-neutral-9 truncate overflow-hidden text-xl font-semibold">
+            {user.name}
+          </h2>
         </section>
 
         {/* Tools */}
         <section className="mt-2 flex w-full flex-col gap-1 pb-4">
-          <h2 className="nav-title">Tools</h2>
+          <h2 className="text-neutral-2 dark:text-neutral-9 overflow-hidden text-xl font-semibold">
+            Tools
+          </h2>
 
           {tools.map(({ label, path, Icon }) => (
             <Link to={path} key={label}>
@@ -89,7 +93,9 @@ const Navbar = () => {
 
         {/* Projects */}
         <section className="mt-2 flex w-full flex-col gap-1 pb-1.5">
-          <h2 className="nav-title">Projects</h2>
+          <h2 className="text-neutral-2 dark:text-neutral-9 overflow-hidden text-xl font-semibold">
+            Projects
+          </h2>
 
           {projects.map(({ _id, iconColor, projectName }) => (
             <Link key={_id} to={`/dashboard/project/${_id}`}>
@@ -98,7 +104,7 @@ const Navbar = () => {
                   #
                 </p>
                 <h3
-                  className={`${selected === _id ? 'text-primary-3' : 'text-neutral-3 dark:text-neutral-6'} text-[16px] duration-200`}
+                  className={`${selected === _id ? 'text-primary-3' : 'text-neutral-3 dark:text-neutral-6'} truncate text-[16px] duration-200`}
                 >
                   {projectName}
                 </h3>

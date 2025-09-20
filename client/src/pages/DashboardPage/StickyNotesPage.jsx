@@ -148,18 +148,18 @@ const StickyNotesPage = () => {
   };
 
   return (
-    <div className="bg-custom-white border-outline h-full w-full rounded-3xl border p-8">
+    <div className="bg-neutral-10 dark:bg-neutral-1 h-full w-full rounded-3xl p-8">
       <div>
-        <h1 className="text-default-text p-6 pt-0 text-4xl font-bold">
+        <h1 className="text-neutral-2 dark:text-neutral-9 p-6 pt-0 text-4xl font-bold">
           Sticky Wall
         </h1>
 
-        <div className="bg-white-gray border-light-gray grid grid-cols-[repeat(auto-fill,_300px)] justify-center gap-6 rounded-3xl border p-8">
+        <div className="bg-neutral-7 dark:bg-neutral-3 shadow-inner-2 grid grid-cols-[repeat(auto-fill,_300px)] justify-center gap-6 rounded-3xl p-8">
           {stickyNotesList.map((note) => (
             <div
               key={note._id}
               onClick={() => handleSelectNote(note)}
-              className={`relative h-75 w-75 overflow-hidden ${selectedNoteId === note._id ? 'z-10 scale-110 cursor-auto shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]' : 'cursor-pointer hover:scale-102'} rounded-[10px] p-2.5 shadow duration-300 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]`}
+              className={`relative h-75 w-75 overflow-hidden ${selectedNoteId === note._id ? 'shadow-drop-3 z-10 scale-110 cursor-auto' : 'shadow-drop-2 hover:shadow-drop-2 cursor-pointer hover:scale-102'} rounded-[10px] p-2.5 duration-300`}
               style={{
                 backgroundColor:
                   selectedNoteId === note._id ? newColor : note.stickyNoteColor,
@@ -204,10 +204,10 @@ const StickyNotesPage = () => {
                 </>
               ) : (
                 <>
-                  <h2 className="text-default-text pb-2 text-xl font-bold select-none">
+                  <h2 className="text-neutral-2 pb-2 text-xl font-bold select-none">
                     {note.stickyNoteTitle}
                   </h2>
-                  <p className="text-default-text space-mono-regular text-xs whitespace-pre-line select-none">
+                  <p className="text-neutral-2 space-mono-regular text-xs break-words whitespace-pre-line select-none">
                     {note.stickyNoteText}
                   </p>
                 </>
@@ -216,10 +216,10 @@ const StickyNotesPage = () => {
           ))}
 
           <div
-            className="bg-light-gray flex h-75 w-75 cursor-pointer items-center justify-center rounded-[10px] duration-300 hover:scale-102 hover:shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]"
+            className="bg-neutral-10 dark:bg-neutral-1 shadow-drop-2 hover:shadow-drop-3 flex h-75 w-75 cursor-pointer items-center justify-center rounded-[10px] duration-300 hover:scale-102"
             onClick={newNote}
           >
-            <Plus className="text-light-text hover:text-default-text h-full w-full p-30 font-light duration-300 hover:p-29.5" />
+            <Plus className="text-neutral-4 dark:text-neutral-6 hover:text-neutral-3 hover:dark:text-neutral-7 h-full w-full p-30 font-light duration-300" />
           </div>
         </div>
       </div>
