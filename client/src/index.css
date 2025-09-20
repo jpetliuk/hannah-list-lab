@@ -1,6 +1,57 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
+  --color-neutral-1: #212529;
+  --color-neutral-2: #343a40;
+  --color-neutral-3: #495057;
+  --color-neutral-4: #868e96;
+  --color-neutral-5: #adb5bd;
+  --color-neutral-6: #ced4da;
+  --color-neutral-7: #dee2e6;
+  --color-neutral-8: #e9ecef;
+  --color-neutral-9: #f1f3f5;
+  --color-neutral-10: #f8f9fa;
+
+  --color-primary-1: #d9480f;
+  --color-primary-2: #e8590c;
+  --color-primary-3: #f76707;
+  --color-primary-4: #fd7e14;
+  --color-primary-5: #ff922b;
+  --color-primary-6: #ffa94d;
+  --color-primary-7: #ffc078;
+  --color-primary-8: #ffd8a8;
+  --color-primary-9: #ffe8cc;
+  --color-primary-10: #fff4e6;
+
+  --color-secondary-1: #f59f00;
+  --color-secondary-2: #fab005;
+  --color-secondary-3: #fcc419;
+  --color-secondary-4: #ffd43b;
+  --color-secondary-5: #ffe066;
+  --color-secondary-6: #ffec99;
+  --color-secondary-7: #fff3bf;
+  --color-secondary-8: #fff9db;
+
+  --color-semantics-blue-1: #0b7285;
+  --color-semantics-blue-2: #1098ad;
+  --color-semantics-blue-3: #22b8cf;
+  --color-semantics-blue-4: #3bc9db;
+  --color-semantics-blue-5: #99e9f2;
+
+  --color-semantics-green-1: #5c940d;
+  --color-semantics-green-2: #74b816;
+  --color-semantics-green-3: #94d82d;
+  --color-semantics-green-4: #a9e34b;
+  --color-semantics-green-5: #d8f5a2;
+
+  --color-semantics-red-1: #c92a2a;
+  --color-semantics-red-2: #f03e3e;
+  --color-semantics-red-3: #ff6b6b;
+  --color-semantics-red-4: #ff8787;
+  --color-semantics-red-5: #ffc9c9;
+
   --color-default-text: #1e1e2c;
   --color-light-text: #5f616b;
   --color-orange-text: #f7653d;
@@ -54,4 +105,8 @@
   font-family: 'Space Mono', serif;
   font-weight: 400;
   font-style: normal;
+}
+
+.nav-title {
+  @apply text-neutral-2 dark:text-neutral-9 overflow-hidden text-xl font-semibold;
 }

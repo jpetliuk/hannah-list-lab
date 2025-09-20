@@ -38,20 +38,13 @@ const tools = [
 ];
 
 const Navbar = () => {
-  const { projects, user, logout, createNewProject } = useUserStore();
+  const { projects, user, logout } = useUserStore();
   const { handleModalUserSettings } = useAppStates();
 
   const location = useLocation();
   const { id } = useParams();
 
   const [selected, setSelected] = useState(location.pathname);
-
-  const [loading, setLoading] = useState(false);
-  const newProjectHandler = async () => {
-    setLoading(true);
-    await createNewProject('new project');
-    setLoading(false);
-  };
 
   useEffect(() => {
     if (id) {
@@ -62,33 +55,29 @@ const Navbar = () => {
   }, [location.pathname, id]);
 
   return (
-    <nav className="border-outline bg-custom-white relative hidden h-full min-h-full w-65 flex-1 flex-col justify-between rounded-3xl border p-3 md:flex">
+    <nav className="bg-neutral-10 dark:bg-neutral-1 relative hidden h-full min-h-full w-80 flex-1 flex-col justify-between rounded-2xl p-4 md:flex">
       <div>
-        <section className="border-white-gray flex w-full items-center gap-3 border-b pb-4">
+        <section className="border-neutral-6 dark:border-neutral-4 flex w-full items-center gap-3 border-b pb-4">
           <img
             src={user.profilePicture}
             alt="user icon photo"
             className="h-10 w-10 rounded-full object-cover"
           />
-          <h2 className="text-default-text text- h-6 w-38 overflow-hidden font-semibold">
-            Welcome Back!
-          </h2>
+          <h2 className="nav-title">Welcome Back!</h2>
         </section>
 
-        {/* Tools builder */}
-        <section className="border-white-gray mt-2 flex w-full flex-col gap-1 border-b pb-4">
-          <h2 className="text-default-text text-base font-semibold">Tools</h2>
+        {/* Tools */}
+        <section className="mt-2 flex w-full flex-col gap-1 pb-4">
+          <h2 className="nav-title">Tools</h2>
 
           {tools.map(({ label, path, Icon }) => (
             <Link to={path} key={label}>
-              <div
-                className={`hover:bg-navbar-select-button flex w-full cursor-pointer items-center gap-2 rounded-3xl py-1.5 pl-4 duration-200 ${selected === path ? 'bg-navbar-select-button' : 'bg-none'}`}
-              >
+              <div className="hover:bg-neutral-8 hover:dark:bg-neutral-2 flex w-full cursor-pointer items-center gap-2 rounded-3xl py-1.5 pl-4 duration-200">
                 <Icon
-                  className={`h-[22px] w-[22px] ${selected === path ? 'text-orange-text' : 'text-light-text'}`}
+                  className={`h-[22px] w-[22px] duration-200 ${selected === path ? 'text-primary-3' : 'text-neutral-3 dark:text-neutral-6'}`}
                 />
                 <h3
-                  className={`${selected === path ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-[15px]`}
+                  className={`${selected === path ? 'text-primary-3' : 'text-neutral-3 dark:text-neutral-6'} text-[16px] duration-200`}
                 >
                   {label}
                 </h3>
@@ -96,65 +85,52 @@ const Navbar = () => {
             </Link>
           ))}
         </section>
-        {/* Tools builder */}
+        {/* Tools */}
 
-        {/* Projects builder */}
-        <section className="border-white-gray mt-2 flex w-full flex-col gap-1 border-b pb-1.5">
-          <h2 className="text-default-text text-base font-semibold">
-            Projects
-          </h2>
+        {/* Projects */}
+        <section className="mt-2 flex w-full flex-col gap-1 pb-1.5">
+          <h2 className="nav-title">Projects</h2>
 
           {projects.map(({ _id, iconColor, projectName }) => (
             <Link key={_id} to={`/dashboard/project/${_id}`}>
-              <div
-                className={`hover:bg-navbar-select-button flex w-full cursor-pointer items-center gap-2 rounded-3xl py-1.5 pl-4 duration-200 ${selected === _id ? 'bg-navbar-select-button' : 'bg-none'}`}
-              >
+              <div className="hover:bg-neutral-8 hover:dark:bg-neutral-2 flex w-full cursor-pointer items-center gap-2 rounded-3xl py-1.5 pl-4 duration-200">
                 <p className="font-bold" style={{ color: iconColor }}>
                   #
                 </p>
                 <h3
-                  className={`${selected === _id ? 'text-orange-text font-semibold' : 'text-light-text font-light'} text-[15px] duration-100`}
+                  className={`${selected === _id ? 'text-primary-3' : 'text-neutral-3 dark:text-neutral-6'} text-[16px] duration-200`}
                 >
                   {projectName}
                 </h3>
               </div>
             </Link>
           ))}
-          <div
-            className={`${loading ? 'text-default-text h-9' : 'h-4 text-transparent'} hover:text-default-text overflow-hidden duration-200 hover:h-9`}
-          >
-            <button
-              disabled={loading}
-              onClick={newProjectHandler}
-              className={`${loading ? 'bg-navbar-create-button' : 'bg-transparent'} hover:bg-navbar-create-button flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1.5 duration-200`}
-            >
-              <h3 className="mr-5 text-center text-[15px] font-light select-none">
-                {loading ? 'Loading...' : '+'}
-              </h3>
-            </button>
-          </div>
         </section>
-        {/* Projects builder */}
+        {/* Projects */}
       </div>
 
-      {/* Settings section */}
-      <section className="border-white-gray flex w-full flex-col gap-1 border-t pt-2">
+      {/* Settings */}
+      <section className="border-neutral-6 dark:border-neutral-4 flex w-full flex-col gap-1 border-t pt-2">
         <div
           onClick={handleModalUserSettings}
-          className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
+          className="hover:bg-neutral-8 hover:dark:bg-neutral-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
         >
-          <Settings className="h-5 w-5" />
-          <h3 className="text-light-text text-[15px] font-light">Settings</h3>
+          <Settings className="text-neutral-3 dark:text-neutral-6 h-5 w-5" />
+          <h3 className="text-neutral-3 dark:text-neutral-6 text-[16px]">
+            Settings
+          </h3>
         </div>
         <div
-          className="hover:bg-white-gray flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
+          className="hover:bg-neutral-8 hover:dark:bg-neutral-2 flex w-full cursor-pointer items-center justify-center gap-2 rounded-3xl py-1"
           onClick={logout}
         >
-          <LogOut className="h-5 w-5" />
-          <h3 className="text-light-text text-[15px] font-light">Sign-out</h3>
+          <LogOut className="text-neutral-3 dark:text-neutral-6 h-5 w-5" />
+          <h3 className="text-neutral-3 dark:text-neutral-6 text-[16px]">
+            Sign-out
+          </h3>
         </div>
       </section>
-      {/* Settings section */}
+      {/* Settings */}
     </nav>
   );
 };

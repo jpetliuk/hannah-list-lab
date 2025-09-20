@@ -1,29 +1,20 @@
-import { useState } from 'react';
+import { useDarkMode } from '../utils/useDarkMode';
 
 const Logo = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isDark, toggleDarkMode } = useDarkMode();
 
   return (
     <section
-      onClick={() => setIsDarkMode(!isDarkMode)}
-      className={`border-outline hidden h-14 w-65 items-center rounded-3xl border select-none md:flex ${isDarkMode ? 'bg-black' : 'bg-custom-white'}`}
+      className="bg-neutral-10 dark:bg-neutral-1 hidden h-16 w-80 items-center rounded-2xl select-none md:flex"
+      onClick={toggleDarkMode}
     >
-      {isDarkMode ? (
-        <img
-          src="/hannahListLabIcon-dark.png"
-          alt="icon"
-          className="ml-3 size-14 rounded-full object-cover object-center"
-        />
-      ) : (
-        <img
-          src="/hannahListLabIcon.png"
-          alt="icon"
-          className="ml-3 size-14 rounded-full object-cover object-center"
-        />
-      )}
-      <h1
-        className={`my-auto text-center text-lg font-bold ${isDarkMode ? 'text-white' : 'text-default-text'}`}
-      >
+      <img
+        src={isDark ? '/hannahListLabIcon-dark.png' : '/hannahListLabIcon.png'}
+        alt="icon"
+        className="ml-3 size-14 rounded-full object-cover object-center"
+      />
+
+      <h1 className="text-default-text my-auto text-center text-lg font-bold dark:text-white">
         HANNAH&apos;S LIST LAB
       </h1>
     </section>
