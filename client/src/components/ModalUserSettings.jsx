@@ -3,7 +3,7 @@ import useUserStore from '../store/userStore';
 import useAppStates from '../store/appStates';
 import { useDarkMode } from '../utils/useDarkMode';
 
-import { UserPen, Lightbulb, Wrench, X } from 'lucide-react';
+import { UserPen, Lightbulb, Wrench, X, Check } from 'lucide-react';
 
 export const Profile = () => {
   const { user, changeNameAndDescription } = useUserStore();
@@ -27,7 +27,9 @@ export const Profile = () => {
           className="bg-white-gray border-light-gray h-25 w-25 rounded-full border object-cover"
         />
         <div>
-          <h2 className="text-xl font-semibold">Profile picture</h2>
+          <h2 className="text-neutral-1 dark:text-neutral-8 text-xl font-semibold">
+            Profile Picture
+          </h2>
           <div className="p-5">
             <button className="bg-primary-3 hover:bg-primary-2 active:bg-primary-2 text-neutral-10 shadow-drop-1 active:shadow-inner-1 h-11 w-38 cursor-pointer rounded-2xl text-base font-medium duration-100">
               Upload picture
@@ -40,15 +42,17 @@ export const Profile = () => {
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold">Username</h2>
+        <h2 className="text-neutral-1 dark:text-neutral-8 text-xl font-semibold">
+          Username
+        </h2>
         <div className="flex">
           <input
             type="text"
             autoComplete="off"
             name="username"
             defaultValue={user.name}
-            placeholder="..."
-            className="text-light-text border-light-gray focus:text-default-text focus:outline-light-gray w-80 resize-none rounded-2xl border py-2 pl-6 font-light"
+            placeholder="Name"
+            className="text-neutral-4 border-neutral-6 dark:border-neutral-3 focus:text-neutral-1 focus:dark:text-neutral-8 focus:ring-primary-3 w-80 resize-none rounded-2xl border py-2 pl-6 font-light focus:ring-1 focus:outline-none"
             maxLength="24"
             onChange={(e) => setNewName(e.target.value)}
           />
@@ -56,11 +60,13 @@ export const Profile = () => {
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold">About me</h2>
+        <h2 className="text-neutral-1 dark:text-neutral-8 text-xl font-semibold">
+          About me
+        </h2>
         <textarea
           name="description"
           defaultValue={user.description}
-          className="text-light-text border-light-gray focus:outline-light-gray focus:text-default-text h-30 w-full resize-none rounded-2xl border py-2 pl-6 font-light whitespace-pre-line"
+          className="focus:outline-light-gray text-neutral-4 border-neutral-6 dark:border-neutral-3 focus:text-neutral-1 focus:dark:text-neutral-8 focus:ring-primary-3 whitespace-pre-lin h-30 w-full resize-none rounded-2xl border py-2 pl-6 font-light focus:ring-1 focus:outline-none"
           maxLength="500"
           onChange={(e) => setNewDescription(e.target.value)}
         />
@@ -77,13 +83,101 @@ export const Profile = () => {
 };
 
 export const Appearance = () => {
-  const { toggleDarkMode } = useDarkMode();
+  const { setSystem, setLight, setDark, theme } = useDarkMode();
 
-  return <div onClick={toggleDarkMode}>Appearance</div>;
+  return (
+    <div className="pt-8">
+      <div className="px-20 pb-5">
+        <h1 className="text-neutral-1 dark:text-neutral-8 text-2xl font-semibold">
+          Theme
+        </h1>
+        <h2 className="text-neutral-4 dark:text-neutral-5 text-base font-light">
+          Change how your UI looks and feels in your browser.
+        </h2>
+      </div>
+
+      <div className="flex justify-center gap-8">
+        {/* System */}
+        <div className="cursor-pointer" onClick={setSystem}>
+          <div>
+            <img
+              src="/images/Visualizer-system.png"
+              alt="light mode"
+              className="h-auto w-55 select-none"
+            />
+            <div className="text-neutral-1 dark:text-neutral-8 flex flex-row gap-2 p-3">
+              <div
+                className={`border-neutral-6 dark:border-neutral-4 flex h-6 w-6 items-center justify-center rounded-full border-1 ${theme === 'system' ? 'bg-primary-3' : 'bg-neutral-9 dark:bg-neutral-2'}`}
+              >
+                <Check
+                  className="text-neutral-9 dark:text-neutral-2 mt-0.5 h-4 w-4.5"
+                  strokeWidth={5}
+                />
+              </div>
+              System
+            </div>
+          </div>
+        </div>
+
+        {/* Light */}
+        <div className="cursor-pointer" onClick={setLight}>
+          <img
+            src="/images/Visualizer-light.png"
+            alt="light mode"
+            className="h-auto w-55 select-none"
+          />
+          <div className="text-neutral-1 dark:text-neutral-8 flex flex-row gap-2 p-3">
+            <div
+              className={`border-neutral-6 dark:border-neutral-4 flex h-6 w-6 items-center justify-center rounded-full border-1 ${theme === 'light' ? 'bg-primary-3' : 'bg-neutral-9 dark:bg-neutral-2'}`}
+            >
+              <Check
+                className="text-neutral-9 dark:text-neutral-2 mt-0.5 h-4 w-4.5"
+                strokeWidth={5}
+              />
+            </div>
+            Light
+          </div>
+        </div>
+
+        {/* Dark */}
+        <div className="cursor-pointer" onClick={setDark}>
+          <div>
+            <img
+              src="/images/Visualizer-dark.png"
+              alt="light mode"
+              className="h-auto w-55 select-none"
+            />
+            <div className="text-neutral-1 dark:text-neutral-8 flex flex-row gap-2 p-3">
+              <div
+                className={`border-neutral-6 dark:border-neutral-4 flex h-6 w-6 items-center justify-center rounded-full border-1 ${theme === 'dark' ? 'bg-primary-3' : 'bg-neutral-9 dark:bg-neutral-2'}`}
+              >
+                <Check
+                  className="text-neutral-9 dark:text-neutral-2 mt-0.5 h-4 w-4.5"
+                  strokeWidth={5}
+                />
+              </div>
+              Dark
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export const Account = () => {
-  return <div>Account</div>;
+  return (
+    <div className="pt-8">
+      <div className="px-20 pb-5">
+        <h1 className="text-neutral-1 dark:text-neutral-8 text-2xl font-semibold">
+          Email Address
+        </h1>
+        <h2 className="text-neutral-4 dark:text-neutral-5 text-base font-light">
+          Change how your UI looks and feels in your browser.
+        </h2>
+      </div>
+    </div>
+  );
 };
 
 const ModalUserSettings = () => {

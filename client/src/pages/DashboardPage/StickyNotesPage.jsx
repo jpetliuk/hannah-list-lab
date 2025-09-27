@@ -159,7 +159,7 @@ const StickyNotesPage = () => {
             <div
               key={note._id}
               onClick={() => handleSelectNote(note)}
-              className={`relative h-75 w-75 overflow-hidden ${selectedNoteId === note._id ? 'shadow-drop-3 z-10 scale-110 cursor-auto' : 'shadow-drop-2 hover:shadow-drop-2 cursor-pointer hover:scale-102'} rounded-[10px] p-2.5 duration-300`}
+              className={`relative h-75 w-75 overflow-hidden ${selectedNoteId === note._id ? 'shadow-drop-3 scale-110 cursor-auto' : 'shadow-drop-2 hover:shadow-drop-2 cursor-pointer hover:scale-102'} rounded-[10px] p-2.5 duration-300`}
               style={{
                 backgroundColor:
                   selectedNoteId === note._id ? newColor : note.stickyNoteColor,
@@ -215,8 +215,9 @@ const StickyNotesPage = () => {
             </div>
           ))}
 
+          {/*New Note*/}
           <div
-            className="bg-neutral-10 dark:bg-neutral-1 shadow-drop-2 hover:shadow-drop-3 flex h-75 w-75 cursor-pointer items-center justify-center rounded-[10px] duration-300 hover:scale-102"
+            className="bg-neutral-10 dark:bg-neutral-2 shadow-drop-2 hover:shadow-drop-3 flex h-75 w-75 cursor-pointer items-center justify-center rounded-[10px] duration-300 hover:scale-102"
             onClick={newNote}
           >
             <Plus className="text-neutral-4 dark:text-neutral-6 hover:text-neutral-3 hover:dark:text-neutral-7 h-full w-full p-30 font-light duration-300" />
