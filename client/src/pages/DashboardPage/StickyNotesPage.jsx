@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
-import { Plus } from 'lucide-react';
+import { Plus, RefreshCw } from 'lucide-react';
 
 import useUserStore from '../../store/userStore';
 
@@ -184,22 +184,25 @@ const StickyNotesPage = () => {
                     onChange={handleTextChange}
                   />
                   <button
-                    className="bg-button-yellow text-default-text absolute right-0 bottom-0 h-7 w-15 cursor-pointer rounded-tl-lg text-sm font-semibold"
+                    className="bg-secondary-4 text-neutral-1 absolute right-0 bottom-0 h-7 w-15 cursor-pointer rounded-tl-lg text-sm font-semibold opacity-35 duration-150 hover:opacity-100"
                     onClick={updateNotes}
                   >
                     save
                   </button>
                   <button
-                    className="bg-light-gray text-default-text absolute bottom-0 left-0 h-7 w-15 cursor-pointer rounded-tr-lg text-sm font-semibold"
+                    className="bg-semantics-red-5 text-semantics-red-1 absolute bottom-0 left-0 h-7 w-15 cursor-pointer rounded-tr-lg text-sm font-semibold opacity-35 duration-150 hover:opacity-100"
                     onClick={removeNote}
                   >
                     remove
                   </button>
                   <button
-                    className="hover:text-default-text absolute top-0 right-0 h-7 w-7 cursor-pointer rounded-bl-lg bg-[#f6f6f6B3] text-sm font-semibold text-transparent duration-300 hover:w-15"
+                    className="absolute top-0 right-0 flex h-7 w-7 cursor-pointer items-center justify-center rounded-bl-lg bg-[#f6f6f6B3] opacity-50 duration-150 hover:opacity-100"
                     onClick={handleChangeNoteColor}
                   >
-                    color
+                    <RefreshCw
+                      className="text-neutral-2 click: h-4.5 w-4.5 duration-300 hover:rotate-180"
+                      strokeWidth={2}
+                    />
                   </button>
                 </>
               ) : (
