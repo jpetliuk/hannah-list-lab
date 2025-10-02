@@ -44,12 +44,12 @@ app.use(
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production', // HTTPS required
       sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 1000 * 60 * 60 * 24,
     },
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: 'sessions',
-      ttl: 24 * 60 * 60,
+      ttl: 1000 * 60 * 60 * 24,
       autoRemoveInterval: 60,
       autoRemove: 'interval',
     }),
