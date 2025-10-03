@@ -9,7 +9,7 @@ const HomePage = () => {
     <div className="bg-neutral-10 dark:bg-neutral-1 h-full w-full rounded-3xl">
       <div className="flex h-full w-full flex-col items-center pt-10">
         <h1 className="text-neutral-2 dark:text-neutral-9 text-4xl font-bold">
-          Welcome Back {user.name}
+          Welcome Back {user.name.split(" ")[0]}
         </h1>
         <hr className="text-neutral-5 dark:text-neutral-4 mt-5 w-[1080px]" />
         <div className="mt-25 w-[1080px]">
