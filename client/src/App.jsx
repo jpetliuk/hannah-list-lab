@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import useUserStore from './store/userStore';
 
 import PropTypes from 'prop-types';
+import { useDarkMode } from './utils/useDarkMode';
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -49,6 +50,7 @@ ProtectedRoute.propTypes = {
 
 function App() {
   const { isLoading, fetchUserData } = useUserStore();
+  useDarkMode();
 
   useEffect(() => {
     fetchUserData();

@@ -2,7 +2,7 @@ import './HamsterWheel.css';
 
 const HamsterWheel = () => {
   return (
-    <section className="bg-white-gray flex h-screen items-center justify-center">
+    <section className="dark:bg-neutral-1 bg-neutral-10 flex h-screen items-center justify-center">
       <div className="h-fit w-fit scale-100">
         <div className="wheel-and-hamster">
           <div className="wheel"></div>

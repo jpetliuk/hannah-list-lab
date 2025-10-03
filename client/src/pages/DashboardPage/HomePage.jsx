@@ -11,7 +11,7 @@ const HomePage = () => {
         <h1 className="text-neutral-2 dark:text-neutral-9 text-4xl font-bold">
           Welcome Back {user.name}
         </h1>
-        <hr className="bg-neutral-1 text-neutral-1 mt-5 w-[1080px]" />
+        <hr className="text-neutral-5 dark:text-neutral-4 mt-5 w-[1080px]" />
         <div className="mt-25 w-[1080px]">
           <h1 className="text-neutral-2 dark:text-neutral-9 text-medium mb-3">
             Recently visited

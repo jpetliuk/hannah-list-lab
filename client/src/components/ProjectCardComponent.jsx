@@ -17,7 +17,7 @@ const ProjectCardComponent = ({ projectName, backgroundImage, iconColor }) => {
         </p>
       </div>
       <div className="h-1/2 w-full px-2.5 pt-4">
-        <h2 className="text-neutral-2 dark:text-neutral-2 line-clamp-2 text-center">
+        <h2 className="text-neutral-2 dark:text-neutral-9 line-clamp-2 text-center">
           {projectName}
         </h2>
       </div>
