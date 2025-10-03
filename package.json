@@ -27,5 +27,8 @@
    "bugs": {
       "url": "https://github.com/jpetliuk/hannah-list-lab/issues"
    },
-   "homepage": "https://jpetliuk.github.io/hannah-list-lab/"
+   "homepage": "https://jpetliuk.github.io/hannah-list-lab/",
+   "dependencies": {
+      
+   }
 }
