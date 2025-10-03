@@ -9,6 +9,7 @@ import passport from 'passport';
 import MongoStore from 'connect-mongo';
 
 import { dbConfig } from './config/dbConfig.js';
+import mongoose from 'mongoose';
 
 import authRoutes from './routes/authRoutes.js';
 import dashboardRoutes from './routes/dashboardRoutes.js';
@@ -32,7 +33,7 @@ app.use(
 );
 
 // Database Connection
-dbConfig();
+await dbConfig();
 
 // Session config
 app.use(
@@ -47,7 +48,7 @@ app.use(
       maxAge: 1000 * 60 * 60 * 24,
     },
     store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
+      client: mongoose.connection.getClient(),
       collectionName: 'sessions',
       ttl: 1000 * 60 * 60 * 24,
       autoRemoveInterval: 60,
